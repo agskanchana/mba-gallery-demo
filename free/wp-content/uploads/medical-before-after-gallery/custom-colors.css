@@ -1,0 +1,10 @@
+/* Medical Before After Gallery Custom Colors - Generated 2025-08-16 08:20:32 */
+body .medbeafgallery-nav-btn:hover { color: #3498db !important; }
+body .medbeafgallery-carousel-item.active::after { background: #3498db !important; }
+body .medbeafgallery-load-more { background: #3498db !important; }
+body .medbeafgallery-slider-button { background: #3498db !important; }
+body .medbeafgallery-control-btn.active { background: #3498db !important; }
+body .medbeafgallery-carousel-item.active p,
+body .medbeafgallery-carousel-item.active .medbeafgallery-category-name { color: #3498db !important; }
+body .medbeafgallery-carousel-item:hover img,
+body .medbeafgallery-carousel-item.active img { border-color: #3498db !important; }
