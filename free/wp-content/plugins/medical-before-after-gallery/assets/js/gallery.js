@@ -209,7 +209,7 @@ function loadCategoryRelationships() {
 // Get the correct REST API base URL
 const medbeafgalleryRestBase = (window.medbeafgalleryGalleryConfig && window.medbeafgalleryGalleryConfig.restBase) ? window.medbeafgalleryGalleryConfig.restBase : `${window.location.origin}/free/wp-json/medical-before-after-gallery/v1`;
 
-return fetch(`${medbeafgalleryRestBase}/categories.json`)
+return fetch(`https://demo.medicalbeforeaftergallery.com/free/wp-json/medical-before-after-gallery/v1/categories.json`)
         .then(response => response.json())
         .then(categories => {
             // Create a map of parent categories to their children
