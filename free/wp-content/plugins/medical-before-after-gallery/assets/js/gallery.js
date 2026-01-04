@@ -349,7 +349,7 @@ async function fetchGalleryData() {
             });
 
         // Fetch gallery items
-        const galleryResponse = await fetch(`${medbeafgalleryRestBase}/gallery-data.json`);
+        const galleryResponse = await fetch(`https://demo.medicalbeforeaftergallery.com/free/wp-json/medical-before-after-gallery/v1/gallery-data.json`);
         const galleryResult = await galleryResponse.json();
 
         // Debug logging for gallery data
