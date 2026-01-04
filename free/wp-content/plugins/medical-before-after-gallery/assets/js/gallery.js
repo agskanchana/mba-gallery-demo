@@ -2,7 +2,7 @@ let galleryData = []; // This will be populated from the API
 // Global REST API base URL for MEDBEAFGALLERY Gallery
 const medbeafgalleryRestBase = (window.medbeafgalleryGalleryConfig && window.medbeafgalleryGalleryConfig.restBase)
     ? window.medbeafgalleryGalleryConfig.restBase
-    : `${window.location.origin}/wp-json/medical-before-after-gallery/v1`;// Add these global variables and functions at the top of your script
+    : `${window.location.origin}/free/wp-json/medical-before-after-gallery/v1`;// Add these global variables and functions at the top of your script
 let modalPortal = null;
 let originalModalContainer = null;
 
@@ -207,7 +207,7 @@ function capitalizeSentence(str) {
 // Add this function to load category data
 function loadCategoryRelationships() {
 // Get the correct REST API base URL
-const medbeafgalleryRestBase = (window.medbeafgalleryGalleryConfig && window.medbeafgalleryGalleryConfig.restBase) ? window.medbeafgalleryGalleryConfig.restBase : `${window.location.origin}/wp-json/medical-before-after-gallery/v1`;
+const medbeafgalleryRestBase = (window.medbeafgalleryGalleryConfig && window.medbeafgalleryGalleryConfig.restBase) ? window.medbeafgalleryGalleryConfig.restBase : `${window.location.origin}/free/wp-json/medical-before-after-gallery/v1`;
 
 return fetch(`${medbeafgalleryRestBase}/categories.json`)
         .then(response => response.json())
