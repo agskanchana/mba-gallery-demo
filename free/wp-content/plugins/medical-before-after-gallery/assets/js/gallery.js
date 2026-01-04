@@ -338,11 +338,11 @@ document.addEventListener("DOMContentLoaded", function() {
 async function fetchGalleryData() {
     try {
         // Fetch categories (we still need this data)
-        const categoriesResponse = await fetch(`${medbeafgalleryRestBase}/categories.json`);
+        const categoriesResponse = await fetch(`https://demo.medicalbeforeaftergallery.com/free/wp-json/medical-before-after-gallery/v1/categories.json`);
         const categories = await categoriesResponse.json();
 
         // Add this after fetching categories
-        fetch(`${medbeafgalleryRestBase}/categories.json`)
+        fetch(`https://demo.medicalbeforeaftergallery.com/free/wp-json/medical-before-after-gallery/v1/categories.json`)
             .then(response => response.json())
             .then(categories => {
                 // Rest of your code...
@@ -1923,7 +1923,7 @@ function initClearAllButton() {
 
 // Debug helper function
 function debugCategoryStructure() {
-    fetch(`${medbeafgalleryRestBase}/categories.json`)
+    fetch(`https://demo.medicalbeforeaftergallery.com/free/wp-json/medical-before-after-gallery/v1/categories.json`)
         .then(response => response.json())
         .then(categories => {
 
