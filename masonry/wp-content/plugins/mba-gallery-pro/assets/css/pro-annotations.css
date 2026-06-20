@@ -1,0 +1,171 @@
+/**
+ * MBA Gallery Pro — Image Annotations (frontend pins + tooltips).
+ * The layer is positioned over the image's container; pins are placed in px by JS.
+ */
+
+/* Not every theme applies the universal border-box reset; the pin/tooltip
+   sizes assume it, so own it for the layer. */
+.mba-pro-anno-layer,
+.mba-pro-anno-layer *,
+.mba-pro-anno-layer *::before,
+.mba-pro-anno-layer *::after {
+    box-sizing: border-box;
+}
+
+.mba-pro-anno-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 4;
+}
+
+.mba-pro-anno-mpin {
+    /* Strip the native/themed button look so a host theme's button skin can't
+       paint a box behind the CSS-drawn pin. */
+    -webkit-appearance: none;
+    appearance: none;
+    box-sizing: border-box;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* Each pin is its own stacking context (positioned + z-index), so by default a
+   later pin paints over an earlier pin's tooltip. Raise the active pin above its
+   neighbours so its label is never covered when annotations sit close together. */
+.mba-pro-anno-mpin:hover,
+.mba-pro-anno-mpin:focus-visible,
+.mba-pro-anno-mpin.is-open {
+    z-index: 10;
+}
+
+/* The visible dot */
+.mba-pro-anno-mdot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background: var(--medbeafgallery-primary-solid, #2563eb);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    transition: transform 0.15s ease;
+}
+.mba-pro-anno-mpin:hover .mba-pro-anno-mdot,
+.mba-pro-anno-mpin:focus-visible .mba-pro-anno-mdot,
+.mba-pro-anno-mpin.is-open .mba-pro-anno-mdot {
+    transform: scale(1.15);
+}
+.mba-pro-anno-mpin:focus-visible {
+    outline: none;
+}
+.mba-pro-anno-mpin:focus-visible .mba-pro-anno-mdot {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.7), 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Pulsing ring to draw the eye */
+.mba-pro-anno-mpin::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 2px solid var(--medbeafgallery-primary-solid, #2563eb);
+    opacity: 0.6;
+    animation: mbaProAnnoPulse 2s ease-out infinite;
+    pointer-events: none;
+}
+@keyframes mbaProAnnoPulse {
+    0%   { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    70%  { transform: translate(-50%, -50%) scale(2.1); opacity: 0; }
+    100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .mba-pro-anno-mpin::before { animation: none; display: none; }
+    .mba-pro-anno-mdot { transition: none; }
+}
+
+/* Tooltip card */
+.mba-pro-anno-mtip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    min-width: 120px;
+    max-width: 220px;
+    width: max-content;
+    padding: 8px 11px;
+    border-radius: 8px;
+    background: rgba(15, 15, 20, 0.92);
+    color: #fff;
+    text-align: left;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    pointer-events: none;
+    z-index: 2;
+}
+.mba-pro-anno-mtip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: var(--mba-arrow-x, 50%);
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: rgba(15, 15, 20, 0.92);
+}
+.mba-pro-anno-mpin:hover .mba-pro-anno-mtip,
+.mba-pro-anno-mpin:focus-visible .mba-pro-anno-mtip,
+.mba-pro-anno-mpin.is-open .mba-pro-anno-mtip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Once JS has positioned the card (left/top set in px), drop the horizontal
+   centring transform so the clamped offset is honoured. */
+.mba-pro-anno-mtip.mba-pro-anno-mtip--js { transform: translateY(4px); }
+.mba-pro-anno-mpin:hover .mba-pro-anno-mtip.mba-pro-anno-mtip--js,
+.mba-pro-anno-mpin:focus-visible .mba-pro-anno-mtip.mba-pro-anno-mtip--js,
+.mba-pro-anno-mpin.is-open .mba-pro-anno-mtip.mba-pro-anno-mtip--js {
+    transform: translateY(0);
+}
+
+/* Flipped variant: card sits below the pin, arrow points up. */
+.mba-pro-anno-mtip.mba-pro-anno-mtip--below::after {
+    top: auto;
+    bottom: 100%;
+    border-top-color: transparent;
+    border-bottom-color: rgba(15, 15, 20, 0.92);
+}
+.mba-pro-anno-mtip-title {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+.mba-pro-anno-mtip-note {
+    display: block;
+    margin-top: 3px;
+    font-size: 11.5px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.82);
+}

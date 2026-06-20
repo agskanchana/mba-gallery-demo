@@ -1,0 +1,142 @@
+/**
+ * MBA Gallery Pro — Image Annotations editor (admin / case editor).
+ */
+
+.mba-pro-anno-app {
+    margin-top: 6px;
+}
+.mba-pro-anno-empty {
+    padding: 14px 16px;
+    background: #fff8e5;
+    border: 1px solid #f0e0a8;
+    border-radius: 6px;
+    color: #6b5b1f;
+}
+.mba-pro-anno-pair {
+    margin: 0 0 22px;
+}
+.mba-pro-anno-pair:last-child {
+    margin-bottom: 0;
+}
+.mba-pro-anno-pair-title {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1d2327;
+}
+.mba-pro-anno-cols {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+.mba-pro-anno-col {
+    flex: 1 1 280px;
+    min-width: 0;
+}
+.mba-pro-anno-side-label {
+    display: inline-block;
+    margin-bottom: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #646970;
+}
+
+/* The editor box matches the image's aspect-ratio (no letterbox), so a click
+   maps directly to a percentage of the image. */
+.mba-pro-anno-box {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    background: #f0f0f1;
+    border: 1px solid #dcdcde;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: crosshair;
+    user-select: none;
+    -webkit-user-select: none;
+}
+.mba-pro-anno-box img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: fill; /* box already matches the image AR → no distortion */
+    pointer-events: none;
+}
+.mba-pro-anno-box-empty {
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    color: #8c8f94;
+    font-style: italic;
+}
+
+/* Pins */
+.mba-pro-anno-pin {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: #2271b1;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: grab;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+    touch-action: none;
+    z-index: 2;
+}
+.mba-pro-anno-pin:active {
+    cursor: grabbing;
+}
+.mba-pro-anno-pin:focus {
+    outline: 2px solid #135e96;
+    outline-offset: 1px;
+}
+
+/* Edit popover */
+.mba-pro-anno-pop {
+    position: absolute;
+    transform: translate(-50%, calc(-100% - 16px));
+    width: 240px;
+    max-width: 90%;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    z-index: 5;
+}
+.mba-pro-anno-pop-title,
+.mba-pro-anno-pop-note {
+    width: 100%;
+    margin: 0 0 8px;
+    box-sizing: border-box;
+}
+.mba-pro-anno-pop-note {
+    resize: vertical;
+}
+.mba-pro-anno-pop-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.mba-pro-anno-pop-del {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #b32d2e;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 12px;
+}
+.mba-pro-anno-pop-del:hover {
+    color: #8a2424;
+}

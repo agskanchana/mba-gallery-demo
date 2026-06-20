@@ -1,0 +1,337 @@
+/**
+ * MBA Gallery Pro – Filter Builder Admin Styles
+ *
+ * @package MBA_Gallery_Pro
+ */
+
+/* ── Page wrapper ──────────────────────────────────────────────────── */
+.mba-pro-filters-wrap {
+    max-width: 820px;
+}
+
+.mba-pro-filters-wrap h1 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mba-pro-badge-inline {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border-radius: 14px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ── Filter card ──────────────────────────────────────────────────── */
+.mba-pro-filter-card {
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 8px;
+    margin-bottom: 14px;
+    padding: 18px 20px;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.mba-pro-filter-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.mba-pro-filter-card.mba-pro-filter-disabled {
+    opacity: 0.55;
+    border-color: #e5e5e5;
+}
+
+.mba-pro-filter-placeholder {
+    height: 60px;
+    background: #f0f0f1;
+    border: 2px dashed #c3c4c7;
+    border-radius: 8px;
+    margin-bottom: 14px;
+}
+
+/* ── Card header ──────────────────────────────────────────────────── */
+.mba-pro-filter-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.mba-pro-filter-drag {
+    cursor: move;
+    color: #a7aaad;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.mba-pro-filter-drag:hover {
+    color: #646970;
+}
+
+.mba-pro-filter-label {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 6px 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: transparent;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.mba-pro-filter-label:hover,
+.mba-pro-filter-label:focus {
+    border-color: #c3c4c7;
+    background: #f9f9f9;
+    outline: none;
+}
+
+.mba-pro-filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+/* ── Toggle switch ─────────────────────────────────────────────────── */
+.mba-pro-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.mba-pro-toggle input {
+    display: none;
+}
+
+.mba-pro-toggle-slider {
+    width: 36px;
+    height: 20px;
+    background: #c3c4c7;
+    border-radius: 10px;
+    position: relative;
+    transition: background 0.25s ease;
+}
+
+.mba-pro-toggle-slider::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.25s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.mba-pro-toggle input:checked + .mba-pro-toggle-slider {
+    background: #2563eb;
+}
+
+.mba-pro-toggle input:checked + .mba-pro-toggle-slider::after {
+    transform: translateX(16px);
+}
+
+.mba-pro-toggle-text {
+    font-size: 12px;
+    color: #646970;
+    min-width: 52px;
+}
+
+/* ── Delete button ─────────────────────────────────────────────────── */
+.mba-pro-filter-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #a7aaad;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color 0.15s, background 0.15s;
+}
+
+.mba-pro-filter-delete:hover {
+    color: #b32d2e;
+    background: #fcecec;
+}
+
+.mba-pro-filter-delete .dashicons {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+/* ── Meta key display ──────────────────────────────────────────────── */
+.mba-pro-filter-meta-key {
+    margin-bottom: 12px;
+}
+
+.mba-pro-filter-meta-key code {
+    font-size: 11px;
+    color: #646970;
+    background: #f0f0f1;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+/* ── Options list ──────────────────────────────────────────────────── */
+.mba-pro-filter-options {
+    border-top: 1px solid #f0f0f1;
+    padding-top: 12px;
+}
+
+.mba-pro-options-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #1d2327;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.mba-pro-options-list {
+    margin-bottom: 8px;
+}
+
+.mba-pro-option-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.mba-pro-option-drag {
+    cursor: move;
+    color: #c3c4c7;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.mba-pro-option-value {
+    flex: 1;
+    padding: 5px 8px;
+    font-size: 13px;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+}
+
+.mba-pro-option-value:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 1px #2563eb;
+    outline: none;
+}
+
+.mba-pro-option-remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #c3c4c7;
+    padding: 2px;
+    border-radius: 3px;
+    transition: color 0.15s;
+}
+
+.mba-pro-option-remove:hover {
+    color: #b32d2e;
+}
+
+.mba-pro-option-remove .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+.mba-pro-add-option {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 4px;
+}
+
+.mba-pro-add-option .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+}
+
+/* ── Action buttons ────────────────────────────────────────────────── */
+.mba-pro-filters-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #dcdcde;
+    flex-wrap: wrap;
+}
+
+.mba-pro-filters-actions .button {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 5px;
+}
+
+.mba-pro-filters-actions .button .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 100%;
+        display: flex;
+    align-items: center;
+}
+
+#mba-pro-save-filters {
+    margin-left: auto;
+}
+
+/* ── Notice ────────────────────────────────────────────────────────── */
+#mba-pro-filters-notice {
+    margin-top: 15px;
+}
+
+/* ── Spin animation for save button ───────────────────────────────── */
+@keyframes mba-pro-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+.dashicons.spin {
+    animation: mba-pro-spin 1s linear infinite;
+}
+
+/* ── Empty state ───────────────────────────────────────────────────── */
+.mba-pro-no-filters {
+    text-align: center;
+    padding: 40px 20px;
+    color: #646970;
+    font-size: 14px;
+    background: #f9f9f9;
+    border: 2px dashed #dcdcde;
+    border-radius: 8px;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    .mba-pro-filter-card-header {
+        flex-wrap: wrap;
+    }
+
+    .mba-pro-filter-controls {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .mba-pro-filters-actions {
+        flex-direction: column;
+    }
+
+    #mba-pro-save-filters {
+        margin-left: 0;
+    }
+}

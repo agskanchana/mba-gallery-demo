@@ -1,0 +1,350 @@
+/**
+ * MBA Gallery Pro — Single Case embed ([mba_case]).
+ *
+ * A full inline "mini case study": a dark before/after viewer (flip + pair nav)
+ * beside a light/dark detail panel (Treatment Overview tiles + description).
+ * Shares the masonry modal's aesthetic. Light by default; dark under
+ * `.mba-pro-dark` on <html>.
+ *
+ * @package MBA_Gallery_Pro
+ */
+
+/* ── Theme defense (this block is injected into arbitrary themes) ─────────── */
+.mba-pro-scase,
+.mba-pro-scase *,
+.mba-pro-scase *::before,
+.mba-pro-scase *::after {
+    box-sizing: border-box;
+}
+.mba-pro-scase svg[fill="none"] { fill: none !important; stroke: currentColor !important; }
+.mba-pro-scase svg[fill="currentColor"] { fill: currentColor !important; stroke: none !important; }
+
+.mba-pro-scase-notice {
+    padding: 12px 16px;
+    border: 1px dashed #f59e0b;
+    border-radius: 8px;
+    background: #fffbeb;
+    color: #92400e;
+    font-size: 14px;
+}
+
+/* ── Shell ───────────────────────────────────────────────────────────────── */
+.mba-pro-scase {
+    --sc-bg: #ffffff;
+    --sc-text: #475569;
+    --sc-title: #0f172a;
+    --sc-border: #ececf1;
+    --sc-muted: #8a8a99;
+    --sc-accent: var(--medbeafgallery-primary-solid, #2563eb);
+    --sc-accent-soft: rgba(37, 99, 235, 0.1);
+    --sc-accent-soft: color-mix(in srgb, var(--sc-accent) 12%, transparent);
+    --sc-tile-bg: #fafafb;
+    --sc-tile-v: #0f172a;
+
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 24px 0;
+    background: var(--sc-bg);
+    color: var(--sc-text);
+    border: 1px solid var(--sc-border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px -12px rgba(17, 24, 39, 0.18);
+}
+.mba-pro-dark .mba-pro-scase {
+    --sc-bg: #14141f;
+    --sc-text: #c7c7d4;
+    --sc-title: #ffffff;
+    --sc-border: rgba(255, 255, 255, 0.09);
+    --sc-muted: #8a8aa0;
+    --sc-accent: var(--medbeafgallery-primary-solid, #c9a24b);
+    --sc-accent-soft: rgba(201, 162, 75, 0.16);
+    --sc-accent-soft: color-mix(in srgb, var(--sc-accent) 18%, transparent);
+    --sc-tile-bg: rgba(255, 255, 255, 0.035);
+    --sc-tile-v: #ffffff;
+}
+
+/* ── Viewer (dark stage) ─────────────────────────────────────────────────── */
+.mba-pro-scase-viewer {
+    position: relative;
+    flex: 1 1 56%;
+    min-width: 0;
+    /* Stretches to the detail column; floor it for short/hidden-detail cases. */
+    min-height: clamp(340px, 56vh, 640px);
+    align-self: stretch;
+    cursor: pointer;
+    line-height: 0;
+    background: radial-gradient(130% 120% at 50% 0%, #23232e 0%, #15151d 55%, #0b0b10 100%);
+    overflow: hidden;
+}
+/* Both images fill the dark stage, contained + centered, so before/after stay
+   aligned for the cross-fade and tall/short cases letterbox cleanly. Locked
+   against `img{max-width:100%!important;height:auto!important}` themes. */
+.mba-pro-scase-img {
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: contain;
+    object-position: center;
+    transition: opacity 0.3s ease;
+}
+.mba-pro-scase-after { opacity: 0; }
+.mba-pro-scase-viewer.mba-pro-show-after .mba-pro-scase-after { opacity: 1; }
+.mba-pro-scase-viewer.mba-pro-show-after .mba-pro-scase-before { opacity: 0; }
+
+/* Glass chips: pair label (top-left) + counter (top-right). */
+.mba-pro-scase-plabel,
+.mba-pro-scase-count {
+    position: absolute;
+    top: 14px;
+    z-index: 3;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: rgba(15, 15, 20, 0.55);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+.mba-pro-scase-plabel {
+    left: 14px;
+    max-width: calc(100% - 90px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.mba-pro-scase-count { right: 14px; font-variant-numeric: tabular-nums; }
+.mba-pro-scase-plabel:empty { display: none; }
+
+/* Pair arrows — glass circles. */
+.mba-pro-scase-arrow {
+    all: unset;
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 4;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    cursor: pointer;
+    line-height: 0;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+.mba-pro-scase-arrow:hover { background: rgba(255, 255, 255, 0.24); }
+.mba-pro-scase-prev { left: 12px; }
+.mba-pro-scase-next { right: 12px; }
+
+/* Before/After segmented toggle — glass pill, bottom-center. */
+.mba-pro-scase-toggle {
+    position: absolute;
+    left: 50%;
+    bottom: 14px;
+    transform: translateX(-50%);
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 4px;
+    border-radius: 9999px;
+    background: rgba(18, 18, 26, 0.6);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+}
+.mba-pro-scase-toggle-hidden { display: none; }
+.mba-pro-scase-seg {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease;
+}
+.mba-pro-scase-seg-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: 0.55; }
+.mba-pro-scase-seg[data-mode="before"] .mba-pro-scase-seg-dot { background: #f87171; }
+.mba-pro-scase-seg[data-mode="after"] .mba-pro-scase-seg-dot { background: #34d399; }
+.mba-pro-scase-seg:not(.is-active):hover { color: #fff; }
+.mba-pro-scase-seg.is-active { background: #fff; color: #0f172a; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25); }
+.mba-pro-scase-seg.is-active .mba-pro-scase-seg-dot { opacity: 1; }
+
+/* ── Side panel ──────────────────────────────────────────────────────────── */
+.mba-pro-scase-side {
+    flex: 1 1 44%;
+    min-width: 0;
+    padding: 26px 26px 28px;
+    background: var(--sc-bg);
+}
+.mba-pro-scase-eyebrow {
+    display: inline-block;
+    padding: 4px 10px;
+    margin-bottom: 10px;
+    border-radius: 7px;
+    background: var(--sc-accent-soft);
+    color: var(--sc-accent);
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+.mba-pro-scase-title {
+    margin: 0 0 18px;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    text-transform: none;
+    color: var(--sc-title);
+}
+.mba-pro-scase-h {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 14px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--sc-accent);
+}
+.mba-pro-scase-h::after { content: ""; flex: 1; height: 1px; background: var(--sc-border); }
+.mba-pro-scase-overview { margin-bottom: 24px; }
+.mba-pro-scase-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.mba-pro-scase-tile {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
+    padding: 15px 15px 14px;
+    border: 1px solid var(--sc-border);
+    border-radius: 14px;
+    background: var(--sc-tile-bg);
+}
+.mba-pro-scase-tile-ic {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 3px;
+    border-radius: 9px;
+    background: var(--sc-accent-soft);
+    color: var(--sc-accent);
+}
+.mba-pro-scase-tile-ic svg { width: 17px; height: 17px; }
+.mba-pro-scase-tile-v { font-size: 16px; font-weight: 800; color: var(--sc-tile-v); line-height: 1.25; overflow-wrap: anywhere; }
+.mba-pro-scase-tile-l { font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sc-muted); }
+
+.mba-pro-scase-about-body { font-size: 14px; line-height: 1.75; color: var(--sc-text); overflow-wrap: anywhere; }
+.mba-pro-scase-about-body img { max-width: 100%; height: auto; }
+.mba-pro-scase-about-body p { margin: 0 0 12px; }
+.mba-pro-scase-about-body p:last-child { margin-bottom: 0; }
+.mba-pro-scase-about-body h2,
+.mba-pro-scase-about-body h3,
+.mba-pro-scase-about-body h4 {
+    color: var(--sc-title);
+    margin: 0 0 8px;
+    font-family: inherit;
+    font-weight: 700;
+    text-transform: none;
+    line-height: 1.3;
+}
+.mba-pro-scase-about-body a { color: var(--sc-accent); text-decoration: underline; }
+.mba-pro-scase-about-body ul,
+.mba-pro-scase-about-body ol { margin: 0 0 12px; padding-left: 20px; list-style-position: outside; }
+
+.mba-pro-scase-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 22px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    background: var(--sc-accent);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+.mba-pro-scase-cta:hover { transform: translateY(-2px); filter: brightness(1.05); color: #fff; }
+.mba-pro-scase-cta svg { transition: transform 0.2s ease; }
+.mba-pro-scase-cta:hover svg { transform: translateX(3px); }
+
+/* ── Skin: follows Appearance → Gallery Layout ───────────────────────────────
+   Both skins share the dark stage. Masonry uses the CSS flip (the .mba-pro-scase
+   -before/-after + segmented toggle above). Classic uses the draggable Cocoen
+   slider (the classic gallery's before/after), styled here. */
+.mba-pro-scase--classic .mba-pro-scase-viewer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default; /* the slider provides its own ew-resize cursor */
+}
+.mba-pro-scase-cocoen { width: 100%; }
+.mba-pro-scase-cocoen img { display: block; width: 100%; height: auto; }
+/* After Cocoen.create() the .cocoen div becomes <cocoen-component>. */
+.mba-pro-scase--classic .mba-pro-scase-viewer cocoen-component {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    cursor: ew-resize;
+}
+.mba-pro-scase--classic .mba-pro-scase-viewer cocoen-component::part(drag) {
+    background: rgba(255, 255, 255, 0.92);
+    width: 3px;
+}
+
+/* Before / After corner labels (glass pills), like the classic gallery slider. */
+.mba-pro-scase-clabel {
+    position: absolute;
+    bottom: 14px;
+    z-index: 4;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: rgba(15, 15, 20, 0.62);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    pointer-events: none;
+}
+.mba-pro-scase-clabel--before { left: 14px; }
+.mba-pro-scase-clabel--after { right: 14px; }
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .mba-pro-scase { flex-direction: column; }
+    .mba-pro-scase-viewer { flex: none; }
+    .mba-pro-scase-side { flex: none; padding: 22px 18px 24px; }
+}

@@ -1,0 +1,1026 @@
+/**
+ * MBA Gallery Pro — Masonry Layout
+ *
+ *   • CSS-columns masonry grid that tiles cards of varying heights,
+ *   • a card with a per-pair viewer (arrows, corner flip button / click image,
+ *     dot pagination) — the card uses its own classes only, so the free plugin's
+ *     document-level "open modal on .medbeafgallery-gallery-item click" handler
+ *     never fires here (only "View Details" opens the modal),
+ *   • a custom modal with a footer (case nav + 1/N counter + flip + CTA). It is
+ *     light by default and switches to dark when the gallery's dark mode is on
+ *     (`.mba-pro-dark` on <html>).
+ *
+ * Scoped to `.medbeafgallery-container.mba-pro-layout-masonry`. The modal is
+ * appended to <body>, namespaced `.mba-pro-mmodal`. Loaded after gallery.css.
+ *
+ * @package MBA_Gallery_Pro
+ */
+
+.mba-pro-hidden { display: none !important; }
+
+/* Cards and the body-level modal are injected into arbitrary themes, and not
+   every theme applies the common `* { box-sizing: border-box }` reset. Under a
+   content-box theme, width + padding combos (e.g. the modal side panel's
+   width:100% + padding) overflow the viewport on mobile — so own the reset.
+   (The click-to-open filter drawer owns its own reset in pro-filter-drawer.css.) */
+.mba-pro-mmodal,
+.mba-pro-mmodal *,
+.mba-pro-mmodal *::before,
+.mba-pro-mmodal *::after,
+.mba-pro-mcard,
+.mba-pro-mcard *,
+.mba-pro-mcard *::before,
+.mba-pro-mcard *::after {
+    box-sizing: border-box;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   1. MASONRY GRID
+   ════════════════════════════════════════════════════════════════════════ */
+.medbeafgallery-container.mba-pro-layout-masonry .medbeafgallery-gallery-grid {
+    display: block !important; /* beat the free plugin's inline display:grid */
+    column-count: 3;
+    column-gap: 28px; /* sideways gap — never set gap/grid-gap (resets this to 0) */
+}
+/* With a sidebar present (Filter Display = Sidebar), the masonry grid shares the
+   row with the filter column, so the main area is narrower — drop to 2 columns
+   at desktop so cards don't get cramped. The drawer/full-width case keeps 3.
+   Scoped to ≥992px: below that the free plugin stacks the sidebar above the
+   grid (main goes full width), so the normal breakpoints below take over. */
+@media (min-width: 992px) {
+    .medbeafgallery-container.mba-pro-layout-masonry:not(.mba-pro-filters-drawer) .medbeafgallery-gallery-grid {
+        column-count: 2;
+    }
+}
+@media (max-width: 1199px) {
+    .medbeafgallery-container.mba-pro-layout-masonry .medbeafgallery-gallery-grid { column-count: 2; }
+}
+@media (max-width: 767px) {
+    .medbeafgallery-container.mba-pro-layout-masonry .medbeafgallery-gallery-grid { column-count: 1; }
+}
+
+/* JS masonry (pro-masonry.js): CSS multi-column balances by height and leaves
+   trailing columns empty when cards are equal height, so the JS distributes the
+   cards into flex columns instead — each card to the shortest column — to fill
+   every column left-to-right. The `column-count` above is kept (resolved per
+   breakpoint / admin override) purely as the column count the JS reads; the
+   28px `column-gap` set on the grid above doubles as the flex gap between
+   columns. Extra class beats the base `display:block !important`. */
+.medbeafgallery-container.mba-pro-layout-masonry .medbeafgallery-gallery-grid.mba-pro-masonry-js {
+    display: flex !important;
+    align-items: flex-start;
+}
+.medbeafgallery-container.mba-pro-layout-masonry .mba-pro-mcol {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   2. CARD — Premium / Editorial (matches the modal: glass Before/After
+      segmented toggle, hover side arrows, pair counter, refined body).
+      Uses only .mba-pro-* classes — no free base styles apply.
+   ════════════════════════════════════════════════════════════════════════ */
+.mba-pro-mcard {
+    --mc-accent: var(--medbeafgallery-primary-solid, #2563eb);
+    --mc-accent-soft: rgba(37, 99, 235, 0.1);
+    --mc-accent-soft: color-mix(in srgb, var(--mc-accent) 12%, transparent);
+    margin: 0 0 28px;
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+    background: #ffffff;
+    border: 1px solid #eef0f3;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(17, 24, 39, 0.06);
+    transition: box-shadow 0.28s ease, transform 0.28s ease, border-color 0.28s ease;
+}
+.mba-pro-mcard:hover {
+    transform: translateY(-4px);
+    border-color: #e5e7eb;
+    box-shadow: 0 22px 44px -14px rgba(17, 24, 39, 0.22);
+}
+
+/* ── Media (per-pair viewer; full-height, never cropped) ───────────────── */
+.mba-pro-mcard .mba-pro-mcard-media {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background: #f4f4f5;
+    line-height: 0;
+}
+.mba-pro-mcard .mba-pro-mcard-img {
+    width: 100%;
+    display: block;
+}
+/* Before is in normal flow → it sets the card's (full, uncropped) height. */
+.mba-pro-mcard .mba-pro-mcard-before {
+    height: auto;
+    transition: opacity 0.3s ease;
+}
+/* After is layered on top and pre-rendered (opacity:0), so revealing it is an
+   instant cross-fade — no display:none→block load/decode/layout flicker.
+   object-fit:contain keeps it uncropped within the before's box. */
+.mba-pro-mcard .mba-pro-mcard-after {
+    position: absolute;
+    inset: 0;
+    /* Overlay must fully cover the before image for the cross-fade. Lock the box
+       against the common theme rule `img{max-width:100%!important;height:auto!important}`,
+       which would otherwise collapse the overlay and misalign the flip. */
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: contain;
+    object-position: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.mba-pro-mcard.mba-pro-show-after .mba-pro-mcard-after { opacity: 1; }
+.mba-pro-mcard.mba-pro-show-after .mba-pro-mcard-before { opacity: 0; }
+
+/* View-name chip (top-left) + pair counter (top-right) — glass on the image */
+.mba-pro-mcard .mba-pro-mcard-plabel,
+.mba-pro-mcard .mba-pro-mcard-count {
+    position: absolute;
+    top: 12px;
+    z-index: 3;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background: rgba(15, 15, 20, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+.mba-pro-mcard .mba-pro-mcard-plabel {
+    left: 12px;
+    max-width: calc(100% - 84px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.mba-pro-mcard .mba-pro-mcard-count { right: 12px; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
+.mba-pro-mcard .mba-pro-mcard-plabel:empty,
+.mba-pro-mcard .mba-pro-mcard-count:empty { display: none; }
+
+/* Pair arrows — glass circles at the sides; reveal on hover (always on touch) */
+.mba-pro-mcard .mba-pro-mcard-arrow {
+    all: unset;
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    z-index: 4;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: #1f2937;
+    cursor: pointer;
+    line-height: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    opacity: 0;
+    transform: translateY(-50%) scale(0.9);
+    transition: opacity 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.mba-pro-mcard .mba-pro-mcard-media:hover .mba-pro-mcard-arrow { opacity: 1; transform: translateY(-50%) scale(1); }
+.mba-pro-mcard .mba-pro-mcard-arrow:hover { color: var(--mc-accent); }
+.mba-pro-mcard .mba-pro-mcard-prev { left: 10px; }
+.mba-pro-mcard .mba-pro-mcard-next { right: 10px; }
+@media (hover: none) {
+    .mba-pro-mcard .mba-pro-mcard-arrow { opacity: 1; transform: translateY(-50%) scale(1); }
+}
+
+/* Before / After segmented toggle — glass pill, bottom-center of the image */
+.mba-pro-mcard .mba-pro-mcard-toggle {
+    position: absolute;
+    left: 50%;
+    bottom: 12px;
+    transform: translateX(-50%);
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 9999px;
+    background: rgba(18, 18, 26, 0.58);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.32);
+}
+.mba-pro-mcard .mba-pro-mcard-seg {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 13px;
+    border-radius: 9999px;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+.mba-pro-mcard .mba-pro-mcard-seg-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.55;
+    transition: opacity 0.25s ease;
+}
+.mba-pro-mcard .mba-pro-mcard-seg[data-mode="before"] .mba-pro-mcard-seg-dot { background: #f87171; }
+.mba-pro-mcard .mba-pro-mcard-seg[data-mode="after"]  .mba-pro-mcard-seg-dot { background: #34d399; }
+.mba-pro-mcard .mba-pro-mcard-seg:not(.is-active):hover { color: #fff; }
+.mba-pro-mcard .mba-pro-mcard-seg.is-active {
+    background: #fff;
+    color: #0f172a;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+.mba-pro-mcard .mba-pro-mcard-seg.is-active .mba-pro-mcard-seg-dot { opacity: 1; }
+
+/* ── Body ──────────────────────────────────────────────────────────────── */
+.mba-pro-mcard .mba-pro-mcard-body {
+    position: relative;
+    padding: 18px;
+    border-top: none;
+}
+.mba-pro-mcard .mba-pro-mcard-num {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: #0f172a;
+    opacity: 0.06;
+    pointer-events: none;
+}
+.mba-pro-mcard .mba-pro-mcard-cats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 9px;
+}
+.mba-pro-mcard .mba-pro-mcard-cats .mba-pro-mcard-cat {
+    margin: 0;
+}
+.mba-pro-mcard .mba-pro-mcard-cat {
+    display: inline-block;
+    margin: 0 0 9px;
+    padding: 4px 9px;
+    border-radius: 6px;
+    background: var(--mc-accent-soft);
+    color: var(--mc-accent);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.mba-pro-mcard .mba-pro-mcard-title {
+    margin: 0 0 8px;
+    padding-right: 34px;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    text-transform: none; /* don't let a theme force-uppercase the title */
+    color: #0f172a;
+}
+.mba-pro-mcard .mba-pro-mcard-desc {
+    margin: 0 0 14px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #6b7280;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.mba-pro-mcard .mba-pro-mcard-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 16px;
+}
+.mba-pro-mcard .mba-pro-mcard-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background: #f4f5f7;
+    color: #475569;
+    font-size: 11.5px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+.mba-pro-mcard .mba-pro-mcard-pill svg { flex-shrink: 0; opacity: 0.7; }
+/* Custom-filter pills carry their attribute label so they're self-explanatory */
+.mba-pro-mcard .mba-pro-mcard-pill-custom { background: #eef2ff; color: #4338ca; }
+.mba-pro-mcard .mba-pro-mcard-pill-l { font-weight: 700; opacity: 0.8; }
+.mba-pro-mcard .mba-pro-mcard-foot {
+    display: flex;
+    border-top: 1px solid #f1f3f5;
+    padding-top: 14px;
+}
+.mba-pro-mcard .mba-pro-mcard-view {
+    all: unset;
+    box-sizing: border-box;
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border-radius: 11px;
+    background: #0f172a;
+    color: #ffffff;
+    font-size: 13.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.mba-pro-mcard .mba-pro-mcard-view:hover {
+    background: var(--mc-accent);
+    color: #fff;
+    box-shadow: 0 10px 22px -8px rgba(37, 99, 235, 0.55);
+    box-shadow: 0 10px 22px -8px color-mix(in srgb, var(--mc-accent) 55%, transparent);
+}
+.mba-pro-mcard .mba-pro-mcard-view:active { transform: scale(0.99); }
+.mba-pro-mcard .mba-pro-mcard-view svg { transition: transform 0.2s ease; }
+.mba-pro-mcard .mba-pro-mcard-view:hover svg { transform: translateX(3px); }
+
+/* ════════════════════════════════════════════════════════════════════════
+   3. CUSTOM MODAL — Premium / Editorial
+      Cinematic dark image stage (always dark, both themes) + a light/dark
+      detail panel. Glass Before/After segmented toggle, icon-led stat cards,
+      refined header/footer. Light by default; dark under .mba-pro-dark.
+   ════════════════════════════════════════════════════════════════════════ */
+/* position:fixed (at the offset JS sets via inline top) holds on iOS Safari,
+   where overflow:hidden alone doesn't stop the background page scrolling. */
+body.mba-pro-mmodal-lock {
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+.mba-pro-mmodal { position: fixed; inset: 0; z-index: 100000; display: none; }
+.mba-pro-mmodal.mba-pro-mmodal-open {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+.mba-pro-mmodal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 8, 14, 0.78);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    animation: mbaProMmodalFade 0.3s ease;
+}
+@keyframes mbaProMmodalFade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Light theme (default) */
+.mba-pro-mmodal-dialog {
+    --mm-bg: #ffffff;
+    --mm-text: #475569;
+    --mm-title: #0f172a;
+    --mm-border: #ececf1;
+    --mm-muted: #8a8a99;
+    --mm-accent: var(--medbeafgallery-primary-solid, #2563eb);
+    --mm-accent-soft: rgba(37, 99, 235, 0.1);
+    --mm-accent-soft: color-mix(in srgb, var(--mm-accent) 12%, transparent);
+    --mm-tile-bg: #fafafb;
+    --mm-tile-v: #0f172a;
+    --mm-btn-bg: #f3f4f6;
+    --mm-btn-hover: #e9eaef;
+    --mm-btn-color: #475569;
+
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1200px;
+    height: 92vh;        /* definite height so the stage can size the image */
+    max-height: 92vh;
+    /* dvh respects mobile browser chrome (URL bar) where supported. */
+    height: 92dvh;
+    max-height: 92dvh;
+    display: flex;
+    flex-direction: column;
+    background: var(--mm-bg);
+    color: var(--mm-text);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+        0 40px 100px -20px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.04);
+    animation: mbaProMmodalPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes mbaProMmodalPop {
+    from { opacity: 0; transform: translateY(14px) scale(0.985); }
+    to   { opacity: 1; transform: none; }
+}
+/* The dialog receives programmatic focus on open (tabindex="-1"); keyboard
+   users land on real controls next, so no ring on the container itself. */
+.mba-pro-mmodal-dialog:focus { outline: none; }
+/* Dark theme (detail panel + chrome; the image stage stays dark in both) */
+.mba-pro-dark .mba-pro-mmodal-dialog {
+    --mm-bg: #14141f;
+    --mm-text: #c7c7d4;
+    --mm-title: #ffffff;
+    --mm-border: rgba(255, 255, 255, 0.09);
+    --mm-muted: #8a8aa0;
+    --mm-accent: var(--medbeafgallery-primary-solid, #c9a24b);
+    --mm-accent-soft: rgba(201, 162, 75, 0.16);
+    --mm-accent-soft: color-mix(in srgb, var(--mm-accent) 18%, transparent);
+    --mm-tile-bg: rgba(255, 255, 255, 0.035);
+    --mm-tile-v: #ffffff;
+    --mm-btn-bg: rgba(255, 255, 255, 0.08);
+    --mm-btn-hover: rgba(255, 255, 255, 0.16);
+    --mm-btn-color: #e5e7eb;
+    box-shadow:
+        0 40px 100px -20px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.mba-pro-mmodal-header {
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 26px;
+    border-bottom: 1px solid var(--mm-border);
+    background: var(--mm-bg);
+}
+.mba-pro-mmodal-eyebrow {
+    display: inline-block;
+    padding: 4px 10px;
+    margin-bottom: 9px;
+    border-radius: 7px;
+    background: var(--mm-accent-soft);
+    color: var(--mm-accent);
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+.mba-pro-mmodal-eyebrow:empty { display: none; }
+.mba-pro-mmodal-title {
+    margin: 0;
+    font-size: 23px;
+    font-weight: 800;
+    color: var(--mm-title);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    text-transform: none; /* don't let a theme force-uppercase the title */
+}
+.mba-pro-mmodal-close {
+    all: unset;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    background: var(--mm-btn-bg);
+    color: var(--mm-btn-color);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.mba-pro-mmodal-close:hover { background: #fee2e2; color: #ef4444; }
+.mba-pro-mmodal-close:active { transform: scale(0.94); }
+.mba-pro-dark .mba-pro-mmodal-close:hover { background: rgba(239, 68, 68, 0.18); color: #fca5a5; }
+
+/* ── Body ────────────────────────────────────────────────────────────────── */
+.mba-pro-mmodal-body { display: flex; flex: 1; min-height: 0; }
+.mba-pro-mmodal-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    background: radial-gradient(130% 120% at 50% 0%, #23232e 0%, #15151d 55%, #0b0b10 100%);
+}
+.mba-pro-mmodal-side {
+    width: 360px;
+    flex-shrink: 0;
+    padding: 28px 28px 30px;
+    overflow-y: auto;
+    overflow-x: hidden; /* overflow-y:auto alone promotes overflow-x to auto */
+    background: var(--mm-bg);
+}
+@media (min-width: 901px) {
+    .mba-pro-mmodal-side { border-left: 1px solid var(--mm-border); }
+}
+
+/* ── Stage ───────────────────────────────────────────────────────────────── */
+.mba-pro-mmodal-stage {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 56px 68px; /* bottom room for the Before/After toggle */
+    min-height: 0;
+}
+/* Hugs the image's width but fills the stage height, so the image is sized by
+   the available box (not the viewport) and can never overflow the dark stage. */
+.mba-pro-mmodal-imgwrap {
+    position: relative;
+    display: inline-flex;
+    height: 100%;
+    max-width: 100%;
+    min-height: 0;
+    cursor: pointer;
+    line-height: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow:
+        0 24px 60px -16px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+.mba-pro-mmodal-img {
+    display: block;
+    height: 100%;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+}
+.mba-pro-mmodal-after {
+    position: absolute;
+    inset: 0;
+    /* Overlay must cover the before image; lock against `img{height:auto!important}`. */
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+.mba-pro-mmodal-imgwrap.mba-pro-show-after .mba-pro-mmodal-after { opacity: 1; }
+
+/* ── "Both" view: before + after side by side (modal only) ─────────────────────
+   Rendered as two figure cells (image + caption directly beneath) so each label
+   stays attached to its image instead of floating in the letterbox. */
+.mba-pro-mmodal-sbs { display: none; }
+.mba-pro-mmodal-imgwrap.mba-pro-show-both {
+    display: flex;
+    width: 100%;
+    cursor: default;
+    /* Drop the single-image card chrome so the two cells stand on their own. */
+    box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
+}
+/* Hide the single-view (overlay) images while side-by-side is active. */
+.mba-pro-mmodal-imgwrap.mba-pro-show-both .mba-pro-mmodal-before,
+.mba-pro-mmodal-imgwrap.mba-pro-show-both .mba-pro-mmodal-after { display: none; }
+.mba-pro-mmodal-imgwrap.mba-pro-show-both .mba-pro-mmodal-sbs {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    width: 100%;
+    height: 100%;
+}
+.mba-pro-mmodal-sbs-cell {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+.mba-pro-mmodal-sbs-img {
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 18px 44px -16px rgba(0, 0, 0, 0.65);
+}
+/* Caption pill sits on the dark stage in both themes, so style it for dark. */
+.mba-pro-mmodal-sbs-cap {
+    flex: 0 0 auto;
+    padding: 5px 16px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 999px;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+.mba-pro-mmodal.mba-pro-no-caps .mba-pro-mmodal-sbs-cap { display: none; }
+
+/* "Both" is the default → nothing to toggle: hide the Before/After control and
+   reclaim the space the stage reserved for it. */
+.mba-pro-mmodal.mba-pro-both-default .mba-pro-mmodal-toggle { display: none !important; }
+.mba-pro-mmodal.mba-pro-both-default .mba-pro-mmodal-stage { padding-bottom: 28px; }
+
+@media (max-width: 900px) {
+    .mba-pro-mmodal-imgwrap.mba-pro-show-both { height: auto; }
+    .mba-pro-mmodal-imgwrap.mba-pro-show-both .mba-pro-mmodal-sbs { height: auto; }
+    .mba-pro-mmodal-sbs-img { flex: 0 0 auto; height: auto; max-height: 46vh; }
+}
+@media (max-width: 600px) {
+    .mba-pro-mmodal-imgwrap.mba-pro-show-both .mba-pro-mmodal-sbs { flex-direction: column; }
+    .mba-pro-mmodal-sbs-img { max-height: 38vh; }
+}
+
+/* View-name chip (top-left) + pair counter (top-right) — glass on the image */
+.mba-pro-mmodal-plabel,
+.mba-pro-mmodal-paircount {
+    position: absolute;
+    top: 14px;
+    z-index: 3;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: rgba(15, 15, 20, 0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+.mba-pro-mmodal-plabel { left: 14px; }
+.mba-pro-mmodal-paircount { right: 14px; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
+.mba-pro-mmodal-plabel:empty,
+.mba-pro-mmodal-paircount:empty { display: none; }
+
+/* Pair arrows — glass circles at the stage edges */
+.mba-pro-mmodal-arrow {
+    all: unset;
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff;
+    cursor: pointer;
+    line-height: 0;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+.mba-pro-mmodal-arrow:hover { background: rgba(255, 255, 255, 0.22); transform: translateY(-50%) scale(1.06); }
+.mba-pro-mmodal-arrow:active { transform: translateY(-50%) scale(0.95); }
+.mba-pro-mmodal-prev { left: 18px; }
+.mba-pro-mmodal-next { right: 18px; }
+
+/* Before / After segmented toggle — glass pill, bottom-center of the stage */
+.mba-pro-mmodal-toggle {
+    position: absolute;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 6;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 4px;
+    border-radius: 9999px;
+    background: rgba(18, 18, 26, 0.6);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+}
+.mba-pro-mmodal-seg {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 20px;
+    border-radius: 9999px;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+.mba-pro-mmodal-seg-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.55;
+    transition: opacity 0.25s ease;
+}
+.mba-pro-mmodal-seg[data-mode="before"] .mba-pro-mmodal-seg-dot { background: #f87171; }
+.mba-pro-mmodal-seg[data-mode="after"]  .mba-pro-mmodal-seg-dot { background: #34d399; }
+.mba-pro-mmodal-seg:not(.is-active):hover { color: #fff; }
+.mba-pro-mmodal-seg.is-active {
+    background: #fff;
+    color: #0f172a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+.mba-pro-mmodal-seg.is-active .mba-pro-mmodal-seg-dot { opacity: 1; }
+
+/* ── Side panel ──────────────────────────────────────────────────────────── */
+/* Tab bar (Treatment Overview / About This Case). Hidden on desktop, where the
+   two sections stack with room to spare; surfaced only on the stacked mobile
+   layout via the `.mba-pro-has-tabs` rules in the responsive block below. */
+.mba-pro-mmodal-tabs { display: none; gap: 8px; margin-bottom: 20px; }
+.mba-pro-mmodal-tab {
+    all: unset;
+    box-sizing: border-box;
+    flex: 1;
+    text-align: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--mm-muted);
+    background: var(--mm-tile-bg);
+    border: 1px solid var(--mm-border);
+    cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.mba-pro-mmodal-tab:hover { color: var(--mm-title); }
+.mba-pro-mmodal-tab.is-active {
+    color: var(--mm-accent);
+    background: var(--mm-accent-soft);
+    border-color: var(--mm-accent);
+}
+.mba-pro-mmodal-h {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 12px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mm-accent);
+}
+.mba-pro-mmodal-h::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--mm-border);
+}
+.mba-pro-mmodal-overview { margin-bottom: 20px; }
+/* minmax(0,1fr) lets the two columns shrink below their content's min-width,
+   so long values can't push a track wide and overlap the next tile on mobile. */
+.mba-pro-mmodal-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.mba-pro-mmodal-tile {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+    padding: 11px 12px 10px;
+    border: 1px solid var(--mm-border);
+    border-radius: 12px;
+    background: var(--mm-tile-bg);
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.mba-pro-mmodal-tile:hover {
+    border-color: var(--mm-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+.mba-pro-mmodal-tile-ic {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    margin-bottom: 2px;
+    border-radius: 8px;
+    background: var(--mm-accent-soft);
+    color: var(--mm-accent);
+}
+.mba-pro-mmodal-tile-ic svg { width: 14px; height: 14px; }
+.mba-pro-mmodal-tile-v { font-size: 15px; font-weight: 800; color: var(--mm-tile-v); line-height: 1.2; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.mba-pro-mmodal-tile-l { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--mm-muted); }
+.mba-pro-mmodal-about-body { font-size: 14px; line-height: 1.75; color: var(--mm-text); overflow-wrap: anywhere; }
+/* User-authored description HTML: keep embedded media inside the panel. */
+.mba-pro-mmodal-about-body img { max-width: 100%; height: auto; }
+.mba-pro-mmodal-about-body p { margin: 0 0 12px; }
+.mba-pro-mmodal-about-body p:last-child { margin-bottom: 0; }
+/* User-authored description HTML: keep its own heading/list typography rather
+   than inheriting the theme's (e.g. forced uppercase serif headings). */
+.mba-pro-mmodal-about-body h2,
+.mba-pro-mmodal-about-body h3,
+.mba-pro-mmodal-about-body h4 {
+    color: var(--mm-title);
+    margin: 0 0 8px;
+    font-family: inherit;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: normal;
+    line-height: 1.3;
+}
+.mba-pro-mmodal-about-body h2 { font-size: 1.25em; }
+.mba-pro-mmodal-about-body h3 { font-size: 1.1em; }
+.mba-pro-mmodal-about-body h4 { font-size: 1em; }
+.mba-pro-mmodal-about-body a { color: var(--mm-accent); text-decoration: underline; }
+.mba-pro-mmodal-about-body ul,
+.mba-pro-mmodal-about-body ol { margin: 0 0 12px; padding-left: 20px; list-style-position: outside; }
+.mba-pro-mmodal-about-body ul { list-style-type: disc; }
+.mba-pro-mmodal-about-body ol { list-style-type: decimal; }
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+.mba-pro-mmodal-footer {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 24px;
+    border-top: 1px solid var(--mm-border);
+    background: var(--mm-bg);
+}
+.mba-pro-mmodal-foot-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: auto; /* push CTA to the right */
+}
+.mba-pro-mmodal-casenav {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    background: var(--mm-btn-bg);
+    color: var(--mm-btn-color);
+    cursor: pointer;
+    line-height: 0;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.mba-pro-mmodal-casenav:hover { background: var(--mm-btn-hover); color: var(--mm-title); }
+.mba-pro-mmodal-casenav:active { transform: scale(0.95); }
+.mba-pro-mmodal-counter {
+    min-width: 62px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--mm-muted);
+    font-variant-numeric: tabular-nums;
+}
+.mba-pro-mmodal-counter .mba-pro-mmodal-cur { color: var(--mm-accent); font-weight: 800; }
+
+.mba-pro-mmodal-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    box-sizing: border-box;
+    padding: 13px 26px;
+    border-radius: 12px;
+    background: var(--mm-accent);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    box-shadow: 0 6px 18px -4px rgba(37, 99, 235, 0.5);
+    box-shadow: 0 6px 18px -4px color-mix(in srgb, var(--mm-accent) 50%, transparent);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.mba-pro-mmodal-cta-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+    color: #fff;
+    box-shadow: 0 12px 28px -4px rgba(37, 99, 235, 0.55);
+    box-shadow: 0 12px 28px -4px color-mix(in srgb, var(--mm-accent) 58%, transparent);
+}
+.mba-pro-mmodal-cta-btn svg { transition: transform 0.2s ease; }
+.mba-pro-mmodal-cta-btn:hover svg { transform: translateX(3px); }
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+    /* overflow-x:hidden — the auto overflow-y would otherwise turn any stray
+       horizontal overflow into a sideways-scrollable modal on mobile. */
+    .mba-pro-mmodal-body { flex-direction: column; overflow-y: auto; overflow-x: hidden; }
+    /* Stacked layout: stage sizes to its image (no flex:1 stretch) so the whole
+       body scrolls instead of being clipped. The image takes most of the
+       viewport height (it's the point of the modal) with the case details below. */
+    .mba-pro-mmodal-main { flex: none; }
+    .mba-pro-mmodal-stage { flex: none; padding: 20px 52px 64px; }
+    .mba-pro-mmodal-imgwrap { height: auto; }
+    .mba-pro-mmodal-img { height: auto; width: auto; max-height: 64vh; }
+    .mba-pro-mmodal-side {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid var(--mm-border);
+    }
+    /* When both sections are present the side panel turns into tabs here: show
+       the tab bar, show only the active panel, and drop the now-redundant
+       in-panel headings (the tab label already names the section). */
+    .mba-pro-mmodal-side.mba-pro-has-tabs .mba-pro-mmodal-tabs { display: flex; }
+    .mba-pro-mmodal-side.mba-pro-has-tabs .mba-pro-mmodal-overview:not(.mba-pro-tab-active),
+    .mba-pro-mmodal-side.mba-pro-has-tabs .mba-pro-mmodal-about:not(.mba-pro-tab-active) { display: none; }
+    .mba-pro-mmodal-side.mba-pro-has-tabs .mba-pro-mmodal-h { display: none; }
+    .mba-pro-mmodal-side.mba-pro-has-tabs .mba-pro-mmodal-overview { margin-bottom: 0; }
+}
+@media (max-width: 600px) {
+    .mba-pro-mmodal.mba-pro-mmodal-open { padding: 0; }
+    .mba-pro-mmodal-dialog {
+        max-width: 100%;
+        max-height: 100vh;
+        height: 100vh;
+        height: 100dvh;
+        border-radius: 0;
+    }
+    .mba-pro-mmodal-header { padding: 16px 18px; }
+    .mba-pro-mmodal-title { font-size: 19px; }
+    .mba-pro-mmodal-stage { padding: 16px 14px 60px; }
+    .mba-pro-mmodal-img { max-height: 58vh; }
+    .mba-pro-mmodal-arrow { width: 38px; height: 38px; }
+    .mba-pro-mmodal-prev { left: 8px; }
+    .mba-pro-mmodal-next { right: 8px; }
+    .mba-pro-mmodal-seg { padding: 8px 16px; }
+    .mba-pro-mmodal-side { padding: 22px 18px 26px; }
+    /* Keep the case nav and the CTA on a single row on mobile: don't wrap, and
+       compact the controls so both fit even on narrow phones. */
+    .mba-pro-mmodal-footer { flex-wrap: nowrap; gap: 10px; padding: 12px 16px; }
+    .mba-pro-mmodal-foot-nav { gap: 8px; flex-shrink: 0; }
+    .mba-pro-mmodal-casenav { width: 36px; height: 36px; }
+    .mba-pro-mmodal-counter { min-width: 44px; font-size: 13px; }
+    .mba-pro-mmodal-cta { flex-shrink: 1; min-width: 0; }
+    .mba-pro-mmodal-cta-btn { padding: 11px 16px; font-size: 13px; white-space: nowrap; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   CATEGORY CAROUSEL — MASONRY LAYOUT MATCH
+
+   When the Masonry layout is active, restyle the category-selector carousel
+   cards so they share the masonry card aesthetic (soft elevated cards with
+   rounded-rectangle thumbnails) instead of the flatter Classic look. Only
+   loaded in masonry mode, so the Classic layout keeps its default styling.
+   ════════════════════════════════════════════════════════════════════════ */
+.medbeafgallery-container.mba-pro-layout-masonry .medbeafgallery-category-carousel.medbeafgallery-carousel-mode:not(.mba-pro-cat-tabs) .medbeafgallery-carousel-item {
+    background: #fff;
+    border: 1px solid #eef0f3;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(16, 24, 40, 0.06);
+    padding: 18px 14px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.medbeafgallery-container.mba-pro-layout-masonry .medbeafgallery-category-carousel.medbeafgallery-carousel-mode:not(.mba-pro-cat-tabs) .medbeafgallery-carousel-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(16, 24, 40, 0.12);
+    border-color: #e2e8f0;
+}
+
+.medbeafgallery-container.mba-pro-layout-masonry .medbeafgallery-category-carousel.medbeafgallery-carousel-mode:not(.mba-pro-cat-tabs) .medbeafgallery-carousel-item.active {
+    background: #fff;
+    border-color: var(--medbeafgallery-primary-solid, #2563eb);
+    box-shadow: 0 14px 28px rgba(37, 99, 235, 0.16);
+}
+
+/* Category thumbnails keep the free plugin's default circular avatars in
+   masonry mode. (A previous rule forced them to 84x84 rounded squares, but
+   because the theme has no box-sizing reset the inner img's default 3px border
+   pushed it to 90px and overflowed the frame.) */
+
+.medbeafgallery-container.mba-pro-layout-masonry .medbeafgallery-category-carousel.medbeafgallery-carousel-mode:not(.mba-pro-cat-tabs) .medbeafgallery-carousel-item.active img {
+    border-color: var(--medbeafgallery-primary-solid, #2563eb);
+}

@@ -1019,9 +1019,7 @@ body.mba-pro-mmodal-lock {
 /* Masonry cards use rounded-rectangle imagery rather than circular avatars. */
 .medbeafgallery-container.mba-pro-layout-masonry .medbeafgallery-category-carousel.medbeafgallery-carousel-mode:not(.mba-pro-cat-tabs) .medbeafgallery-carousel-item img,
 .medbeafgallery-container.mba-pro-layout-masonry .medbeafgallery-category-carousel.medbeafgallery-carousel-mode:not(.mba-pro-cat-tabs) .medbeafgallery-category-image {
-    border-radius: 14px;
-    width: 84px;
-    height: 84px;
+   
 }
 
 .medbeafgallery-container.mba-pro-layout-masonry .medbeafgallery-category-carousel.medbeafgallery-carousel-mode:not(.mba-pro-cat-tabs) .medbeafgallery-carousel-item.active img {

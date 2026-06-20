@@ -1,0 +1,978 @@
+/**
+ * Pro Modal Design Override
+ *
+ * Overrides the free plugin's modal styling with a refined,
+ * modern aesthetic. Only loaded when the Pro add-on is active.
+ *
+ * Theming: colors are driven by CSS custom properties declared in the
+ * `:root` block at the bottom of this file. The Pro add-on injects an
+ * inline `:root { --pro-accent: … }` override (after this stylesheet) so
+ * the admin-chosen accent color and dark mode take effect without editing
+ * this file. Add `.mba-pro-dark` to <html> for dark mode.
+ *
+ * @package MBA_Gallery_Pro
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   1. MODAL OVERLAY
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* The modal is designed for border-box sizing (as under the universal reset
+   every WP default theme ships), but it renders into arbitrary themes — some
+   never reset box-sizing, and width+padding combos then overflow on mobile.
+   Own the reset for the modal tree (covers the body-level portal too). */
+.medbeafgallery-modal,
+.medbeafgallery-modal *,
+.medbeafgallery-modal *::before,
+.medbeafgallery-modal *::after {
+    box-sizing: border-box;
+}
+
+.medbeafgallery-modal {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   2. MODAL CONTENT (Card)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-modal-content {
+    border-radius: 16px;
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        0 32px 64px -12px rgba(0, 0, 0, 0.4),
+        0 0 120px -20px rgba(var(--pro-accent-rgb), 0.08);
+    overflow: hidden;
+}
+
+@media (max-width: 767px) {
+    .medbeafgallery-modal-content {
+        border-radius: 0;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   3. MODAL HEADER
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-modal-header {
+    padding: 16px 24px;
+    background: var(--pro-bg);
+    border-bottom: 1px solid var(--pro-border);
+    gap: 12px;
+}
+
+.medbeafgallery-modal-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--pro-text);
+    letter-spacing: -0.02em;
+}
+
+/* View mode control buttons */
+.medbeafgallery-modal-header .medbeafgallery-image-controls {
+    gap: 4px;
+}
+
+.medbeafgallery-control-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--pro-bg-muted);
+    color: var(--pro-text-muted);
+    box-shadow: none;
+    transition: all 0.15s ease;
+}
+
+.medbeafgallery-control-btn:hover {
+    background: var(--pro-border);
+    color: var(--pro-text);
+    transform: none;
+    box-shadow: none;
+}
+
+.medbeafgallery-control-btn.active {
+    background: var(--pro-accent);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(var(--pro-accent-rgb), 0.35);
+}
+
+.medbeafgallery-control-btn.active:hover {
+    background: var(--pro-accent-hover);
+    color: #fff;
+}
+
+/* Pair info badge (e.g. "Main View") */
+.medbeafgallery-modal-header .medbeafgallery-pair-info {
+    background: rgba(var(--pro-accent-rgb), 0.08);
+    color: var(--pro-accent);
+    padding: 5px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border: 1px solid rgba(var(--pro-accent-rgb), 0.12);
+}
+
+/* Close button */
+.medbeafgallery-modal-close {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: var(--pro-bg-muted);
+    color: var(--pro-text-muted);
+    font-size: 20px;
+    transition: all 0.15s ease;
+}
+
+.medbeafgallery-modal-close:hover {
+    background: #fee2e2;
+    color: #ef4444;
+    transform: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   4. MODAL BODY
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Comparison container (image area) */
+.medbeafgallery-comparison-container {
+    background: #0a0a0f;
+}
+
+/* Before / After labels */
+.medbeafgallery-before-label,
+.medbeafgallery-after-label {
+    padding: 6px 14px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+/* In the after-only view the free plugin sets the before label to display:none,
+   which lets the labels row (justify-content:space-between) collapse the lone
+   after label into the bottom-LEFT corner — on top of the watermark and the
+   first annotation pin. Keep it pinned to its natural right side instead. */
+.medbeafgallery-comparison-container.view-after .medbeafgallery-after-label {
+    margin-left: auto;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   5. IMAGE PAIRS NAVIGATION (bottom overlay on images)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-image-pairs-nav {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 24px;
+    padding: 6px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.medbeafgallery-pair-nav {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    transition: all 0.15s ease;
+}
+
+.medbeafgallery-pair-nav:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: none;
+}
+
+.medbeafgallery-pair-indicator {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    transition: all 0.2s ease;
+}
+
+.medbeafgallery-pair-indicator:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.medbeafgallery-pair-indicator.active {
+    background: #fff;
+    width: 20px;
+    height: 7px;
+    border-radius: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   6. CASE DETAILS PANEL (right side)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-case-details {
+    background: var(--pro-bg-subtle);
+}
+
+@media (min-width: 992px) {
+    .medbeafgallery-case-details {
+        border-left: 1px solid var(--pro-border);
+    }
+}
+
+@media (max-width: 991px) {
+    .medbeafgallery-case-details {
+        border-top: 1px solid var(--pro-border);
+    }
+}
+
+/* ─── Tabs ─── */
+.medbeafgallery-case-tabs {
+    border-bottom: 1px solid var(--pro-border);
+    background: var(--pro-bg);
+    padding: 0 8px;
+}
+
+.medbeafgallery-tab {
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--pro-text-subtle);
+    letter-spacing: 0.02em;
+    transition: color 0.15s ease;
+    position: relative;
+    border-bottom: 2px solid transparent !important;
+}
+
+.medbeafgallery-tab:hover {
+    color: var(--pro-text);
+    background: transparent;
+}
+
+.medbeafgallery-tab.active {
+    color: var(--pro-accent);
+}
+
+.medbeafgallery-tab.active::after {
+    background: var(--pro-accent);
+    height: 2px;
+    bottom: -1px;
+    border-radius: 2px 2px 0 0;
+}
+
+/* ─── Tab content ─── */
+.medbeafgallery-tab-content {
+    padding: 28px;
+}
+
+.medbeafgallery-tab-content p {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--pro-text-muted);
+}
+
+#medbeafgallery-case-description {
+    max-height: 100%;
+    scrollbar-width: thin;
+    scrollbar-color: #d1d5db transparent;
+}
+
+#medbeafgallery-case-description::-webkit-scrollbar {
+    width: 5px;
+}
+
+#medbeafgallery-case-description::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#medbeafgallery-case-description::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 10px;
+}
+
+#medbeafgallery-case-description::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+/* ─── Detail grid ─── */
+.medbeafgallery-detail-grid {
+    gap: 18px;
+}
+
+.medbeafgallery-detail-item {
+    padding: 12px 14px;
+    background: var(--pro-bg);
+    border-radius: 10px;
+    border: 1px solid var(--pro-border);
+    transition: border-color 0.15s ease;
+}
+
+.medbeafgallery-detail-item:hover {
+    border-color: var(--pro-text-subtle);
+}
+
+.medbeafgallery-detail-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--pro-text-subtle);
+    margin-bottom: 4px;
+    letter-spacing: 0.8px;
+}
+
+.medbeafgallery-detail-value {
+    font-size: 14px;
+    color: var(--pro-text);
+    font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   7. CTA & SHARE SECTION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-cta-container {
+    padding: 16px 24px;
+    border-top: 1px solid var(--pro-border);
+    background: var(--pro-bg);
+}
+
+.medbeafgallery-social-share span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--pro-text-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.medbeafgallery-share-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid var(--pro-border);
+    background: var(--pro-bg-subtle);
+    color: var(--pro-text-muted);
+    transition: all 0.15s ease;
+}
+
+.medbeafgallery-share-btn:hover {
+    transform: translateY(-1px);
+}
+
+.medbeafgallery-share-btn.medbeafgallery-share-facebook:hover {
+    background: #1877f2;
+    color: #fff;
+    border-color: #1877f2;
+    box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25);
+}
+
+.medbeafgallery-share-btn.medbeafgallery-share-twitter:hover {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.medbeafgallery-share-btn.medbeafgallery-share-email:hover {
+    background: #6366f1;
+    color: #fff;
+    border-color: #6366f1;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+
+/* CTA Button — appended into the nav container (next to the prev/next case
+   arrows). margin-left:auto keeps the arrows on the left and the CTA on the
+   right, all on one line. */
+.medbeafgallery-modal-nav .medbeafgallery-cta-button {
+    margin-left: auto;
+    flex-shrink: 0;
+    white-space: nowrap;
+    background: var(--pro-accent);
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    box-shadow: 0 2px 8px rgba(var(--pro-accent-rgb), 0.3);
+    transition: all 0.15s ease;
+}
+
+.medbeafgallery-modal-nav .medbeafgallery-cta-button:hover {
+    background: var(--pro-accent-hover);
+    box-shadow: 0 4px 16px rgba(var(--pro-accent-rgb), 0.4);
+    transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   8. MODAL NAVIGATION (bottom bar)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-modal-nav {
+    padding: 12px 24px;
+    background: var(--pro-bg);
+    border-top: 1px solid var(--pro-border);
+}
+
+/* The nav container holds the prev/next arrows, the counter and the injected
+   CTA. Let it span the bar width so the CTA's margin-left:auto can push it to
+   the right edge while the arrows stay left — one row, never wrapping. */
+.medbeafgallery-modal-nav-container {
+    width: 100%;
+    flex-wrap: nowrap;
+}
+
+.medbeafgallery-modal-prev,
+.medbeafgallery-modal-next {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--pro-bg-muted) !important;
+    border: 1px solid var(--pro-border);
+    color: var(--pro-text-muted);
+    box-shadow: none;
+    transition: all 0.15s ease;
+}
+
+.medbeafgallery-modal-prev:hover,
+.medbeafgallery-modal-next:hover {
+    background: var(--pro-border) !important;
+    color: var(--pro-text);
+    transform: none;
+    box-shadow: none;
+    border-color: var(--pro-text-subtle);
+}
+
+.medbeafgallery-modal-prev:active,
+.medbeafgallery-modal-next:active {
+    transform: scale(0.96);
+}
+
+.medbeafgallery-modal-counter {
+    background: var(--pro-bg-muted);
+    padding: 6px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    border: 1px solid var(--pro-border);
+    box-shadow: none;
+    font-size: 14px;
+    color: var(--pro-text-muted);
+}
+
+.medbeafgallery-modal-counter .medbeafgallery-counter-current {
+    color: var(--pro-accent);
+    font-weight: 700;
+}
+
+.medbeafgallery-modal-counter .medbeafgallery-counter-separator {
+    color: var(--pro-text-subtle);
+}
+
+/* The free plugin's counter wrapper uses overflow:hidden + a fixed 32px height
+   for its slide animation. The Pro counter is taller/larger, so that wrapper
+   clips the right edge — covering the total number. Let the wrapper size to its
+   content and stop it from shrinking inside the nav bar so the total always
+   shows. The slide animation is unaffected (the moved digit is opacity:0). */
+.medbeafgallery-modal-counter-wrapper {
+    height: auto;
+    overflow: visible;
+    flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   9. LOADING SPINNER
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-loading-spinner circle {
+    stroke: var(--pro-accent);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   10. ANIMATIONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-modal.active .medbeafgallery-modal-content {
+    animation: proModalIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes proModalIn {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Tab content transitions */
+.medbeafgallery-tab-content {
+    transition: opacity 0.2s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   11. PAIR INFO BADGE OVERLAY (on images)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-pair-info,
+.medbeafgallery-pair-description {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   12. RESPONSIVE ADJUSTMENTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Mobile */
+@media (max-width: 767px) {
+    .medbeafgallery-modal-header {
+        padding: 14px 18px;
+        gap: 10px;
+    }
+
+    /* The free plugin centres the title full-width here and pins the close
+       button top-right (position:absolute), so a long title runs under it.
+       Reserve symmetric horizontal space so the centred title clears the
+       close button on the right (and stays visually centred). */
+    .medbeafgallery-modal-header h2 {
+        box-sizing: border-box;
+        padding-left: 44px;
+        padding-right: 44px;
+        font-size: 17px;
+    }
+
+    .medbeafgallery-control-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+    }
+
+    .medbeafgallery-modal-close {
+        width: 32px;
+        height: 32px;
+        top: 14px;
+        right: 18px;
+    }
+
+    .medbeafgallery-tab {
+        padding: 12px 16px;
+        font-size: 12px;
+    }
+
+    .medbeafgallery-tab-content {
+        padding: 20px;
+    }
+
+    .medbeafgallery-detail-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .medbeafgallery-detail-item {
+        padding: 10px 12px;
+    }
+
+    .medbeafgallery-cta-container {
+        padding: 14px 18px;
+        justify-content: center;
+    }
+
+    /* Override the free plugin's mobile rules that stack the nav into a column
+       and force the CTA full-width. Keep the arrows + CTA on one row. */
+    .medbeafgallery-modal-nav {
+        padding: 10px 16px;
+        flex-direction: row;
+    }
+
+    .medbeafgallery-modal-nav-container {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        gap: 10px;
+    }
+
+    .medbeafgallery-modal-nav .medbeafgallery-cta-button {
+        width: auto;
+        margin-left: auto;
+        padding: 10px 16px;
+    }
+
+    .medbeafgallery-modal-prev,
+    .medbeafgallery-modal-next {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+    }
+
+    .medbeafgallery-share-btn {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+    }
+
+    .medbeafgallery-modal-counter {
+        font-size: 13px;
+        padding: 5px 12px;
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 991px) {
+    .medbeafgallery-modal-header {
+        padding: 16px 20px;
+    }
+
+    .medbeafgallery-tab-content {
+        padding: 22px;
+    }
+
+    .medbeafgallery-detail-grid {
+        gap: 14px;
+    }
+}
+
+/* ─── Keep the image inside the viewport on the stacked layout ───
+   In the column layout the free CSS lets the comparison area grow to the
+   image's natural height, so a portrait image overflows the screen and the
+   viewer has to scroll just to see the whole image. Pin it to a definite,
+   viewport-bound height instead so cocoen sizes the image to fit — like the
+   desktop split view — with the case details scrolling below. */
+@media (max-width: 991px) {
+    .medbeafgallery-modal-body .medbeafgallery-comparison-container {
+        height: 58vh;
+        height: 58dvh;
+        min-height: 0;
+        max-height: 58vh;
+        max-height: 58dvh;
+        flex-shrink: 0;
+    }
+    .medbeafgallery-comparison-container .medbeafgallery-image-sets-container,
+    .medbeafgallery-comparison-container .medbeafgallery-before-after-wrapper {
+        height: 100%;
+        min-height: 0;
+        max-height: 100%;
+    }
+    .medbeafgallery-before-after-wrapper cocoen-component,
+    .medbeafgallery-before-after-wrapper .cocoen {
+        max-height: 100%;
+    }
+    .medbeafgallery-before-after-wrapper .medbeafgallery-standalone-before,
+    .medbeafgallery-before-after-wrapper .medbeafgallery-standalone-after,
+    .medbeafgallery-before-img,
+    .medbeafgallery-after-img {
+        max-height: 100%;
+        object-fit: contain;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   13. PORTAL OVERRIDES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+#medbeafgallery-modal-portal .medbeafgallery-modal {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   14. THEME CUSTOM PROPERTIES (light defaults)
+
+   Declared on :root so the Pro add-on's injected inline `:root { … }`
+   override (loaded after this file) takes effect via source order, and so
+   the values are inherited by the body-level modal portal AND the gallery.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+    --pro-accent: #2563eb;
+    --pro-accent-hover: #1d4ed8;
+    --pro-accent-rgb: 37, 99, 235;
+    --pro-bg: #fff;
+    --pro-bg-subtle: #fafafa;
+    --pro-bg-muted: #f5f5f7;
+    --pro-border: #ebebeb;
+    --pro-text: #1a1a2e;
+    --pro-text-muted: #6e6e80;
+    --pro-text-subtle: #9ca3af;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   15. DARK MODE (modal surfaces)
+
+   Activated by adding `.mba-pro-dark` to <html> (handled by pro-frontend-filters.js).
+   Only remaps the surface custom properties — the accent stays the admin choice.
+   The modal lives in a body-level portal, so the class must be on <html>/<body>.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.mba-pro-dark .medbeafgallery-modal {
+    --pro-bg: #1b1b29;
+    --pro-bg-subtle: #16161f;
+    --pro-bg-muted: #25253a;
+    --pro-border: #33334d;
+    --pro-text: #f1f1f6;
+    --pro-text-muted: #b6b6c6;
+    --pro-text-subtle: #8a8aa0;
+}
+
+/* Slightly lift the modal card edge against a dark page */
+.mba-pro-dark .medbeafgallery-modal-content {
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.06),
+        0 32px 64px -12px rgba(0, 0, 0, 0.6),
+        0 0 120px -20px rgba(var(--pro-accent-rgb), 0.12);
+}
+
+/* Description scrollbar in dark mode */
+.mba-pro-dark #medbeafgallery-case-description {
+    scrollbar-color: #4b4b66 transparent;
+}
+
+.mba-pro-dark #medbeafgallery-case-description::-webkit-scrollbar-thumb {
+    background: #4b4b66;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   16. THEME COMPATIBILITY FIXES
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Fix: Themes (e.g. Bemeina/Elementor) applying global img { max-width: 100% }
+   which overrides Cocoen's dynamic pixel widths and breaks the before/after slider. */
+.medbeafgallery-before-after-wrapper img[slot="before"],
+.medbeafgallery-before-after-wrapper img[slot="after"] {
+    max-width: none !important;
+    height: 100% !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   17. CLASSIC MODAL — MASONRY-STYLE DETAIL PANEL
+
+   Replaces the tabbed Description / Details panel with the single-view design
+   used by the Masonry modal: a "Treatment Overview" tile grid + an "About This
+   Case" section. JS hides the original tabs/panels (`.mba-pro-cmodal`) and fills
+   `.mba-pro-cmodal-side`. Colours reuse the modal theme vars (dark mode works).
+   ═══════════════════════════════════════════════════════════════════════════ */
+.medbeafgallery-case-details.mba-pro-cmodal .medbeafgallery-case-tabs,
+.medbeafgallery-case-details.mba-pro-cmodal .medbeafgallery-tab-content {
+    display: none !important;
+}
+
+.mba-pro-cmodal-side {
+    /* Use the gallery's own colour (the free plugin's "Gallery Color"), exactly
+       like the Masonry modal, instead of the modal's generic blue accent. */
+    --cm-accent: var(--medbeafgallery-primary-solid, #2563eb);
+    --cm-accent-soft: var(--medbeafgallery-primary-10, rgba(37, 99, 235, 0.1));
+    padding: 28px;
+}
+.mba-pro-cmodal-section {
+    margin-bottom: 20px;
+}
+.mba-pro-cmodal-section:last-child {
+    margin-bottom: 0;
+}
+.mba-pro-cmodal-eyebrow {
+    margin: 0 0 10px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cm-accent);
+}
+.mba-pro-cmodal-eyebrow:empty {
+    display: none;
+}
+.mba-pro-cmodal-h {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 12px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cm-accent);
+}
+.mba-pro-cmodal-h::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--pro-border, #ececf1);
+}
+/* minmax(0,1fr) lets columns shrink below content width so long values can't
+   push a track wide and overlap the next tile on mobile. */
+.mba-pro-cmodal-tiles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+.mba-pro-cmodal-tile {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+    padding: 11px 12px 10px;
+    border: 1px solid var(--pro-border, #ececf1);
+    border-radius: 12px;
+    background: var(--pro-bg-subtle, #fafafb);
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.mba-pro-cmodal-tile:hover {
+    border-color: var(--cm-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+.mba-pro-cmodal-tile-ic {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    margin-bottom: 2px;
+    border-radius: 8px;
+    background: var(--cm-accent-soft);
+    color: var(--cm-accent);
+}
+.mba-pro-cmodal-tile-ic svg {
+    width: 14px;
+    height: 14px;
+}
+.mba-pro-cmodal-tile-v {
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--pro-text, #0f172a);
+    overflow-wrap: anywhere;
+}
+.mba-pro-cmodal-tile-l {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--pro-text-muted, #8a8a99);
+}
+.mba-pro-cmodal-about {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--pro-text-muted, #475569);
+}
+.mba-pro-cmodal-about p {
+    margin: 0 0 12px;
+}
+.mba-pro-cmodal-about p:last-child {
+    margin-bottom: 0;
+}
+.mba-pro-cmodal-about h2,
+.mba-pro-cmodal-about h3,
+.mba-pro-cmodal-about h4 {
+    margin: 0 0 8px;
+    color: var(--pro-text, #0f172a);
+}
+.mba-pro-cmodal-about a {
+    color: var(--cm-accent);
+    text-decoration: underline;
+}
+.mba-pro-cmodal-about ul,
+.mba-pro-cmodal-about ol {
+    margin: 0 0 12px;
+    padding-left: 20px;
+}
+
+/* ─── Treatment Overview / About This Case as tabs on mobile ───
+   The two sections stack on desktop (room to spare) but turn into tabs on the
+   stacked mobile layout, where there is no room for both. The tab bar stays
+   hidden until JS marks the panel `.mba-pro-has-tabs` (both sections present). */
+.mba-pro-cmodal-tabs {
+    display: none;
+    gap: 8px;
+    margin-bottom: 20px;
+    /* When a tab is clicked JS scrolls this bar to the top of the modal body;
+       leave a little breathing room above it. */
+    scroll-margin-top: 12px;
+}
+.mba-pro-cmodal-tab {
+    all: unset;
+    box-sizing: border-box;
+    flex: 1;
+    text-align: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--pro-text-subtle, #9ca3af);
+    background: var(--pro-bg-subtle, #fafafa);
+    border: 1px solid var(--pro-border, #ebebeb);
+    cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+.mba-pro-cmodal-tab:hover { color: var(--pro-text); }
+.mba-pro-cmodal-tab.is-active {
+    color: var(--cm-accent);
+    background: var(--cm-accent-soft);
+    border-color: var(--cm-accent);
+}
+@media (max-width: 991px) {
+    .mba-pro-cmodal-side.mba-pro-has-tabs .mba-pro-cmodal-tabs { display: flex; }
+    .mba-pro-cmodal-side.mba-pro-has-tabs .mba-pro-cmodal-overview:not(.mba-pro-tab-active),
+    .mba-pro-cmodal-side.mba-pro-has-tabs .mba-pro-cmodal-aboutsec:not(.mba-pro-tab-active) {
+        display: none;
+    }
+    /* The active tab already names the section — drop the in-panel heading. */
+    .mba-pro-cmodal-side.mba-pro-has-tabs .mba-pro-cmodal-h { display: none; }
+    .mba-pro-cmodal-side.mba-pro-has-tabs .mba-pro-cmodal-section { margin-bottom: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   18. CLASSIC MODAL — "BOTH" VIEW (before + after side by side)
+
+   Applied (via JS) as `.mba-pro-view-both` on the comparison container + the
+   active wrapper when Default View Mode = "Both (side by side)". Reuses the
+   standalone before/after <img> elements the free plugin already creates.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.mba-pro-view-both cocoen-component,
+.mba-pro-view-both .cocoen {
+    display: none !important;
+}
+.medbeafgallery-before-after-wrapper.mba-pro-view-both {
+    flex-direction: row;
+    gap: 4px;
+}
+.medbeafgallery-before-after-wrapper.mba-pro-view-both .medbeafgallery-standalone-before,
+.medbeafgallery-before-after-wrapper.mba-pro-view-both .medbeafgallery-standalone-after {
+    display: block !important;
+    width: 50%;
+    height: 100%;
+    object-fit: contain;
+}
+/* Show both labels together in this mode (the free plugin only hides one in
+   before/after-only modes). The "Show labels" toggle still wins via its own
+   !important rule. */
+.medbeafgallery-comparison-container.mba-pro-view-both .medbeafgallery-before-label,
+.medbeafgallery-comparison-container.mba-pro-view-both .medbeafgallery-after-label {
+    display: block;
+}
+/* On narrow screens stack the two images vertically. */
+@media (max-width: 600px) {
+    .medbeafgallery-before-after-wrapper.mba-pro-view-both {
+        flex-direction: column;
+    }
+    .medbeafgallery-before-after-wrapper.mba-pro-view-both .medbeafgallery-standalone-before,
+    .medbeafgallery-before-after-wrapper.mba-pro-view-both .medbeafgallery-standalone-after {
+        width: 100%;
+        height: 50%;
+    }
+}
