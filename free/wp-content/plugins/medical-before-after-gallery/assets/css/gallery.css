@@ -1,0 +1,2330 @@
+/* Modern Category Grid Layout */
+.medbeafgallery-category-carousel {
+  position: relative;
+  margin: 30px 0 40px;
+  z-index: 1;
+}
+
+/* Add balanced spacing for carousel mode */
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode {
+  padding: 0;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-grid-mode {
+  padding: 0;
+}
+
+/* Base navigation buttons - hidden by default for grid mode */
+.medbeafgallery-nav-buttons {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: none;
+  justify-content: space-between;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.medbeafgallery-nav-btn {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #e5e7eb;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  pointer-events: auto; /* Enable clicks on buttons */
+  color: #374151;
+  backdrop-filter: blur(8px); /* Enhanced blur for overlay effect */
+  z-index: 15; /* High z-index to appear over carousel items */
+}
+
+.medbeafgallery-nav-btn:hover {
+  background: #ffffff;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  transform: scale(1.05);
+  color: #3b82f6;
+}
+
+.medbeafgallery-nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.medbeafgallery-nav-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* Arrow styles for text-based arrows */
+.medbeafgallery-arrow-left,
+.medbeafgallery-arrow-right {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1;
+  color: currentColor;
+  user-select: none;
+}
+
+.medbeafgallery-prev-btn {
+  left: 10px; /* Overlay on the left side */
+}
+
+.medbeafgallery-next-btn {
+  right: 10px; /* Overlay on the right side */
+}
+
+/* Show navigation only in carousel mode */
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-nav-buttons {
+  display: flex;
+}
+
+/* Hide navigation in grid mode */
+.medbeafgallery-category-carousel.medbeafgallery-grid-mode .medbeafgallery-nav-buttons {
+  display: none !important;
+}
+
+/* Category Grid Container */
+.medbeafgallery-carousel-wrapper {
+  position: relative;
+  border-radius: 16px;
+  padding: 24px;
+  overflow: hidden;
+}
+
+
+
+/* Grid Layout for Categories - Default for both modes */
+.medbeafgallery-carousel-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  padding: 0;
+  max-width: 100%;
+  transition: transform 0.3s ease;
+}
+
+/* Carousel mode specific styles */
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-wrapper {
+  overflow: hidden; /* Prevent overflow in carousel mode */
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-items {
+  display: flex;
+  grid-template-columns: none;
+  gap: 20px;
+  overflow: visible; /* The wrapper handles overflow */
+  scroll-behavior: smooth;
+  flex-wrap: nowrap;
+  width: fit-content; /* Allow natural width calculation */
+  transition: transform 0.3s ease;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-item {
+  flex: 0 0 auto;
+  min-width: 140px;
+  max-width: 140px;
+}
+
+/* Grid mode uses the default responsive grid */
+.medbeafgallery-category-carousel.medbeafgallery-grid-mode .medbeafgallery-carousel-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+/* Modern Category Item */
+.medbeafgallery-carousel-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  background: #ffffff;
+  border: 2px solid #f1f5f9;
+  min-height: 140px;
+  justify-content: center;
+}
+
+.medbeafgallery-carousel-item:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.medbeafgallery-carousel-item.active {
+  background: #eff6ff;
+  transform: translateY(-2px);
+  box-shadow:
+    0 10px 15px -3px rgba(37, 99, 235, 0.1),
+    0 4px 6px -2px rgba(37, 99, 235, 0.05);
+}
+
+.medbeafgallery-carousel-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  border-radius: 2px;
+}
+
+/* Category Images */
+.medbeafgallery-carousel-item img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #e5e7eb;
+  transition: all 0.3s ease;
+  margin-bottom: 12px;
+}
+
+.medbeafgallery-carousel-item:hover img {
+  border-color: #3b82f6;
+  transform: scale(1.05);
+}
+
+.medbeafgallery-carousel-item.active img {
+  border-color: #2563eb;
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+/* Category Names */
+.medbeafgallery-carousel-item p,
+.medbeafgallery-category-name {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  text-align: center;
+  line-height: 1.3;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.medbeafgallery-carousel-item:hover p,
+.medbeafgallery-carousel-item:hover .medbeafgallery-category-name {
+  color: #1f2937;
+}
+
+.medbeafgallery-carousel-item.active p,
+.medbeafgallery-carousel-item.active .medbeafgallery-category-name {
+  color: #1e40af;
+  font-weight: 700;
+}
+
+/* Focus states for accessibility */
+.medbeafgallery-carousel-item:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.1),
+    0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Grid */
+@media (max-width: 1024px) {
+  .medbeafgallery-carousel-items {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+  }
+
+  /* Carousel mode adjustments */
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-items {
+    gap: 16px;
+  }
+
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-item {
+    min-width: 120px;
+    max-width: 120px;
+  }
+
+  .medbeafgallery-carousel-item {
+    padding: 16px 12px;
+    min-height: 120px;
+  }
+
+  .medbeafgallery-carousel-item img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .medbeafgallery-carousel-item p,
+  .medbeafgallery-category-name {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Remove responsive padding adjustments - keep arrows overlaid */
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode {
+    padding: 0; /* No padding needed */
+  }
+
+  .medbeafgallery-carousel-wrapper {
+    padding: 20px 16px;
+    margin: 20px 0 30px;
+  }
+
+  .medbeafgallery-carousel-items {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 10px;
+  }
+
+  /* Carousel mode adjustments */
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-items {
+    gap: 12px;
+  }
+
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-item {
+    min-width: 100px;
+    max-width: 100px;
+  }
+
+  /* Navigation button adjustments for mobile */
+  .medbeafgallery-nav-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .medbeafgallery-prev-btn {
+    left: 8px; /* Overlay position for mobile */
+  }
+
+  .medbeafgallery-next-btn {
+    right: 8px; /* Overlay position for mobile */
+  }
+
+  .medbeafgallery-carousel-item {
+    padding: 14px 10px;
+    min-height: 110px;
+  }
+
+  .medbeafgallery-carousel-item img {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+  }
+
+  .medbeafgallery-carousel-item p,
+  .medbeafgallery-category-name {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* No additional padding needed - keep overlay approach */
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode {
+    padding: 0;
+  }
+
+  .medbeafgallery-carousel-items {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 8px;
+  }
+
+  /* Carousel mode adjustments */
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-items {
+    gap: 10px;
+  }
+
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-item {
+    min-width: 90px;
+    max-width: 90px;
+  }
+
+  /* Smaller navigation on very small screens */
+  .medbeafgallery-nav-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .medbeafgallery-prev-btn {
+    left: 5px; /* Overlay position for small screens */
+  }
+
+  .medbeafgallery-next-btn {
+    right: 5px; /* Overlay position for small screens */
+  }
+
+  .medbeafgallery-carousel-item {
+    padding: 12px 8px;
+    min-height: 100px;
+  }
+
+  .medbeafgallery-carousel-item img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .medbeafgallery-carousel-item p,
+  .medbeafgallery-category-name {
+    font-size: 11px;
+  }
+}
+
+
+/* Base container styles */
+.medbeafgallery-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  position: relative; /* Required for absolute positioning of the overlay */
+}
+
+.medbeafgallery-gallery-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+/* Gallery Grid Styles */
+.medbeafgallery-gallery-container {
+  margin: 20px 0;
+}
+
+.medbeafgallery-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-gap: 25px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 767px) {
+  .medbeafgallery-gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 20px;
+  }
+
+  .medbeafgallery-gallery-item-info h3 {
+    font-size: 15px;
+  }
+
+  .medbeafgallery-gallery-view-btn {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Enhanced Gallery Item Styling */
+.medbeafgallery-gallery-item {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.medbeafgallery-gallery-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+}
+
+.medbeafgallery-gallery-item:nth-child(1) { animation: fadeInUp 0.5s ease forwards 0.1s; }
+.medbeafgallery-gallery-item:nth-child(2) { animation: fadeInUp 0.5s ease forwards 0.15s; }
+.medbeafgallery-gallery-item:nth-child(3) { animation: fadeInUp 0.5s ease forwards 0.2s; }
+.medbeafgallery-gallery-item:nth-child(4) { animation: fadeInUp 0.5s ease forwards 0.25s; }
+.medbeafgallery-gallery-item:nth-child(5) { animation: fadeInUp 0.5s ease forwards 0.3s; }
+.medbeafgallery-gallery-item:nth-child(6) { animation: fadeInUp 0.5s ease forwards 0.35s; }
+.medbeafgallery-gallery-item:nth-child(n+7) { animation: fadeInUp 0.5s ease forwards 0.4s; }
+
+/* Image container styling */
+.medbeafgallery-gallery-image-container {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  background-color: #f4f4f5;
+}
+
+/* Preview container setup */
+.medbeafgallery-preview-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+/* Before and after preview images */
+.medbeafgallery-preview-before,
+.medbeafgallery-preview-after {
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Improved divider between before/after */
+.medbeafgallery-preview-divider {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 3px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateX(-50%);
+  z-index: 2;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.medbeafgallery-gallery-item:hover .medbeafgallery-preview-divider {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+/* Enhanced view button */
+.medbeafgallery-gallery-view-btn {
+  all: unset;
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translate(-50%, 10px);
+  background: rgba(255, 255, 255, 0.95);
+  color: #1f2937;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 5;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.medbeafgallery-gallery-view-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.medbeafgallery-gallery-item:hover .medbeafgallery-gallery-view-btn {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+.medbeafgallery-gallery-view-btn:hover {
+  color: white;
+}
+
+/* Item info container */
+.medbeafgallery-gallery-item-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  border-top: 1px solid rgba(230, 232, 236, 0.6);
+}
+
+/* Item title */
+.medbeafgallery-gallery-item-info h3 {
+  font-size: 16px;
+  margin: 0 0 8px 0;
+  color: #111827;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+/* Category badge */
+.medbeafgallery-gallery-category {
+  background: #f3f4f6;
+  color: #4b5563;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+/* Item metadata */
+.medbeafgallery-gallery-meta {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px dashed #e5e7eb;
+}
+
+.medbeafgallery-gallery-meta span:not(:last-child) {
+  margin-right: 8px;
+  padding-right: 8px;
+  border-right: 1px solid #e5e7eb;
+}
+
+/* Category-specific styling */
+.medbeafgallery-gallery-item[data-category="ba_category_face"] .medbeafgallery-gallery-category {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.medbeafgallery-gallery-item[data-category="ba_category_nose"] .medbeafgallery-gallery-category {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.medbeafgallery-gallery-item[data-category="ba_category_breast"] .medbeafgallery-gallery-category {
+  background: #fce4ec;
+  color: #c2185b;
+}
+
+.medbeafgallery-gallery-item[data-category="ba_category_body"] .medbeafgallery-gallery-category {
+  background: #e8eaf6;
+  color: #3949ab;
+}
+
+/* Loading skeleton animation */
+@keyframes skeletonPulse {
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+
+.medbeafgallery-gallery-item.loading .medbeafgallery-preview-container {
+  background: linear-gradient(90deg, #f0f0f0, #f8f8f8, #f0f0f0);
+  background-size: 200px 100%;
+  animation: skeletonPulse 1.5s infinite;
+}
+
+.medbeafgallery-gallery-item.loading h3,
+.medbeafgallery-gallery-item.loading .medbeafgallery-gallery-category {
+  background: linear-gradient(90deg, #f0f0f0, #f8f8f8, #f0f0f0);
+  background-size: 200px 100%;
+  animation: skeletonPulse 1.5s infinite;
+  color: transparent;
+}
+
+/* Pagination/Load More */
+.medbeafgallery-pagination {
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.medbeafgallery-load-more {
+  padding: 10px 24px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+
+
+/* Modal Styles */
+.medbeafgallery-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.9);
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 0;
+  box-sizing: border-box;
+  backdrop-filter: blur(5px);
+}
+
+.medbeafgallery-modal.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.medbeafgallery-modal-content {
+  background: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 650px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Modal Header */
+.medbeafgallery-modal-header {
+  padding: 20px 25px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  gap: 15px;
+  position: relative;
+}
+
+.medbeafgallery-modal-header h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.3;
+  flex: 1;
+  order: 3;
+}
+
+/* Image Controls in Header - Desktop first */
+.medbeafgallery-modal-header .medbeafgallery-image-controls {
+  position: static;
+  top: auto;
+  left: auto;
+  display: flex;
+  gap: 8px;
+  z-index: auto;
+  order: 1;
+}
+
+/* Pair Info in Header - Desktop second */
+.medbeafgallery-modal-header .medbeafgallery-pair-info {
+  position: static;
+  top: auto;
+  right: auto;
+  background: #e5e7eb;
+  color: #374151;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: auto;
+  box-shadow: none;
+  order: 2;
+}
+
+.medbeafgallery-modal-close {
+  all: unset;
+  background: #f3f4f6;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4b5563;
+  transition: all 0.2s ease;
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.medbeafgallery-modal-close:hover {
+  background: #e5e7eb;
+  color: #111827;
+  transform: rotate(90deg);
+}
+
+/* Modal Body */
+.medbeafgallery-modal-body {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: auto;
+}
+#medbeafgallery-case-description {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+#medbeafgallery-case-description p,
+#medbeafgallery-case-description h2,
+#medbeafgallery-case-description h3,
+#medbeafgallery-case-description h4 {
+  margin-bottom: 1em;
+}
+@media (min-width: 992px) {
+  .medbeafgallery-modal-body {
+    flex-direction: row;
+    height: calc(90vh - 140px); /* Subtract header and nav heights */
+    overflow: hidden;
+  }
+}
+
+/* Image Controls */
+.medbeafgallery-image-controls {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.medbeafgallery-control-btn {
+  all: unset;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 6px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #4b5563;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.medbeafgallery-control-btn.active {
+  color: white;
+}
+
+.medbeafgallery-control-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Before-After Comparison Container */
+.medbeafgallery-comparison-container {
+  flex: 1.2;
+  min-width: 0;
+  position: relative;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 992px) {
+  .medbeafgallery-comparison-container {
+    height: 100%;
+    max-height: none;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 991px) {
+  .medbeafgallery-comparison-container {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1; /* Square aspect ratio on mobile */
+  }
+}
+
+.medbeafgallery-before-after-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+}
+
+.medbeafgallery-before-after-wrapper.active {
+  animation: fadeInScale 0.4s ease forwards;
+}
+
+@media (min-width: 992px) {
+  .medbeafgallery-before-after-wrapper {
+    max-height: 100%;
+    aspect-ratio: auto;
+  }
+
+  /* Optimize image size based on screen height */
+  @media (min-height: 800px) {
+    .medbeafgallery-before-after-wrapper {
+      max-width: 80%;
+      margin: 0 auto;
+    }
+  }
+
+  @media (min-height: 1000px) {
+    .medbeafgallery-before-after-wrapper {
+      max-width: 70%;
+      margin: 0 auto;
+    }
+  }
+
+  @media (min-height: 1200px) {
+    .medbeafgallery-before-after-wrapper {
+      max-width: 60%;
+      margin: 0 auto;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .medbeafgallery-before-after-wrapper {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1/1;
+  }
+}
+
+.medbeafgallery-before-img,
+.medbeafgallery-after-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-height: calc(90vh - 180px); /* Subtract header and footer heights */
+}
+
+@media (min-width: 992px) {
+  .medbeafgallery-before-img,
+  .medbeafgallery-after-img {
+    max-height: 100%;
+  }
+}
+
+@media (max-width: 991px) {
+  .medbeafgallery-before-img,
+  .medbeafgallery-after-img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+.medbeafgallery-after-img {
+  clip-path: inset(0 0 0 50%);
+  transition: clip-path 0.3s ease;
+}
+
+/* Labels */
+.medbeafgallery-labels {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+.medbeafgallery-before-label,
+.medbeafgallery-after-label {
+  padding: 8px 16px;
+  background: rgba(15, 23, 42, 0.75);
+  color: white;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Case Details */
+.medbeafgallery-case-details {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  position: relative;
+}
+
+@media (max-width: 991px) {
+  .medbeafgallery-case-details {
+    border-top: 1px solid #e5e7eb;
+  }
+}
+
+@media (min-width: 992px) {
+  .medbeafgallery-case-details {
+    border-left: 1px solid #e5e7eb;
+    height: 100%;
+    overflow-y: auto;
+  }
+}
+
+/* Tabs */
+.medbeafgallery-case-tabs {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.medbeafgallery-tab {
+  padding: 15px 20px;
+  background: transparent !important;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-weight: 500;
+  color: #6b7280;
+  transition: all 0.2s ease;
+  flex: 1;
+  text-align: center;
+}
+
+.medbeafgallery-tab:hover {
+  color: #2563eb;
+  background: #f3f4f6;
+}
+
+.medbeafgallery-tab.active {
+  position: relative;
+}
+
+.medbeafgallery-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #2563eb;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+/* Tab Content */
+.medbeafgallery-tab-content {
+  padding: 25px;
+  display: none;
+  flex-grow: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  height: 0;
+  overflow: hidden;
+}
+
+.medbeafgallery-tab-content.active {
+  display: block;
+  opacity: 1;
+  height: auto;
+}
+
+.medbeafgallery-tab-content p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+/* Detail Grid */
+.medbeafgallery-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.medbeafgallery-detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.medbeafgallery-detail-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 5px;
+  letter-spacing: 0.5px;
+}
+
+.medbeafgallery-detail-value {
+  font-size: 16px;
+  color: #111827;
+  font-weight: 500;
+}
+
+/* CTA Section */
+.medbeafgallery-cta-container {
+  padding: 20px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Align to right since no button */
+  background: #f9fafb;
+}
+
+/* Enhanced Social Share Section */
+.medbeafgallery-social-share {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.medbeafgallery-social-share span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.medbeafgallery-share-btn {
+  all: unset;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e5e7eb;
+  background: white;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Platform-specific colors on hover */
+.medbeafgallery-share-btn.medbeafgallery-share-facebook:hover {
+  background: #1877f2;
+  color: white;
+  border-color: #1877f2;
+  box-shadow: 0 2px 5px rgba(24, 119, 242, 0.3);
+}
+
+.medbeafgallery-share-btn.medbeafgallery-share-twitter:hover {
+  background: #1da1f2;
+  color: white;
+  border-color: #1da1f2;
+  box-shadow: 0 2px 5px rgba(29, 161, 242, 0.3);
+}
+
+.medbeafgallery-share-btn.medbeafgallery-share-email:hover {
+  background: #6366f1;
+  color: white;
+  border-color: #6366f1;
+  box-shadow: 0 2px 5px rgba(99, 102, 241, 0.3);
+}
+
+/* CTA Button in Nav */
+.medbeafgallery-modal-nav .medbeafgallery-cta-button {
+  all: unset;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.medbeafgallery-modal-nav .medbeafgallery-cta-button:hover {
+  transform: translateY(-1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .medbeafgallery-modal-nav {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .medbeafgallery-modal-nav-container {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .medbeafgallery-modal-nav .medbeafgallery-cta-button {
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+  }
+
+  .medbeafgallery-cta-container {
+    justify-content: center;
+  }
+}
+
+/* For very small screens */
+@media (max-width: 360px) {
+  .medbeafgallery-share-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .medbeafgallery-social-share {
+    gap: 8px;
+  }
+}
+
+/* Modal Navigation */
+.medbeafgallery-modal-nav {
+  padding: 15px 25px;
+  background: linear-gradient(to top, rgba(249, 250, 251, 1), rgba(249, 250, 251, 0.95));
+  border-top: 1px solid rgba(229, 231, 235, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* New navigation container */
+.medbeafgallery-modal-nav-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+}
+
+/* Improved navigation buttons */
+.medbeafgallery-modal-prev,
+.medbeafgallery-modal-next {
+  all: unset;
+  padding: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: white !important;
+  border: 1px solid #e5e7eb;
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.medbeafgallery-modal-prev:hover,
+.medbeafgallery-modal-next:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #2563eb;
+  border-color: #d1d5db;
+}
+
+.medbeafgallery-modal-prev svg,
+.medbeafgallery-modal-next svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.5;
+}
+
+/* Counter with sliding animation */
+.medbeafgallery-modal-counter-wrapper {
+  position: relative;
+  overflow: hidden;
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.medbeafgallery-modal-counter {
+  background: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  font-size: 15px;
+  color: #4b5563;
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.medbeafgallery-modal-counter .medbeafgallery-counter-current {
+  font-weight: 700;
+}
+
+.medbeafgallery-modal-counter .medbeafgallery-counter-separator {
+  color: #9ca3af;
+  margin: 0 2px;
+}
+
+/* Mobile adjustments for navigation */
+@media (max-width: 767px) {
+  .medbeafgallery-modal-nav {
+    padding: 12px 15px;
+  }
+
+  .medbeafgallery-modal-prev,
+  .medbeafgallery-modal-next {
+    width: 40px;
+    height: 40px;
+  }
+
+  .medbeafgallery-modal-counter {
+    padding: 5px 12px;
+    font-size: 14px;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 767px) {
+  .medbeafgallery-modal-header {
+    padding: 15px 20px;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .medbeafgallery-modal-header h2 {
+    font-size: 18px;
+    width: 100%;
+    order: 1;
+    text-align: center;
+  }
+
+  .medbeafgallery-modal-header .medbeafgallery-image-controls {
+    width: 100%;
+    justify-content: center;
+    order: 2;
+  }
+
+  .medbeafgallery-modal-header .medbeafgallery-pair-info {
+    width: 100%;
+    text-align: center;
+    order: 3;
+  }
+
+  .medbeafgallery-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    order: 4;
+  }
+
+  .medbeafgallery-tab {
+    padding: 12px 10px;
+    font-size: 14px;
+  }
+
+  .medbeafgallery-tab-content {
+    padding: 20px;
+  }
+
+  .medbeafgallery-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .medbeafgallery-cta-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .medbeafgallery-cta-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .medbeafgallery-social-share {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .medbeafgallery-modal-nav {
+    padding: 12px;
+  }
+
+  .medbeafgallery-modal-prev span,
+  .medbeafgallery-modal-next span {
+    display: none;
+  }
+}
+
+/* Animation effects */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.medbeafgallery-modal.active .medbeafgallery-modal-content {
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+.medbeafgallery-modal.active {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 767px) {
+  .medbeafgallery-gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+  }
+
+  .medbeafgallery-gallery-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+
+
+
+  .medbeafgallery-modal-body {
+    padding: 20px;
+  }
+
+  .medbeafgallery-case-details h3 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .medbeafgallery-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .medbeafgallery-slider-button {
+    width: 30px;
+    height: 30px;
+  }
+
+  .medbeafgallery-modal-nav {
+    padding: 10px 20px 20px;
+  }
+}
+
+
+
+/* Adjust for taller screens to prevent too much black space */
+@media (min-width: 992px) and (min-height: 800px) {
+  .medbeafgallery-before-after-wrapper {
+    max-width: 75%;
+    margin: 0 auto;
+  }
+}
+
+/* Adjust for very tall screens */
+@media (min-width: 992px) and (min-height: 1000px) {
+  .medbeafgallery-before-after-wrapper {
+    max-width: 65%;
+    margin: 0 auto;
+  }
+}
+
+/* Enhanced Modal Image Container for Better Responsiveness */
+
+/* Modal base structure - consistent across all devices */
+
+/* Before-After Comparison Container - core styles */
+.medbeafgallery-comparison-container {
+  position: relative;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Desktop specific image container */
+@media (min-width: 992px) {
+  .medbeafgallery-comparison-container {
+    flex: 1.2;
+    height: 100%;
+    max-height: none;
+    overflow: hidden;
+  }
+}
+
+/* Mobile specific image container */
+@media (max-width: 991px) {
+  .medbeafgallery-comparison-container {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1; /* Square aspect ratio on mobile */
+  }
+}
+
+/* Before-after wrapper - shared styles */
+.medbeafgallery-before-after-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  overflow: hidden;
+}
+
+/* Desktop specific wrapper */
+@media (min-width: 992px) {
+  .medbeafgallery-before-after-wrapper {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+  }
+
+  /* Optimize image size based on screen height */
+  @media (min-height: 800px) {
+    .medbeafgallery-before-after-wrapper {
+      max-width: 80%;
+      margin: 0 auto;
+    }
+  }
+
+  @media (min-height: 1000px) {
+    .medbeafgallery-before-after-wrapper {
+      max-width: 70%;
+      margin: 0 auto;
+    }
+  }
+
+  @media (min-height: 1200px) {
+    .medbeafgallery-before-after-wrapper {
+      max-width: 60%;
+      margin: 0 auto;
+    }
+  }
+}
+
+/* Mobile specific wrapper */
+@media (max-width: 991px) {
+  .medbeafgallery-before-after-wrapper {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1/1;
+  }
+}
+
+/* Before and after images - shared styles */
+.medbeafgallery-before-img,
+.medbeafgallery-after-img {
+  position: absolute;
+  object-fit: contain;
+}
+
+/* Desktop specific images */
+@media (min-width: 992px) {
+  .medbeafgallery-before-img,
+  .medbeafgallery-after-img {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+  }
+}
+
+/* Mobile specific images */
+@media (max-width: 991px) {
+  .medbeafgallery-before-img,
+  .medbeafgallery-after-img {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+/* After image clip path */
+.medbeafgallery-after-img {
+  clip-path: inset(0 0 0 50%);
+  transition: clip-path 0.3s ease;
+}
+
+/* Fix modal body height for proper overflow */
+@media (min-width: 992px) {
+  .medbeafgallery-modal-body {
+    flex-direction: row;
+    height: calc(90vh - 140px); /* Subtract header and nav heights */
+    overflow: hidden;
+  }
+
+  .medbeafgallery-case-details {
+    flex: 1;
+    overflow-y: auto;
+    height: 100%;
+  }
+}
+
+@media (max-width: 991px) {
+  .medbeafgallery-modal-body {
+    flex-direction: column;
+    overflow-y: auto;
+    max-height: calc(90vh - 140px);
+  }
+
+  .medbeafgallery-case-details {
+    flex: none;
+    overflow: visible;
+  }
+}
+
+/* Slider handle styles */
+.medbeafgallery-slider-handle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: 2px;
+  transform: translateX(-50%);
+  cursor: col-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.3s ease;
+  z-index: 10;
+}
+
+.medbeafgallery-slider-line {
+  position: absolute;
+  height: 100%;
+  width: 2px;
+  background: white;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.medbeafgallery-slider-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.medbeafgallery-slider-button:hover {
+  transform: scale(1.1);
+}
+
+.medbeafgallery-slider-button svg {
+  width: 10px;
+  height: 10px;
+  color: white;
+}
+
+/* Make sure slider doesn't get hidden */
+.view-before .medbeafgallery-slider-handle,
+.view-after .medbeafgallery-slider-handle {
+  display: none;
+}
+
+.view-split .medbeafgallery-slider-handle {
+  display: flex;
+}
+
+/* Mobile specific slider adjustments */
+@media (max-width: 767px) {
+  .medbeafgallery-slider-button {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* Fix for scrollbar at 992px breakpoint */
+
+
+
+/* Multiple Image Pairs Navigation Styles */
+
+/* Image Sets Container */
+.medbeafgallery-image-sets-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Hide all wrappers by default */
+.medbeafgallery-before-after-wrapper {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+/* Show only active wrapper */
+.medbeafgallery-before-after-wrapper.active {
+  display: block;
+}
+
+/* Image Pairs Navigation */
+.medbeafgallery-image-pairs-nav {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 23, 42, 0.75);
+  border-radius: 30px;
+  padding: 8px 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Pair Navigation Buttons */
+.medbeafgallery-pair-nav {
+  all: unset;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.medbeafgallery-pair-nav:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}
+
+.medbeafgallery-pair-nav:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Indicators Container */
+.medbeafgallery-pair-indicators {
+  display: flex;
+  gap: 6px;
+}
+
+/* Indicator Dots */
+.medbeafgallery-pair-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.medbeafgallery-pair-indicator:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.medbeafgallery-pair-indicator.active {
+  background: white;
+  width: 12px;
+  height: 12px;
+}
+
+/* Hide navigation when there's only one pair */
+.medbeafgallery-image-pairs-nav.single-pair {
+  display: none;
+}
+
+/* Image Pair Info/Description */
+.medbeafgallery-pair-info {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(15, 23, 42, 0.75);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Make sure the image controls don't overlap with pair info */
+.medbeafgallery-image-controls {
+  left: 15px;
+  right: auto;
+}
+
+/* Adjust labels position to not overlap with pair navigation */
+.medbeafgallery-labels {
+  bottom: 65px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+  .medbeafgallery-image-pairs-nav {
+    bottom: 10px;
+    padding: 6px 10px;
+    gap: 8px;
+  }
+
+  .medbeafgallery-pair-nav {
+    width: 24px;
+    height: 24px;
+  }
+
+  .medbeafgallery-pair-indicator {
+    width: 6px;
+    height: 6px;
+  }
+
+  .medbeafgallery-pair-indicator.active {
+    width: 10px;
+    height: 10px;
+  }
+
+  .medbeafgallery-pair-info {
+    top: 60px; /* Move below the image controls on mobile */
+    right: 15px;
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  /* Adjust labels to avoid overlap with navigation */
+  .medbeafgallery-labels {
+    bottom: 55px;
+  }
+}
+
+/* Touch-friendly targets for mobile devices */
+@media (max-width: 480px) {
+  .medbeafgallery-pair-nav {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Animation for image pair transitions */
+@keyframes fadePairIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.medbeafgallery-before-after-wrapper.active {
+  animation: fadePairIn 0.3s ease forwards;
+}
+
+/* Ensure each image pair's slider works independently */
+.medbeafgallery-before-after-wrapper .medbeafgallery-slider-handle {
+  z-index: 15;
+}
+
+/* Adjustments for multiple sliders - so every slider gets proper z-index */
+.medbeafgallery-before-after-wrapper:nth-child(1) .medbeafgallery-slider-handle {
+  z-index: 15;
+}
+
+.medbeafgallery-before-after-wrapper:nth-child(2) .medbeafgallery-slider-handle {
+  z-index: 15;
+}
+
+.medbeafgallery-before-after-wrapper:nth-child(3) .medbeafgallery-slider-handle {
+  z-index: 15;
+}
+
+/* Hide view mode controls when there are no images */
+.medbeafgallery-image-controls.no-images {
+  display: none;
+}
+
+/* Hide indicators when there's no navigation */
+.medbeafgallery-pair-indicators:empty {
+  display: none;
+}
+
+/* Status message when no images */
+.medbeafgallery-no-images-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(15, 23, 42, 0.75);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: none;
+}
+
+.medbeafgallery-no-images-message.active {
+  display: block;
+}
+
+
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Smoother tab transitions */
+.medbeafgallery-tab-content {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  height: 0;
+  overflow: hidden;
+}
+
+.medbeafgallery-tab-content.active {
+  opacity: 1;
+  height: auto;
+}
+
+/* Improved mobile experience */
+@media (max-width: 767px) {
+  .medbeafgallery-modal-content {
+    width: 95%;
+    border-radius: 0;
+    /* height: 95vh; */
+    max-height: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .medbeafgallery-comparison-container {
+    flex: none;
+    /* height: 50vh; */
+  }
+
+  .medbeafgallery-modal-body {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .medbeafgallery-modal-nav {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+  }
+
+  /* Swipe hint for mobile users */
+  .medbeafgallery-swipe-hint {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    opacity: 0.8;
+    animation: fadeInOut 3s ease forwards;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  @keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    20%, 80% { opacity: 0.8; }
+  }
+}
+
+/* Better accessibility */
+.medbeafgallery-tab.active {
+  position: relative;
+}
+
+.medbeafgallery-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+/* Focus states for keyboard navigation */
+.medbeafgallery-gallery-item:focus-visible,
+.medbeafgallery-tab:focus-visible,
+.medbeafgallery-modal-prev:focus-visible,
+.medbeafgallery-modal-next:focus-visible,
+.medbeafgallery-control-btn:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Improved color contrast */
+.medbeafgallery-gallery-item-info h3 {
+  color: #111827;
+}
+
+.medbeafgallery-gallery-category {
+  color: #4b5563;
+}
+
+/* New case indicator */
+.medbeafgallery-new-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #2563eb;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  z-index: 2;
+  box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
+}
+
+/* Additional styling for loading state */
+.medbeafgallery-loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  z-index: 10;
+}
+
+.medbeafgallery-loading-spinner svg {
+  animation: spin 1s linear infinite;
+}
+
+.medbeafgallery-loading-spinner circle {
+  stroke: #2563eb;
+  stroke-dasharray: 80;
+  stroke-dashoffset: 60;
+  transform-origin: center;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* Multiple views indicator */
+.medbeafgallery-multi-view-indicator {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.medbeafgallery-multi-view-indicator svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Enhanced loading spinner styles */
+.medbeafgallery-loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  z-index: 10;
+  pointer-events: none; /* Allows clicking through the spinner */
+}
+
+.medbeafgallery-loading-spinner svg {
+  animation: spin 1.2s linear infinite;
+  width: 100%;
+  height: 100%;
+}
+
+.medbeafgallery-loading-spinner circle {
+  stroke: #2563eb;
+  stroke-linecap: round;
+  stroke-dasharray: 90, 150;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Make sure loading state is properly represented */
+.medbeafgallery-before-after-wrapper.loading .medbeafgallery-before-img,
+.medbeafgallery-before-after-wrapper.loading .medbeafgallery-after-img {
+  opacity: 0.6;
+}
+
+/* Hide spinner when not in loading state */
+.medbeafgallery-before-after-wrapper:not(.loading) .medbeafgallery-loading-spinner {
+  display: none;
+}
+
+.medbeafgallery-category-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+  color: #6b7280;
+}
+
+.medbeafgallery-category-placeholder svg {
+  width: 60px;
+  height: 60px;
+  opacity: 0.7;
+}
+
+.medbeafgallery-category-image {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.medbeafgallery-category-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.medbeafgallery-category-svg-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.medbeafgallery-category-count {
+  display: inline-block;
+  background-color: rgba(74, 144, 226, 0.15);
+  color: #4A90E2;
+  font-size: 12px;
+  border-radius: 10px;
+  padding: 0 6px;
+  margin-left: 4px;
+}
+
+/* Modal Portal Styling */
+#medbeafgallery-modal-portal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+#medbeafgallery-modal-portal .medbeafgallery-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: auto;
+}
+
+#medbeafgallery-modal-portal .medbeafgallery-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Ensure modal content has proper styling */
+
+.medbeafgallery-toggle-filters-btn:hover {
+    background-color: var(--medbeafgallery-primary-20, #e5e7eb);
+    border-color: var(--medbeafgallery-primary-solid, #d1d5db);
+}
+
+/* Consolidated Mobile Sidebar Styles */
+
+
+/* Overlay styles */
+.medbeafgallery-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Fix horizontal scroll issues */
+html, body {
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.medbeafgallery-gallery-layout {
+  overflow-x: hidden;
+}
+
+.medbeafgallery-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  backdrop-filter: blur(2px);
+}
+
+/* Improved empty states and user feedback */
+.medbeafgallery-no-results {
+  text-align: center;
+  padding: 60px 20px; /* Increased padding */
+  border-radius: 12px;
+  background-color: #f9fafb;
+  border: 1px dashed #e5e7eb;
+  margin: 30px 0;
+}
+
+.medbeafgallery-no-results p {
+  font-size: 16px;
+  color: #6b7280;
+  margin: 0 0 20px; /* Increased margin */
+}
+
+.medbeafgallery-no-results-icon {
+  margin-bottom: 30px; /* Increased margin */
+  color: #9ca3af;
+}
+
+.medbeafgallery-no-results-icon svg {
+  width: 70px; /* Larger icon */
+  height: 70px;
+  opacity: 0.6; /* Slightly more visible */
+}
+
+.medbeafgallery-no-results .medbeafgallery-reset-suggestion {
+  display: inline-block;
+  padding: 10px 20px; /* Larger button */
+  background-color: #f3f4f6;
+  border-radius: 8px; /* More rounded */
+  font-size: 15px;
+  font-weight: 500;
+  color: #4b5563;
+  margin-top: 20px; /* Increased margin */
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.medbeafgallery-no-results .medbeafgallery-reset-suggestion:hover {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+
+
+
+
+/* Hide appropriate labels based on view mode */
+.medbeafgallery-comparison-container.view-before .medbeafgallery-after-label {
+  display: none;
+}
+
+.medbeafgallery-comparison-container.view-after .medbeafgallery-before-label {
+  display: none;
+}
+
+/* Ensure labels appear in split view */
+.medbeafgallery-comparison-container.view-split .medbeafgallery-before-label,
+.medbeafgallery-comparison-container.view-split .medbeafgallery-after-label {
+  display: block;
+}
+
+
+
+/* Procedure Info */
+.medbeafgallery-procedure-info {
+  color: #333;
+  line-height: 1.6;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.medbeafgallery-procedure-info p {
+  margin-bottom: 1em;
+}
+
+.medbeafgallery-procedure-info h1,
+.medbeafgallery-procedure-info h2,
+.medbeafgallery-procedure-info h3,
+.medbeafgallery-procedure-info h4 {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.medbeafgallery-procedure-info ul,
+.medbeafgallery-procedure-info ol {
+  margin-left: 1.5em;
+  margin-bottom: 1em;
+}
+
+.medbeafgallery-procedure-info img {
+  max-width: 100%;
+  height: auto;
+  margin: 1em 0;
+}
