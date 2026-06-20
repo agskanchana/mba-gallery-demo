@@ -1,0 +1,545 @@
+/**
+ * Pro Frontend Filters — sidebar, filter groups, CTA button styles.
+ *
+ * @package MBA_Gallery_Pro
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   THEME DEFENSE (shared)
+
+   The gallery is injected into arbitrary themes. This file is enqueued for
+   every gallery, so the cross-component theme defenses that aren't tied to one
+   layout live here. See tests/theme-resilience/ for the harness that proves it.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Own the box-sizing reset for roots that had none — the category selector and
+   the consent overlay. Under a content-box theme their width+padding combos
+   overflow the viewport (esp. mobile). (Card/modal/toolbar own their reset in
+   pro-masonry.css; subcategory pills in pro-subcategories.css.) */
+.medbeafgallery-category-carousel,
+.medbeafgallery-category-carousel *,
+.medbeafgallery-category-carousel *::before,
+.medbeafgallery-category-carousel *::after,
+.medbeafgallery-consent-overlay,
+.medbeafgallery-consent-overlay *,
+.medbeafgallery-consent-overlay *::before,
+.medbeafgallery-consent-overlay *::after {
+    box-sizing: border-box;
+}
+
+/* A host theme's `svg { fill/stroke: … !important }` recolours every plugin
+   icon. Re-assert the line-icon (fill=none, stroke=currentColor) and solid-icon
+   (fill=currentColor) intent with attribute selectors — these out-specify a bare
+   `svg` rule, so they win even against the theme's !important. Scoped to the
+   gallery container and the body-level modal portals (masonry + classic). */
+.medbeafgallery-container svg[fill="none"],
+.mba-pro-mmodal svg[fill="none"],
+.medbeafgallery-modal svg[fill="none"] {
+    fill: none !important;
+    stroke: currentColor !important;
+}
+.medbeafgallery-container svg[fill="currentColor"],
+.mba-pro-mmodal svg[fill="currentColor"],
+.medbeafgallery-modal svg[fill="currentColor"] {
+    fill: currentColor !important;
+    stroke: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   GALLERY LAYOUT WITH SIDEBAR
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-gallery-layout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+.medbeafgallery-gallery-layout .medbeafgallery-main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FILTER SIDEBAR
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-filter-sidebar {
+    width: 260px;
+    flex-shrink: 0;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    position: sticky;
+    top: 32px; /* Admin bar height */
+}
+
+.medbeafgallery-filter-sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.medbeafgallery-filter-sidebar-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.medbeafgallery-filter-sidebar-toggle {
+    all: unset;
+    display: none;
+    cursor: pointer;
+    color: #6b7280;
+    padding: 4px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.medbeafgallery-filter-sidebar-toggle:hover {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+/* Filter Groups */
+.medbeafgallery-filter-groups {
+    padding: 8px 0;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.medbeafgallery-filter-group {
+    padding: 12px 20px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.medbeafgallery-filter-group:last-child {
+    border-bottom: none;
+}
+
+.medbeafgallery-filter-group-title {
+    margin: 0 0 10px 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.medbeafgallery-filter-group-options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Checkbox Labels */
+.medbeafgallery-filter-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin: 0;
+}
+
+.medbeafgallery-filter-checkbox:hover {
+    background: #f3f4f6;
+}
+
+.medbeafgallery-filter-checkbox input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--medbeafgallery-primary-solid, #2563eb);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.medbeafgallery-filter-checkbox-label {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.3;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CTA BUTTON
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-cta-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 20px;
+    background: var(--medbeafgallery-primary-solid, #2563eb);
+    color: #ffffff !important;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none !important;
+    transition: background 0.2s, transform 0.15s, filter 0.2s;
+    cursor: pointer;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.medbeafgallery-cta-button:hover {
+    background: var(--medbeafgallery-primary-solid, #1d4ed8);
+    filter: brightness(0.9);
+    transform: translateY(-1px);
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+.medbeafgallery-cta-button:active {
+    transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE — TABLET & MOBILE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 991px) {
+    .medbeafgallery-gallery-layout {
+        flex-direction: column;
+    }
+
+    /* Safari (iPadOS) does not stretch flex children on the cross-axis when
+       align-items: flex-start is set on a column-direction flex container.
+       Explicitly set width so the gallery grid can calculate its columns. */
+    .medbeafgallery-gallery-layout .medbeafgallery-main-content {
+        width: 100%;
+    }
+
+    .medbeafgallery-filter-sidebar {
+        width: 100%;
+        position: static;
+    }
+
+    .medbeafgallery-filter-sidebar-toggle {
+        display: flex;
+    }
+
+    .medbeafgallery-filter-groups.collapsed {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .medbeafgallery-filter-sidebar {
+        border-radius: 8px;
+    }
+
+    .medbeafgallery-filter-group {
+        padding: 10px 16px;
+    }
+
+    .medbeafgallery-filter-sidebar-header {
+        padding: 12px 16px;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SEARCH + SORT TOOLBAR (top of the sidebar)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-pro-toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+}
+
+.medbeafgallery-pro-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.medbeafgallery-pro-search-icon {
+    position: absolute;
+    left: 10px;
+    color: #9ca3af;
+    pointer-events: none;
+}
+
+.medbeafgallery-pro-search-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 10px 8px 32px;
+    font-size: 14px;
+    color: #111827;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.medbeafgallery-pro-search-input:focus {
+    border-color: var(--pro-accent, #2563eb);
+    box-shadow: 0 0 0 3px rgba(var(--pro-accent-rgb, 37, 99, 235), 0.15);
+}
+
+.medbeafgallery-pro-sort {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.medbeafgallery-pro-sort-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6b7280;
+}
+
+.medbeafgallery-pro-sort-select {
+    flex: 1;
+    padding: 7px 10px;
+    font-size: 14px;
+    color: #111827;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.medbeafgallery-pro-sort-select:focus {
+    border-color: var(--pro-accent, #2563eb);
+    outline: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SENSITIVE-CONTENT CONSENT OVERLAY
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+html.medbeafgallery-consent-lock {
+    overflow: hidden !important;
+}
+
+.medbeafgallery-consent-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.medbeafgallery-consent-box {
+    max-width: 460px;
+    width: 100%;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px 28px;
+    text-align: center;
+    box-shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.5);
+}
+
+.medbeafgallery-consent-box h2 {
+    margin: 0 0 12px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+.medbeafgallery-consent-message {
+    margin: 0 0 24px;
+    font-size: 15px;
+    line-height: 1.65;
+    color: #4b5563;
+}
+
+.medbeafgallery-consent-message p {
+    margin: 0 0 10px;
+}
+
+.medbeafgallery-consent-message p:last-child {
+    margin-bottom: 0;
+}
+
+.medbeafgallery-consent-accept {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    background: var(--pro-accent, #2563eb);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(var(--pro-accent-rgb, 37, 99, 235), 0.35);
+    transition: filter 0.2s, transform 0.15s;
+}
+
+.medbeafgallery-consent-accept:hover {
+    filter: brightness(0.93);
+    transform: translateY(-1px);
+}
+
+.medbeafgallery-consent-accept:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+    .medbeafgallery-consent-box {
+        padding: 26px 20px;
+    }
+
+    .medbeafgallery-consent-box h2 {
+        font-size: 19px;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DARK MODE (gallery page — sidebar, toolbar, cards)
+
+   The modal's dark theme lives in pro-modal.css. This covers the rest of the
+   gallery page so dark mode is coherent. Activated by `.mba-pro-dark` on <html>.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Sidebar + toolbar */
+.mba-pro-dark .medbeafgallery-filter-sidebar {
+    background: #1b1b29;
+    border-color: #33334d;
+}
+
+.mba-pro-dark .medbeafgallery-filter-sidebar-header,
+.mba-pro-dark .medbeafgallery-pro-toolbar {
+    background: #16161f;
+    border-bottom-color: #33334d;
+}
+
+.mba-pro-dark .medbeafgallery-filter-sidebar-header h3,
+.mba-pro-dark .medbeafgallery-filter-group-title {
+    color: #f1f1f6;
+}
+
+.mba-pro-dark .medbeafgallery-filter-group {
+    border-bottom-color: #2a2a40;
+}
+
+.mba-pro-dark .medbeafgallery-filter-checkbox-label {
+    color: #b6b6c6;
+}
+
+.mba-pro-dark .medbeafgallery-filter-checkbox:hover {
+    background: #25253a;
+}
+
+.mba-pro-dark .medbeafgallery-pro-search-input,
+.mba-pro-dark .medbeafgallery-pro-sort-select {
+    background: #25253a;
+    border-color: #33334d;
+    color: #f1f1f6;
+}
+
+.mba-pro-dark .medbeafgallery-pro-sort-label {
+    color: #8a8aa0;
+}
+
+/* Gallery cards */
+.mba-pro-dark .medbeafgallery-gallery-item {
+    background: #1b1b29;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.mba-pro-dark .medbeafgallery-gallery-item:hover {
+    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.45);
+}
+
+.mba-pro-dark .medbeafgallery-gallery-item-info h3 {
+    color: #f1f1f6;
+}
+
+.mba-pro-dark .medbeafgallery-gallery-category {
+    background: #25253a;
+    color: #b6b6c6;
+}
+
+.mba-pro-dark .medbeafgallery-no-results {
+    color: #b6b6c6;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   MULTI-CATEGORY CARDS (Classic layout)
+   A case in several categories gets one pill per category. The wrapper carries
+   the same vertical rhythm the free plugin's single category badge uses
+   (margin-top:1rem / margin-bottom:12px) so multi-category cards line up with
+   single-category ones; the per-pill margins are then reset.
+   ─────────────────────────────────────────────────────────────────────────── */
+.medbeafgallery-gallery-categories {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 1rem 0 12px;
+}
+.medbeafgallery-gallery-categories .medbeafgallery-gallery-category {
+    margin: 0;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   RICHER CLASSIC CARDS (Classic layout)
+   A description excerpt and treatment-overview meta pills under the card title,
+   matching the Masonry cards. Injected by initMultiCategoryCards() in
+   pro-frontend-filters.js (the free card body shows only category + title).
+   ─────────────────────────────────────────────────────────────────────────── */
+.medbeafgallery-gallery-item-info .mba-pro-ccard-desc {
+    margin: 0 0 12px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #6b7280;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.medbeafgallery-gallery-item-info .mba-pro-ccard-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 16px;
+}
+/* Whichever enhancement is last gives the card body its bottom breathing room
+   (the free info block has padding-bottom:0). */
+.medbeafgallery-gallery-item-info .mba-pro-ccard-desc:last-child,
+.medbeafgallery-gallery-item-info .mba-pro-ccard-meta:last-child {
+    margin-bottom: 16px;
+}
+.mba-pro-ccard-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background: #f4f5f7;
+    color: #475569;
+    font-size: 11.5px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+.mba-pro-ccard-pill svg { flex-shrink: 0; opacity: 0.7; }
+/* Custom-filter pills carry their attribute label so they're self-explanatory. */
+.mba-pro-ccard-pill-custom { background: #eef2ff; color: #4338ca; }
+.mba-pro-ccard-pill-l { font-weight: 700; opacity: 0.8; }
+
+/* Dark mode */
+.mba-pro-dark .mba-pro-ccard-desc { color: #9b9bb0; }
+.mba-pro-dark .mba-pro-ccard-pill { background: #25253a; color: #b6b6c6; }
+.mba-pro-dark .mba-pro-ccard-pill-custom { background: #2a2a45; color: #c7d2fe; }

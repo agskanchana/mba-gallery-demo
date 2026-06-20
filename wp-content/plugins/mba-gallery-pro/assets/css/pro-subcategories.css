@@ -1,0 +1,490 @@
+/**
+ * MBA Gallery Pro – Subcategory Pills
+ *
+ * Pill-style buttons that appear below the main category carousel
+ * when a parent category with children is selected.
+ *
+ * @package MBA_Gallery_Pro
+ */
+
+/* Theme defense: own the box-sizing reset (this component had none) so a
+   content-box theme can't overflow the pill row. Icons are covered by the
+   shared svg lock in pro-frontend-filters.css (pills live in the container). */
+.medbeafgallery-child-categories,
+.medbeafgallery-child-categories *,
+.medbeafgallery-child-categories *::before,
+.medbeafgallery-child-categories *::after {
+    box-sizing: border-box;
+}
+
+/* ── Container ──────────────────────────────────────────────────── */
+.medbeafgallery-child-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 0 16px;
+    margin: 0 0 8px;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Entry animation */
+.medbeafgallery-child-categories.mba-pro-pills-enter {
+    animation: mbaProPillsFadeIn 0.25s ease-out;
+}
+
+@keyframes mbaProPillsFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Individual pill ────────────────────────────────────────────── */
+.mba-pro-subcategory-pill {
+    /* Strip the native button look so a theme's button skin can't bleed through;
+       every visual property below is set explicitly. */
+    -webkit-appearance: none;
+    appearance: none;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 9999px; /* fully rounded */
+    background: #ffffff;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    font-family: inherit;
+}
+
+.mba-pro-subcategory-pill:hover {
+    background: var(--medbeafgallery-primary-10, #eff6ff);
+    border-color: var(--medbeafgallery-primary-50, #93c5fd);
+    color: var(--medbeafgallery-primary-solid, #1d4ed8);
+}
+
+.mba-pro-subcategory-pill:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* Active / selected state */
+.mba-pro-subcategory-pill.active {
+    background: var(--medbeafgallery-primary-solid, #2563eb);
+    border-color: var(--medbeafgallery-primary-solid, #2563eb);
+    color: #ffffff;
+    box-shadow: 0 1px 3px var(--medbeafgallery-primary-20, rgba(37, 99, 235, 0.3));
+}
+
+.mba-pro-subcategory-pill.active:hover {
+    background: var(--medbeafgallery-primary-solid, #1d4ed8);
+    border-color: var(--medbeafgallery-primary-solid, #1d4ed8);
+    color: #ffffff;
+    filter: brightness(0.9);
+}
+
+/* Count badge inside pill */
+.mba-pro-pill-count {
+    font-weight: 400;
+    opacity: 0.7;
+    font-size: 12px;
+}
+
+.mba-pro-subcategory-pill.active .mba-pro-pill-count {
+    opacity: 0.85;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .medbeafgallery-child-categories {
+        padding: 10px 0 12px;
+        gap: 6px;
+    }
+
+    .mba-pro-subcategory-pill {
+        padding: 5px 12px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .medbeafgallery-child-categories {
+        justify-content: flex-start;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 8px;
+        scrollbar-width: none; /* Firefox */
+    }
+
+    .medbeafgallery-child-categories::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   CATEGORY CAROUSEL — NAV ARROWS ON EITHER SIDE
+
+   Keep the prev/next arrows flanking the carousel and vertically centred,
+   rather than grouped in the top-left corner. Loaded after the free plugin's
+   gallery.css, so these win on source order. Carousel mode only (tab mode
+   uses its own scroll arrows).
+   ════════════════════════════════════════════════════════════════════════ */
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode {
+    position: relative;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-nav-buttons {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 0 6px;
+    pointer-events: none;
+    z-index: 12;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-nav-btn {
+    position: relative;
+    pointer-events: auto;
+    flex: 0 0 auto;
+}
+
+/* Reserve a little room at each end so the arrows don't cover the first/last
+   category card. */
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-wrapper {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+/* SVG chevrons injected by pro-frontend-filters.js (replacing the free plugin's
+   text ← →). Force stroke rendering so gallery.css's `.medbeafgallery-nav-btn
+   svg { fill: currentColor }` can't fill the open chevron path. */
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-nav-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+}
+
+/* ── Carousel fits without scrolling ─────────────────────────────────────
+   When every category already fits (no horizontal overflow), the carousel
+   can't scroll, so hide the arrows and center the cards instead of leaving
+   them left-aligned with empty space. `.mba-pro-cat-fits` is toggled by
+   pro-frontend-filters.js. */
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode.mba-pro-cat-fits .medbeafgallery-nav-buttons {
+    display: none;
+}
+
+/* Keep the items' natural (fit-content) width and just center the block, so
+   the overflow measurement stays valid if the viewport later narrows. */
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode.mba-pro-cat-fits .medbeafgallery-carousel-items {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* No arrows to clear → drop the reserved side padding. */
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode.mba-pro-cat-fits .medbeafgallery-carousel-wrapper {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   CATEGORY TABS MODE  (Appearance → Category Display: Tabs)
+
+   Flattens the free plugin's image-card carousel into a row of text tabs.
+   The `.mba-pro-cat-tabs` class is added to `.medbeafgallery-category-carousel`
+   by pro-frontend-filters.js. These rules deliberately reuse the existing
+   markup (.medbeafgallery-carousel-item / .medbeafgallery-category-name) so
+   every click/filter handler the free plugin bound to it keeps working.
+
+   Loaded after the free plugin's gallery.css (dependency), so equal-specificity
+   rules win on source order; `!important` is used only where the carousel-mode
+   rules would otherwise tie and force the flex/scroll layout back on.
+   ════════════════════════════════════════════════════════════════════════ */
+.medbeafgallery-category-carousel.mba-pro-cat-tabs {
+    margin: 24px 0 32px;
+}
+
+/* No carousel arrows in tab mode */
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-nav-buttons {
+    display: none !important;
+}
+
+/* Drop the rounded "card tray" padding; use a single baseline rule instead */
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-wrapper {
+    padding: 0;
+    border-radius: 0;
+    overflow: visible;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Lay the items out as a centered, wrapping tab strip */
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-items {
+    display: flex !important;
+    grid-template-columns: none !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    width: 100% !important;
+    gap: 2px;
+    transform: none !important; /* cancel any carousel scroll offset */
+}
+
+/* Turn each image card into a flat text tab */
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-item {
+    flex: 0 0 auto;
+    flex-direction: row;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 0;
+    padding: 12px 18px;
+    margin-bottom: -1px; /* sit the active underline on the strip border */
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-item:hover {
+    transform: none;
+    box-shadow: none;
+    background: var(--medbeafgallery-primary-10, #eff6ff);
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-item.active {
+    transform: none;
+    box-shadow: none;
+    background: transparent;
+    border-bottom-color: var(--medbeafgallery-primary-solid, #2563eb);
+}
+
+/* The carousel paints its own underline pseudo-element; the tab border replaces it */
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-item.active::after {
+    display: none;
+}
+
+/* Tabs are text only — hide the category image / SVG placeholder */
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-category-image,
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-item img {
+    display: none !important;
+}
+
+/* Tab label */
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-item p,
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-category-name {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+    color: #374151;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-item.active p,
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-item.active .medbeafgallery-category-name {
+    color: var(--medbeafgallery-primary-solid, #1e40af);
+    font-weight: 700;
+}
+
+/* On narrow screens, scroll the tab strip horizontally instead of wrapping */
+@media (max-width: 600px) {
+    .medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-items {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+    }
+    .medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-items::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+}
+
+/* ── Tab strip scroll arrows ─────────────────────────────────────────────
+   Injected by pro-frontend-filters.js. Hidden until the strip overflows its
+   container (e.g. on mobile, where it scrolls horizontally instead of
+   wrapping). The gradient gives a "more categories →" cue at the clipped edge,
+   and each arrow auto-hides once that end is reached. */
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .mba-pro-tab-scroll {
+    all: unset;
+    box-sizing: border-box;
+    display: none; /* revealed by .mba-pro-tabs-overflow */
+    position: absolute;
+    top: 0;
+    bottom: 1px; /* keep clear of the strip's bottom border */
+    width: 46px;
+    z-index: 5;
+    cursor: pointer;
+    align-items: center;
+    color: #374151;
+    -webkit-tap-highlight-color: transparent;
+    transition: color 0.2s ease;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .mba-pro-tab-scroll svg {
+    display: block;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .mba-pro-tab-scroll-prev {
+    left: 0;
+    justify-content: flex-start;
+    padding-left: 2px;
+    background: linear-gradient(to right, #ffffff 55%, rgba(255, 255, 255, 0));
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .mba-pro-tab-scroll-next {
+    right: 0;
+    justify-content: flex-end;
+    padding-right: 2px;
+    background: linear-gradient(to left, #ffffff 55%, rgba(255, 255, 255, 0));
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .mba-pro-tab-scroll:hover {
+    color: var(--medbeafgallery-primary-solid, #2563eb);
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .mba-pro-tab-scroll:focus-visible {
+    outline: 2px solid var(--medbeafgallery-primary-solid, #3b82f6);
+    outline-offset: -2px;
+}
+
+/* Reveal the arrows only when the strip actually overflows … */
+.medbeafgallery-category-carousel.mba-pro-cat-tabs.mba-pro-tabs-overflow .mba-pro-tab-scroll {
+    display: flex;
+}
+
+/* … and drop the relevant arrow once that end is reached. */
+.medbeafgallery-category-carousel.mba-pro-cat-tabs.mba-pro-tabs-at-start .mba-pro-tab-scroll-prev,
+.medbeafgallery-category-carousel.mba-pro-cat-tabs.mba-pro-tabs-at-end .mba-pro-tab-scroll-next {
+    display: none;
+}
+
+/* ── Pro Case Description in Modal ──────────────────────────────── */
+#medbeafgallery-case-description.medbeafgallery-case-description {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    padding: 20px 24px;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.80);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 14px;
+    line-height: 1.7;
+    color: #e2e8f0;
+    max-height: 35%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.3) transparent;
+}
+
+/* Hide when empty */
+#medbeafgallery-case-description.medbeafgallery-case-description:empty {
+    display: none !important;
+}
+
+.medbeafgallery-case-description::-webkit-scrollbar {
+    width: 5px;
+}
+
+.medbeafgallery-case-description::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.medbeafgallery-case-description::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.3);
+    border-radius: 10px;
+}
+
+/* Typography inside description */
+.medbeafgallery-case-description h2,
+.medbeafgallery-case-description h3,
+.medbeafgallery-case-description h4 {
+    margin: 0 0 8px;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.medbeafgallery-case-description h2 {
+    font-size: 18px;
+}
+
+.medbeafgallery-case-description h3 {
+    font-size: 16px;
+}
+
+.medbeafgallery-case-description h4 {
+    font-size: 15px;
+}
+
+.medbeafgallery-case-description p {
+    margin: 0 0 12px;
+}
+
+.medbeafgallery-case-description p:last-child {
+    margin-bottom: 0;
+}
+
+.medbeafgallery-case-description ul,
+.medbeafgallery-case-description ol {
+    margin: 0 0 12px;
+    padding-left: 20px;
+}
+
+.medbeafgallery-case-description li {
+    margin-bottom: 4px;
+}
+
+.medbeafgallery-case-description a {
+    color: #93c5fd;
+    text-decoration: underline;
+}
+
+.medbeafgallery-case-description a:hover {
+    color: #bfdbfe;
+}
+
+.medbeafgallery-case-description strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.medbeafgallery-case-description blockquote {
+    margin: 0 0 12px;
+    padding: 10px 16px;
+    border-left: 3px solid #60a5fa;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+    color: #cbd5e1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .medbeafgallery-case-description {
+        position: relative;
+        max-height: 150px;
+        padding: 14px 16px;
+        font-size: 13px;
+    }
+}

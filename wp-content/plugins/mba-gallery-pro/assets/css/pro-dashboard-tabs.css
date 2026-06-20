@@ -1,0 +1,167 @@
+/**
+ * MBA Gallery Pro – Dashboard Tabs
+ *
+ * @package MBA_Gallery_Pro
+ */
+
+/* ── Tab container ─────────────────────────────────────────────────── */
+.mba-pro-tabs-wrapper {
+    margin: 24px 0 10px;
+}
+
+.mba-pro-tabs-header {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 0;
+    border-bottom: 2px solid #e0e0e0;
+    position: relative;
+    flex-direction: column;
+}
+
+.mba-pro-tabs-header .mba-pro-tabs-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 18px 0 0;
+    padding: 0 0 12px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #1d2327;
+    white-space: nowrap;
+}
+
+.mba-pro-tabs-header .mba-pro-tabs-title .mba-pro-tabs-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border-radius: 14px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ── Tab navigation ────────────────────────────────────────────────── */
+.mba-pro-tabs-nav {
+    display: flex;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    flex-wrap: wrap;
+}
+
+.mba-pro-tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    margin-bottom: -2px;
+    border: 2px solid transparent;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    background: transparent;
+    color: #50575e;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    line-height: 1.4;
+}
+
+.mba-pro-tab-btn:hover {
+    background: #f0f0f1;
+    color: #1d2327;
+}
+
+.mba-pro-tab-btn.mba-pro-tab-active {
+    background: #fff;
+    color: #2271b1;
+    border-color: #e0e0e0;
+    border-bottom: 2px solid #fff;
+    font-weight: 600;
+}
+
+.mba-pro-tab-btn .dashicons {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+}
+
+/* ── Tab panels ────────────────────────────────────────────────────── */
+.mba-pro-tabs-body {
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 0;
+    min-height: 200px;
+}
+
+.mba-pro-tab-panel {
+    display: none;
+    padding: 20px 24px 24px;
+    animation: mbaProTabFadeIn 0.25s ease;
+}
+
+.mba-pro-tab-panel.mba-pro-tab-panel-active {
+    display: block;
+}
+
+@keyframes mbaProTabFadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Override the admin-box styling inside tabs — we don't need
+   the extra box-shadow / border since the tab panel IS the box. */
+.mba-pro-tab-panel > .medbeafgallery-admin-box {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* Remove duplicate headers inside tab panels (the tab already labels the section) */
+.mba-pro-tab-panel > .medbeafgallery-admin-box > .medbeafgallery-pro-header {
+    display: none;
+}
+
+/* Also hide the h2 inside the settings form (it's redundant with the tab label) */
+.mba-pro-tab-panel > .medbeafgallery-settings-form > h2 {
+    display: none;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────── */
+@media screen and (max-width: 782px) {
+    .mba-pro-tabs-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .mba-pro-tabs-header .mba-pro-tabs-title {
+        margin-bottom: 8px;
+    }
+
+    .mba-pro-tabs-nav {
+        width: 100%;
+    }
+
+    .mba-pro-tab-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .mba-pro-tab-panel {
+        padding: 16px;
+    }
+}
+
