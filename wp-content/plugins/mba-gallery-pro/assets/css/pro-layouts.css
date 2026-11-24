@@ -1,0 +1,2250 @@
+/* Default variables only affect this module's additions. Presets are opt-in.
+   Each colour, radius, shadow and heading font reads a public --mbg-* property
+   first (see Pro's readme FAQ), so a site can restyle every look. Dark Mode
+   keeps its own colours. */
+.mba-pro-layouts,
+.mba-pro-layout-window {
+    --mba-pro-layout-page: transparent;
+    --mba-pro-layout-card: var(--mbg-card-bg, #ffffff);
+    --mba-pro-layout-soft: #f1f5f9;
+    --mba-pro-layout-text: var(--mbg-text, #172735);
+    --mba-pro-layout-muted: var(--mbg-muted, #4b6072);
+    --mba-pro-layout-accent: var(--mbg-accent, var(--medbeafgallery-primary-solid, #1d4ed8));
+    --mba-pro-layout-on-accent: #ffffff;
+    --mba-pro-layout-line: var(--mbg-card-border, #c4d0dc);
+    --mba-pro-layout-radius: var(--mbg-card-radius, 12px);
+    --mba-pro-layout-shadow: var(--mbg-card-shadow, 0 5px 20px rgb(15 23 42 / 8%));
+    --mba-pro-layout-heading: var(--mbg-heading-font, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+    --mba-pro-layout-photo-bg: #e9edf0;
+}
+
+.mba-pro-layouts,
+.mba-pro-layouts *,
+.mba-pro-layouts *::before,
+.mba-pro-layouts *::after,
+.mba-pro-layout-window,
+.mba-pro-layout-window *,
+.mba-pro-layout-window *::before,
+.mba-pro-layout-window *::after {
+    box-sizing: border-box !important;
+}
+
+.mba-pro-layouts.mba-pro-preset-clinical,
+.mba-pro-layout-window.mba-pro-preset-clinical {
+    --mba-pro-layout-page: #f3f8fc;
+    --mba-pro-layout-card: var(--mbg-card-bg, #ffffff);
+    --mba-pro-layout-soft: #eaf1f8;
+    --mba-pro-layout-text: var(--mbg-text, #142c44);
+    --mba-pro-layout-muted: var(--mbg-muted, #455d73);
+    --mba-pro-layout-accent: var(--mbg-accent, #1555a0);
+    --mba-pro-layout-line: var(--mbg-card-border, #c4d3e0);
+    --mba-pro-layout-radius: var(--mbg-card-radius, 6px);
+    --mba-pro-layout-shadow: var(--mbg-card-shadow, 0 2px 8px rgb(20 44 68 / 6%));
+}
+
+.mba-pro-layouts.mba-pro-preset-luxury,
+.mba-pro-layout-window.mba-pro-preset-luxury {
+    --mba-pro-layout-page: #f6f0e4;
+    --mba-pro-layout-card: var(--mbg-card-bg, #fffcf5);
+    --mba-pro-layout-soft: #eee5d4;
+    --mba-pro-layout-text: var(--mbg-text, #241f18);
+    --mba-pro-layout-muted: var(--mbg-muted, #625640);
+    --mba-pro-layout-accent: var(--mbg-accent, #725015);
+    --mba-pro-layout-line: var(--mbg-card-border, #d5c7ae);
+    --mba-pro-layout-radius: var(--mbg-card-radius, 4px);
+    --mba-pro-layout-shadow: var(--mbg-card-shadow, 0 10px 28px rgb(36 31 24 / 10%));
+}
+
+.mba-pro-layouts.mba-pro-preset-spa,
+.mba-pro-layout-window.mba-pro-preset-spa {
+    --mba-pro-layout-page: #f5f6ee;
+    --mba-pro-layout-card: var(--mbg-card-bg, #fffff8);
+    --mba-pro-layout-soft: #e6eddf;
+    --mba-pro-layout-text: var(--mbg-text, #233c33);
+    --mba-pro-layout-muted: var(--mbg-muted, #4f655a);
+    --mba-pro-layout-accent: var(--mbg-accent, #345c47);
+    --mba-pro-layout-line: var(--mbg-card-border, #cbd7c8);
+    --mba-pro-layout-radius: var(--mbg-card-radius, 24px);
+    --mba-pro-layout-shadow: var(--mbg-card-shadow, 0 8px 26px rgb(35 60 51 / 8%));
+}
+
+/* Dark Mode on/auto changes local tokens; it never changes the global mode. */
+.mba-pro-layouts[data-mba-pro-layout-dark="true"],
+.mba-pro-layout-window[data-mba-pro-layout-dark="true"],
+.mba-pro-layout-window.mba-pro-viewer-dark {
+    --mba-pro-layout-page: #101b2d;
+    --mba-pro-layout-card: #18263a;
+    --mba-pro-layout-soft: #23364b;
+    --mba-pro-layout-text: #edf4fc;
+    --mba-pro-layout-muted: #b8c8de;
+    --mba-pro-layout-accent: #97c8fc;
+    --mba-pro-layout-on-accent: #101b2d;
+    --mba-pro-layout-line: #425875;
+    --mba-pro-layout-photo-bg: #101924;
+}
+
+.mba-pro-layouts.mba-pro-preset-luxury[data-mba-pro-layout-dark="true"],
+.mba-pro-layout-window.mba-pro-preset-luxury[data-mba-pro-layout-dark="true"],
+.mba-pro-layout-window.mba-pro-preset-luxury.mba-pro-viewer-dark {
+    --mba-pro-layout-page: #191713;
+    --mba-pro-layout-card: #26221b;
+    --mba-pro-layout-soft: #342e23;
+    --mba-pro-layout-text: #fbf4e5;
+    --mba-pro-layout-muted: #d2c5ae;
+    --mba-pro-layout-accent: #e6c276;
+    --mba-pro-layout-on-accent: #211b11;
+    --mba-pro-layout-line: #655941;
+}
+
+.mba-pro-layouts.mba-pro-preset-spa[data-mba-pro-layout-dark="true"],
+.mba-pro-layout-window.mba-pro-preset-spa[data-mba-pro-layout-dark="true"],
+.mba-pro-layout-window.mba-pro-preset-spa.mba-pro-viewer-dark {
+    --mba-pro-layout-page: #14241e;
+    --mba-pro-layout-card: #1e342a;
+    --mba-pro-layout-soft: #2c4438;
+    --mba-pro-layout-text: #edf6ec;
+    --mba-pro-layout-muted: #bed1bf;
+    --mba-pro-layout-accent: #bad4a9;
+    --mba-pro-layout-on-accent: #18271b;
+    --mba-pro-layout-line: #526d59;
+}
+
+.mba-pro-layouts.mba-pro-preset-midnight,
+.mba-pro-layout-window.mba-pro-preset-midnight {
+    --mba-pro-layout-page: #101b2d;
+    --mba-pro-layout-card: var(--mbg-card-bg, #18263a);
+    --mba-pro-layout-soft: #23364b;
+    --mba-pro-layout-text: var(--mbg-text, #edf4fc);
+    --mba-pro-layout-muted: var(--mbg-muted, #b8c8de);
+    --mba-pro-layout-accent: var(--mbg-accent, #97c8fc);
+    --mba-pro-layout-on-accent: #101b2d;
+    --mba-pro-layout-line: var(--mbg-card-border, #425875);
+    --mba-pro-layout-photo-bg: #101924;
+    --mba-pro-layout-radius: var(--mbg-card-radius, 12px);
+    --mba-pro-layout-shadow: var(--mbg-card-shadow, 0 10px 30px rgb(0 0 0 / 25%));
+    color-scheme: dark;
+}
+
+/* No background behind the gallery: it sits on the page like the rest of the
+   content. The cards carry the preset's colours. */
+.mba-pro-layouts.mba-pro-preset-active {
+    background: transparent !important;
+    color: var(--mba-pro-layout-text) !important;
+    padding: 0 !important;
+    border-radius: 0;
+}
+
+/* Dark looks (Midnight, Dark Mode) keep their dark surface: their light text
+   would vanish on a light page without it. */
+.mba-pro-layouts.mba-pro-preset-active:is(.mba-pro-preset-midnight, [data-mba-pro-layout-dark="true"]) {
+    background: var(--mba-pro-layout-page) !important;
+    padding: clamp(12px, 2vw, 24px) !important;
+    border-radius: var(--mba-pro-layout-radius);
+}
+
+.mba-pro-layouts.mba-pro-preset-active .medbeafgallery-gallery-item {
+    background: var(--mba-pro-layout-card) !important;
+    color: var(--mba-pro-layout-text) !important;
+    border: 1px solid var(--mba-pro-layout-line) !important;
+    border-radius: var(--mba-pro-layout-radius) !important;
+    box-shadow: var(--mba-pro-layout-shadow) !important;
+}
+
+.mba-pro-layouts.mba-pro-preset-active :is(.medbeafgallery-gallery-item-info h3, .medbeafgallery-gallery-title, .medbeafgallery-filter-sidebar-header h3, .mba-pro-row-title),
+.mba-pro-layout-window.mba-pro-preset-active :is(.medbeafgallery-modal-header h2, .mba-pro-mmodal-title, .mba-pro-viewer-title, .mba-pro-viewer-detail-case-title) {
+    font-family: var(--mba-pro-layout-heading) !important;
+    color: var(--mba-pro-layout-text) !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+}
+
+.mba-pro-layouts.mba-pro-preset-active :is(.medbeafgallery-gallery-category, .mba-pro-ccard-pill, .mba-pro-mcard-pill, .medbeafgallery-pro-search-input, .medbeafgallery-pro-sort-select) {
+    background: var(--mba-pro-layout-soft) !important;
+    color: var(--mba-pro-layout-text) !important;
+    border-color: var(--mba-pro-layout-line) !important;
+}
+
+.mba-pro-layouts.mba-pro-preset-active :is(.mba-pro-ccard-desc, .mba-pro-mcard-desc, .medbeafgallery-filter-checkbox-label, .medbeafgallery-no-results, .medbeafgallery-pro-sort-label) {
+    color: var(--mba-pro-layout-muted) !important;
+}
+
+.mba-pro-layouts.mba-pro-preset-active :is(.medbeafgallery-filter-sidebar, .medbeafgallery-filter-sidebar-header, .medbeafgallery-pro-toolbar) {
+    background: var(--mba-pro-layout-card) !important;
+    color: var(--mba-pro-layout-text) !important;
+    border-color: var(--mba-pro-layout-line) !important;
+}
+
+.mba-pro-layouts.mba-pro-preset-active .medbeafgallery-filter-group-title {
+    color: var(--mba-pro-layout-text) !important;
+}
+
+/* Map the same tokens into all three existing case-window implementations. */
+.mba-pro-layout-window.mba-pro-preset-active {
+    --pro-bg: var(--mba-pro-layout-card) !important;
+    --pro-bg-subtle: var(--mba-pro-layout-page) !important;
+    --pro-bg-muted: var(--mba-pro-layout-soft) !important;
+    --pro-text: var(--mba-pro-layout-text) !important;
+    --pro-text-muted: var(--mba-pro-layout-muted) !important;
+    --pro-text-subtle: var(--mba-pro-layout-muted) !important;
+    --pro-border: var(--mba-pro-layout-line) !important;
+    --pro-accent: var(--mba-pro-layout-accent) !important;
+    --mba-viewer-bg: var(--mba-pro-layout-card) !important;
+    --mba-viewer-soft: var(--mba-pro-layout-soft) !important;
+    --mba-viewer-text: var(--mba-pro-layout-text) !important;
+    --mba-viewer-muted: var(--mba-pro-layout-muted) !important;
+    --mba-viewer-line: var(--mba-pro-layout-line) !important;
+    --mba-viewer-accent: var(--mba-pro-layout-accent) !important;
+    --mba-viewer-on-accent: var(--mba-pro-layout-on-accent) !important;
+}
+
+.mba-pro-layout-window.mba-pro-preset-active .mba-pro-mmodal-dialog {
+    --mm-bg: var(--mba-pro-layout-card) !important;
+    --mm-text: var(--mba-pro-layout-text) !important;
+    --mm-title: var(--mba-pro-layout-text) !important;
+    --mm-muted: var(--mba-pro-layout-muted) !important;
+    --mm-border: var(--mba-pro-layout-line) !important;
+    --mm-accent: var(--mba-pro-layout-accent) !important;
+    --mm-accent-soft: var(--mba-pro-layout-soft) !important;
+    --mm-tile-bg: var(--mba-pro-layout-soft) !important;
+    --mm-tile-v: var(--mba-pro-layout-text) !important;
+    --mm-btn-bg: var(--mba-pro-layout-soft) !important;
+    --mm-btn-hover: var(--mba-pro-layout-card) !important;
+    --mm-btn-color: var(--mba-pro-layout-text) !important;
+    --mm-bg-fade: transparent !important;
+}
+
+.mba-pro-layout-window.mba-pro-preset-active :is(.medbeafgallery-modal-content, .mba-pro-mmodal-dialog, .mba-pro-viewer-dialog) {
+    background: var(--mba-pro-layout-card) !important;
+    color: var(--mba-pro-layout-text) !important;
+    border-radius: var(--mba-pro-layout-radius) !important;
+    border-color: var(--mba-pro-layout-line) !important;
+}
+
+.mba-pro-layout-window.mba-pro-preset-active :is(.medbeafgallery-modal-header, .medbeafgallery-case-details, .mba-pro-cmodal-side, .medbeafgallery-modal-nav-container) {
+    background: var(--mba-pro-layout-card) !important;
+    color: var(--mba-pro-layout-text) !important;
+    border-color: var(--mba-pro-layout-line) !important;
+}
+
+.mba-pro-layout-window.mba-pro-preset-active :is(.medbeafgallery-control-btn, .mba-pro-mmodal-seg, .mba-pro-mmodal-tab, .mba-pro-cmodal-tab) {
+    background: var(--mba-pro-layout-soft) !important;
+    color: var(--mba-pro-layout-text) !important;
+}
+
+.mba-pro-layout-window.mba-pro-preset-active :is(.medbeafgallery-control-btn.active, .mba-pro-mmodal-seg.is-active, .mba-pro-mmodal-tab.is-active, .mba-pro-cmodal-tab.is-active, .mba-pro-cta-btn),
+.mba-pro-layouts.mba-pro-preset-active .medbeafgallery-load-more {
+    background: var(--mba-pro-layout-accent) !important;
+    color: var(--mba-pro-layout-on-accent) !important;
+}
+
+/* Shared layout boundaries: intrinsic image widths cannot widen the page. */
+.mba-pro-layouts .medbeafgallery-main-content,
+.mba-pro-layouts .medbeafgallery-gallery-container,
+.mba-pro-layouts .medbeafgallery-gallery-grid,
+.mba-pro-layouts .mba-pro-layout-card {
+    min-width: 0 !important;
+}
+
+.mba-pro-layouts:not(.mba-pro-gallery-classic):not(.mba-pro-gallery-masonry) {
+    container-type: inline-size;
+}
+
+.mba-pro-layouts:not(.mba-pro-gallery-masonry):not(.mba-pro-gallery-editorial):not(.mba-pro-rows-active)[data-mba-pro-columns="1"] .medbeafgallery-gallery-grid,
+.mba-pro-layouts:not(.mba-pro-gallery-masonry):not(.mba-pro-gallery-editorial):not(.mba-pro-rows-active)[data-mba-pro-columns="2"] .medbeafgallery-gallery-grid,
+.mba-pro-layouts:not(.mba-pro-gallery-masonry):not(.mba-pro-gallery-editorial):not(.mba-pro-rows-active)[data-mba-pro-columns="3"] .medbeafgallery-gallery-grid,
+.mba-pro-layouts:not(.mba-pro-gallery-masonry):not(.mba-pro-gallery-editorial):not(.mba-pro-rows-active)[data-mba-pro-columns="4"] .medbeafgallery-gallery-grid {
+    grid-template-columns: repeat(var(--mba-pro-layout-columns), minmax(0, 1fr)) !important;
+}
+
+.mba-pro-layouts.mba-pro-gallery-masonry:not([data-mba-pro-columns="auto"]) .medbeafgallery-gallery-grid {
+    column-count: var(--mba-pro-layout-columns, 3) !important;
+}
+
+.mba-pro-layouts.mba-pro-gallery-masonry[data-mba-pro-columns-override="true"][data-mba-pro-columns="auto"] .medbeafgallery-gallery-grid {
+    column-count: 3 !important;
+}
+
+.mba-pro-layouts[data-mba-pro-columns-override="true"][data-mba-pro-columns="auto"]:not(.mba-pro-gallery-masonry):not(.mba-pro-gallery-spotlight):not(.mba-pro-gallery-editorial):not(.mba-pro-rows-active) .medbeafgallery-gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)) !important;
+}
+
+.mba-pro-layouts.mba-pro-gallery-spotlight .medbeafgallery-gallery-grid {
+    display: grid !important;
+    grid-template-columns: repeat(var(--mba-pro-layout-columns, 3), minmax(0, 1fr)) !important;
+    grid-auto-rows: minmax(230px, auto);
+    align-items: stretch !important;
+}
+
+.mba-pro-layouts.mba-pro-gallery-spotlight .mba-pro-featured-card {
+    grid-column: span 2 !important;
+    grid-row: span 2 !important;
+}
+
+.mba-pro-layouts.mba-pro-gallery-spotlight[data-mba-pro-columns="1"] .mba-pro-featured-card {
+    grid-column: auto !important;
+    grid-row: auto !important;
+}
+
+.mba-pro-layouts.mba-pro-gallery-spotlight .mba-pro-featured-card .mba-pro-card-media {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    flex-direction: column !important;
+    min-height: 280px !important;
+    aspect-ratio: auto !important;
+}
+
+.mba-pro-layouts.mba-pro-gallery-spotlight .mba-pro-featured-card :is(.medbeafgallery-preview-container, .mba-pro-card-stage) {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    aspect-ratio: auto !important;
+}
+
+/* The featured card spans two rows: the photo takes the extra height, the
+   caption keeps its own (both growing left a tall empty box under the text). */
+.mba-pro-layouts.mba-pro-gallery-spotlight .mba-pro-layout-card.mba-pro-featured-card > .medbeafgallery-gallery-item-info.medbeafgallery-gallery-item-info {
+    flex: 0 0 auto !important;
+}
+
+/* Procedure rows group the existing, paginated cards without a second engine. */
+.mba-pro-layouts.mba-pro-rows-active .medbeafgallery-gallery-grid {
+    display: block !important;
+    max-width: 100% !important;
+    transform: none !important;
+}
+
+.mba-pro-layouts .mba-pro-procedure-row {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 0 30px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+}
+
+.mba-pro-layouts .mba-pro-row-heading {
+    display: flex !important;
+    position: relative !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 8px 12px;
+    min-width: 0 !important;
+    margin: 0 0 8px !important;
+    padding: 0 !important;
+}
+
+.mba-pro-layouts .mba-pro-row-title {
+    flex: 0 1 auto !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: var(--mba-pro-layout-text) !important;
+    font-family: var(--mba-pro-layout-heading) !important;
+    font-size: clamp(18px, 2vw, 24px) !important;
+    line-height: 1.3 !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    overflow-wrap: anywhere;
+}
+
+.mba-pro-layouts .mba-pro-row-count {
+    color: var(--mba-pro-layout-muted) !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+}
+
+.mba-pro-layouts :is(.mba-pro-row-count, .mba-pro-card-doctor span, .mba-pro-card-badge, .mba-pro-result-chip, .mba-pro-angle-label, .mba-pro-whole-label, .mba-pro-compare-label, .mba-pro-photo-category, .mba-pro-photo-fit, .mba-pro-photo-state, .mba-pro-photo-state span, .mba-pro-card-missing, .mba-pro-editorial-excerpt, .mba-pro-editorial-detail dt, .mba-pro-editorial-detail dd) {
+    font-family: var(--mbr-font, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif) !important;
+}
+
+.mba-pro-layouts .mba-pro-card-doctor span,
+.mba-pro-layouts .mba-pro-photo-state span {
+    min-width: 0 !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    overflow-wrap: anywhere;
+}
+
+.mba-pro-layouts .mba-pro-row-controls {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    gap: 6px;
+    margin-inline-start: auto !important;
+}
+
+/* Fully reset every new button, including a decorated existing View button. */
+.mba-pro-layouts :is(.mba-pro-row-button, .mba-pro-angle-button, .mba-pro-layout-open) {
+    appearance: none !important;
+    display: inline-flex !important;
+    position: relative !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+    inset: auto !important;
+    gap: 6px;
+    width: auto !important;
+    min-width: 44px !important;
+    max-width: 100% !important;
+    min-height: 44px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 8px 12px !important;
+    border: 1px solid var(--mba-pro-layout-line) !important;
+    border-radius: 8px !important;
+    background: var(--mba-pro-layout-card) !important;
+    color: var(--mba-pro-layout-text) !important;
+    font-family: var(--mbr-font, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 1.25 !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    text-align: center !important;
+    text-decoration: none !important;
+    white-space: normal !important;
+    box-shadow: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    cursor: pointer !important;
+    touch-action: manipulation;
+    overflow-wrap: anywhere;
+}
+
+.mba-pro-layouts :is(.mba-pro-row-button, .mba-pro-angle-button, .mba-pro-layout-open)::before,
+.mba-pro-layouts :is(.mba-pro-row-button, .mba-pro-angle-button, .mba-pro-layout-open)::after {
+    display: none !important;
+    content: none !important;
+}
+
+.mba-pro-layouts :is(.mba-pro-row-button, .mba-pro-angle-button, .mba-pro-layout-open):hover {
+    background: var(--mba-pro-layout-soft) !important;
+    color: var(--mba-pro-layout-text) !important;
+}
+
+.mba-pro-layouts :is(.mba-pro-row-button, .mba-pro-angle-button):disabled {
+    cursor: default !important;
+    opacity: .55 !important;
+}
+
+.mba-pro-layouts :is(.mba-pro-row-button, .mba-pro-angle-button, .mba-pro-layout-open, .mba-pro-row-rail, .mba-pro-card-slider-handle):focus-visible {
+    outline: 3px solid var(--mba-pro-layout-accent) !important;
+    outline-offset: 3px !important;
+    box-shadow: 0 0 0 3px var(--mba-pro-layout-card) !important;
+}
+
+.mba-pro-layouts .mba-pro-row-rail {
+    display: flex !important;
+    position: relative !important;
+    align-items: stretch !important;
+    gap: 18px;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 8px 5px 14px !important;
+    border: 0 !important;
+    background: transparent !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 5px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--mba-pro-layout-muted) var(--mba-pro-layout-soft);
+    cursor: grab;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mba-pro-layouts .mba-pro-row-rail > .mba-pro-layout-card {
+    display: flex !important;
+    position: relative !important;
+    flex: 0 0 clamp(235px, 30vw, 310px) !important;
+    width: clamp(235px, 30vw, 310px) !important;
+    max-width: 90% !important;
+    height: auto !important;
+    scroll-snap-align: start;
+}
+
+.mba-pro-layouts .mba-pro-row-rail.mba-pro-row-dragging {
+    scroll-snap-type: none;
+    cursor: grabbing;
+    user-select: none;
+}
+
+.mba-pro-layouts .mba-pro-row-pending {
+    flex: 1 1 auto !important;
+    margin: 0 !important;
+    padding: 18px 4px !important;
+    color: var(--mba-pro-layout-muted) !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+}
+
+/* Editorial retains the builder's title, categories, excerpt and detail pills. */
+.mba-pro-layouts:not(.mba-pro-gallery-masonry) .mba-pro-layout-card .medbeafgallery-gallery-item-info h3 {
+    font-family: var(--mba-pro-layout-heading) !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    overflow-wrap: anywhere;
+}
+
+.mba-pro-layouts.mba-pro-gallery-editorial .medbeafgallery-gallery-grid {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 24px;
+}
+
+.mba-pro-layouts .mba-pro-editorial-card {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    align-items: stretch !important;
+    height: auto !important;
+}
+
+.mba-pro-layouts .mba-pro-editorial-card:nth-child(even) > .mba-pro-card-media {
+    order: 2 !important;
+}
+
+.mba-pro-layouts .mba-pro-editorial-card > .mba-pro-card-media {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 260px !important;
+    height: 100% !important;
+    aspect-ratio: auto !important;
+}
+
+.mba-pro-layouts .mba-pro-editorial-card > .medbeafgallery-gallery-item-info {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: clamp(18px, 3vw, 36px) !important;
+    border: 0 !important;
+}
+
+.mba-pro-layouts.mba-pro-gallery-editorial .mba-pro-editorial-card .medbeafgallery-gallery-item-info h3 {
+    font-size: clamp(20px, 2.4vw, 30px) !important;
+    overflow-wrap: anywhere;
+}
+
+.mba-pro-layouts .mba-pro-editorial-excerpt {
+    margin: 0 0 16px !important;
+    padding: 0 !important;
+    color: var(--mba-pro-layout-muted) !important;
+    font-size: 15px !important;
+    line-height: 1.65 !important;
+    overflow-wrap: anywhere;
+}
+
+.mba-pro-layouts .mba-pro-editorial-details {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 12px 20px;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.mba-pro-layouts .mba-pro-editorial-detail {
+    display: block !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+}
+
+.mba-pro-layouts .mba-pro-editorial-detail dt,
+.mba-pro-layouts .mba-pro-editorial-detail dd {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    overflow-wrap: anywhere;
+}
+
+.mba-pro-layouts .mba-pro-editorial-detail dt {
+    color: var(--mba-pro-layout-muted) !important;
+}
+
+.mba-pro-layouts .mba-pro-editorial-detail dd {
+    color: var(--mba-pro-layout-text) !important;
+    font-weight: 600;
+}
+
+/* Full display URLs and identical image fitting in every custom comparison. */
+.mba-pro-layouts .mba-pro-layout-card .medbeafgallery-preview-container {
+    display: flex !important;
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.mba-pro-layouts .mba-pro-layout-card :is(.medbeafgallery-preview-before, .medbeafgallery-preview-after) {
+    display: block !important;
+    width: 50% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+}
+
+.mba-pro-layouts .mba-pro-layout-card.medbeafgallery-reveal-card :is(.medbeafgallery-preview-before, .medbeafgallery-preview-after) {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.mba-pro-layouts .mba-pro-card-media {
+    position: relative !important;
+    min-width: 0 !important;
+}
+
+.mba-pro-layouts .mba-pro-media-replaced {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+    overflow: hidden !important;
+    background: var(--mba-pro-layout-photo-bg) !important;
+}
+
+.mba-pro-layouts .mba-pro-media-replaced > :is(.medbeafgallery-preview-container, .mba-pro-mcard-img, .mba-pro-mcard-toggle, .mba-pro-mcard-plabel, .mba-pro-mcard-arrow, .mba-pro-mcard-count) {
+    display: none !important;
+}
+
+.mba-pro-layouts .mba-pro-card-stage {
+    display: block !important;
+    position: relative !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    aspect-ratio: var(--mba-pro-layout-aspect, 1 / 1) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: var(--mba-pro-layout-photo-bg) !important;
+    overflow: hidden !important;
+    isolation: isolate;
+}
+
+.mba-pro-layouts .mba-pro-fit-note,
+.mba-pro-layouts .mba-pro-motion-note {
+    display: block !important;
+    position: relative !important;
+    margin: 0 !important;
+    padding: 8px 12px !important;
+    color: var(--mba-pro-layout-muted) !important;
+    background: var(--mba-pro-layout-card) !important;
+    font-family: var(--mbr-font, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif) !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    overflow-wrap: anywhere;
+}
+
+.mba-pro-layouts .mba-pro-motion-note {
+    margin-top: 16px !important;
+    background: transparent !important;
+}
+
+.mba-pro-layouts .mba-pro-media-replaced > .mba-pro-layout-open {
+    align-self: flex-end !important;
+    margin: 0 8px 8px !important;
+}
+
+.mba-pro-layouts .mba-pro-custom-card .mba-pro-layout-open svg {
+    display: block !important;
+    flex: 0 0 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+}
+
+.mba-pro-layouts .mba-pro-compare-image,
+.mba-pro-layouts .mba-pro-photo-image {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 100% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: var(--mba-pro-layout-photo-bg) !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    pointer-events: none;
+    user-select: none;
+}
+
+.mba-pro-layouts .mba-pro-compare-before {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    clip-path: inset(0 calc(100% - var(--mba-pro-card-split, 50%)) 0 0) !important;
+    z-index: 1;
+}
+
+.mba-pro-layouts .mba-pro-card-slider-line {
+    display: block !important;
+    position: absolute !important;
+    z-index: 3;
+    inset: 0 auto 0 var(--mba-pro-card-split, 50%) !important;
+    width: 2px !important;
+    height: 100% !important;
+    background: #ffffff !important;
+    box-shadow: 0 0 0 1px #172735;
+    pointer-events: none;
+}
+
+.mba-pro-layouts .mba-pro-card-slider-handle {
+    display: flex !important;
+    position: absolute !important;
+    z-index: 6;
+    top: 50% !important;
+    left: clamp(22px, var(--mba-pro-card-split, 50%), calc(100% - 22px)) !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 2px solid #172735 !important;
+    border-radius: 50% !important;
+    background: #ffffff !important;
+    color: #172735 !important;
+    font-family: system-ui, sans-serif !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    transform: translate(-50%, -50%) !important;
+    cursor: ew-resize !important;
+    touch-action: none;
+    user-select: none;
+}
+
+.mba-pro-layouts .mba-pro-compare-label,
+.mba-pro-layouts .mba-pro-photo-state {
+    display: block !important;
+    position: absolute !important;
+    z-index: 3;
+    bottom: 10px !important;
+    margin: 0 !important;
+    padding: 4px 8px !important;
+    border: 0 !important;
+    border-radius: 4px;
+    background: #172735 !important;
+    color: #ffffff !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    pointer-events: none;
+    max-width: 45% !important;
+    overflow-wrap: anywhere;
+}
+
+.mba-pro-layouts .mba-pro-compare-label-before {
+    left: 8px !important;
+}
+
+.mba-pro-layouts .mba-pro-compare-label-after {
+    right: 8px !important;
+}
+
+.mba-pro-layouts .mba-pro-uncropped-stage {
+    display: flex !important;
+    gap: 2px;
+    align-items: stretch !important;
+}
+
+.mba-pro-layouts .mba-pro-whole-photo {
+    display: grid !important;
+    position: relative !important;
+    grid-template-rows: minmax(0, 1fr) auto !important;
+    flex: 1 1 0 !important;
+    width: 50% !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 6px 0 0 !important;
+    border: 0 !important;
+    background: var(--mba-pro-layout-photo-bg) !important;
+}
+
+.mba-pro-layouts .mba-pro-whole-image {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    transform: none !important;
+}
+
+.mba-pro-layouts .mba-pro-whole-label {
+    display: block !important;
+    margin: 0 !important;
+    padding: 8px 4px !important;
+    background: var(--mba-pro-layout-card) !important;
+    color: var(--mba-pro-layout-text) !important;
+    font-size: 13px !important;
+    font-weight: 600;
+    line-height: 1.4 !important;
+    text-align: center !important;
+    overflow-wrap: anywhere;
+}
+
+.mba-pro-layouts .mba-pro-card-missing {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 0 !important;
+    height: 100% !important;
+    padding: 12px !important;
+    background: var(--mba-pro-layout-photo-bg) !important;
+    color: #334155 !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+    overflow-wrap: anywhere;
+}
+
+.mba-pro-layouts[data-mba-pro-layout-dark="true"] .mba-pro-card-missing,
+.mba-pro-layouts.mba-pro-preset-midnight .mba-pro-card-missing {
+    color: #d4dfeb !important;
+}
+
+/* Photo cards preserve the free reveal preference with equally fitted layers. */
+.mba-pro-layouts .mba-pro-photo-image {
+    object-fit: cover !important;
+}
+
+.mba-pro-layouts .mba-pro-photo-card:not(.mba-pro-editorial-card) > .medbeafgallery-gallery-item-info {
+    display: none !important;
+}
+
+.mba-pro-layouts .mba-pro-photo-caption {
+    display: flex !important;
+    position: absolute !important;
+    z-index: 4;
+    inset: auto 0 0 !important;
+    flex-direction: column !important;
+    gap: 6px;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 52px 16px 16px !important;
+    border: 0 !important;
+    background: linear-gradient(transparent, rgb(4 12 20 / 94%) 48%) !important;
+    color: #ffffff !important;
+    pointer-events: none;
+}
+
+.mba-pro-layouts .mba-pro-photo-title {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: #ffffff !important;
+    font-family: var(--mba-pro-layout-heading) !important;
+    font-size: clamp(17px, 1.8vw, 23px) !important;
+    line-height: 1.3 !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    overflow-wrap: anywhere;
+}
+
+.mba-pro-layouts .mba-pro-photo-category,
+.mba-pro-layouts .mba-pro-photo-fit {
+    color: #ffffff !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    overflow-wrap: anywhere;
+}
+
+.mba-pro-layouts .mba-pro-photo-fit {
+    color: #dbe4ed !important;
+    font-size: 11px !important;
+}
+
+.mba-pro-layouts .mba-pro-photo-stage > .mba-pro-layout-open {
+    position: absolute !important;
+    z-index: 5;
+    top: 48% !important;
+    left: 50% !important;
+    width: max-content !important;
+    max-width: calc(100% - 24px) !important;
+    opacity: 0 !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+.mba-pro-layouts .mba-pro-photo-card:hover .mba-pro-layout-open,
+.mba-pro-layouts .mba-pro-photo-card:focus-within .mba-pro-layout-open {
+    opacity: 1 !important;
+}
+
+.mba-pro-layouts .mba-pro-photo-reveal .mba-pro-photo-after {
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path .5s ease;
+}
+
+.mba-pro-layouts .mba-pro-photo-reveal:hover .mba-pro-photo-after,
+.mba-pro-layouts .mba-pro-photo-reveal:focus-within .mba-pro-photo-after,
+.mba-pro-layouts .mba-pro-photo-held .mba-pro-photo-after {
+    clip-path: inset(0);
+}
+
+.mba-pro-layouts .mba-pro-photo-state {
+    bottom: auto !important;
+    top: 10px !important;
+    left: 8px !important;
+}
+
+.mba-pro-layouts .mba-pro-photo-state-after,
+.mba-pro-layouts .mba-pro-photo-reveal:hover .mba-pro-photo-state-before,
+.mba-pro-layouts .mba-pro-photo-reveal:focus-within .mba-pro-photo-state-before,
+.mba-pro-layouts .mba-pro-photo-held .mba-pro-photo-state-before {
+    display: none !important;
+}
+
+.mba-pro-layouts .mba-pro-photo-reveal:hover .mba-pro-photo-state-after,
+.mba-pro-layouts .mba-pro-photo-reveal:focus-within .mba-pro-photo-state-after,
+.mba-pro-layouts .mba-pro-photo-held .mba-pro-photo-state-after {
+    display: inline !important;
+}
+
+.mba-pro-layouts .mba-pro-has-topline .mba-pro-photo-state {
+    top: auto !important;
+    bottom: 10px !important;
+    left: auto !important;
+    right: 8px !important;
+}
+
+/* Optional extras share one wrapping top line rather than overlapping chips. */
+.mba-pro-layouts .mba-pro-card-topline {
+    display: flex !important;
+    position: absolute !important;
+    z-index: 7;
+    top: 8px !important;
+    left: 8px !important;
+    right: 8px !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+    gap: 6px;
+    min-width: 0 !important;
+    max-width: calc(100% - 16px) !important;
+    pointer-events: none;
+}
+
+.mba-pro-layouts .mba-pro-card-doctor,
+.mba-pro-layouts .mba-pro-card-badge {
+    display: inline-flex !important;
+    position: relative !important;
+    align-items: center !important;
+    gap: 6px;
+    max-width: 100% !important;
+    min-height: 28px !important;
+    margin: 0 !important;
+    padding: 4px 8px !important;
+    border: 1px solid var(--mba-pro-layout-line) !important;
+    border-radius: 20px;
+    background: var(--mba-pro-layout-card) !important;
+    color: var(--mba-pro-layout-text) !important;
+    font-family: var(--mbr-font, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif) !important;
+    font-size: 12px !important;
+    font-weight: 600;
+    line-height: 1.4 !important;
+    overflow-wrap: anywhere;
+}
+
+.mba-pro-layouts .mba-pro-card-doctor {
+    min-width: 0 !important;
+    flex: 0 1 auto !important;
+}
+
+.mba-pro-layouts .mba-pro-card-avatar {
+    display: block !important;
+    position: static !important;
+    flex: 0 0 26px !important;
+    width: 26px !important;
+    min-width: 26px !important;
+    max-width: 26px !important;
+    height: 26px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+}
+
+.mba-pro-layouts .mba-pro-card-badges {
+    display: flex !important;
+    flex: 0 1 auto !important;
+    justify-content: flex-end !important;
+    flex-wrap: wrap !important;
+    gap: 4px;
+    max-width: 100% !important;
+    margin-inline-start: auto !important;
+}
+
+.mba-pro-layouts .mba-pro-has-topline .medbeafgallery-multi-view-indicator {
+    top: auto !important;
+    bottom: 8px !important;
+    right: 8px !important;
+}
+
+/* Photo cards carry their caption and result chips along the bottom, so the
+   "N more" badge goes under the top line (doctor / New / Progress) instead. */
+.mba-pro-layouts .mba-pro-photo-card .medbeafgallery-multi-view-indicator,
+.mba-pro-layouts .mba-pro-photo-card.mba-pro-has-topline .medbeafgallery-multi-view-indicator {
+    top: 54px !important;
+    bottom: auto !important;
+    left: 10px !important;
+    right: auto !important;
+}
+.mba-pro-layouts .mba-pro-photo-card:not(.mba-pro-has-topline) .medbeafgallery-multi-view-indicator {
+    top: 10px !important;
+}
+
+.mba-pro-layouts .mba-pro-result-chips {
+    display: flex !important;
+    position: absolute !important;
+    z-index: 4;
+    bottom: 36px !important;
+    left: 8px !important;
+    right: 8px !important;
+    flex-wrap: wrap !important;
+    align-items: flex-end !important;
+    gap: 4px;
+    max-width: calc(100% - 16px) !important;
+    pointer-events: none;
+}
+
+.mba-pro-layouts .mba-pro-result-chip {
+    display: inline-block !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    padding: 4px 7px !important;
+    border: 1px solid var(--mba-pro-layout-line) !important;
+    border-radius: 5px;
+    background: var(--mba-pro-layout-card) !important;
+    color: var(--mba-pro-layout-text) !important;
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+    overflow-wrap: anywhere;
+}
+
+.mba-pro-layouts .mba-pro-photo-caption .mba-pro-result-chips {
+    position: static !important;
+    max-width: 100% !important;
+}
+
+.mba-pro-layouts .mba-pro-angle-strip {
+    display: flex !important;
+    position: relative !important;
+    flex: 0 0 auto !important;
+    align-items: stretch !important;
+    gap: 8px;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 10px !important;
+    border: 0 !important;
+    background: var(--mba-pro-layout-card) !important;
+    overflow-x: auto !important;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+}
+
+.mba-pro-layouts .mba-pro-angle-button {
+    flex-direction: column !important;
+    flex: 0 0 66px !important;
+    width: 66px !important;
+    min-width: 66px !important;
+    padding: 4px !important;
+    scroll-snap-align: start;
+}
+
+.mba-pro-layouts .mba-pro-angle-image {
+    display: block !important;
+    position: static !important;
+    width: 54px !important;
+    max-width: 100% !important;
+    height: 44px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 3px !important;
+    background: var(--mba-pro-layout-photo-bg) !important;
+    object-fit: contain !important;
+    transform: none !important;
+}
+
+.mba-pro-layouts .mba-pro-angle-label {
+    display: block !important;
+    width: 100% !important;
+    color: var(--mba-pro-layout-text) !important;
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+    overflow-wrap: anywhere;
+}
+
+.mba-pro-layouts.mba-pro-gallery-angles .medbeafgallery-multi-view-indicator {
+    display: none !important;
+}
+
+/* Lively entrances run only on insertion, never on a scroll callback. */
+.mba-pro-layouts.mba-pro-motion-lively .mba-pro-layout-card {
+    animation: mba-pro-layout-rise .48s ease both !important;
+    animation-delay: var(--mba-pro-entrance-delay, 0ms) !important;
+    transition: box-shadow .2s ease !important;
+}
+
+@keyframes mba-pro-layout-rise {
+    from { opacity: 0; transform: translateY(16px) scale(.98); }
+    to { opacity: 1; transform: none; }
+}
+
+.mba-pro-layouts.mba-pro-motion-lively .mba-pro-card-media :is(.medbeafgallery-preview-before, .medbeafgallery-preview-after, .mba-pro-photo-image, .mba-pro-compare-image, .mba-pro-mcard-img) {
+    transition: transform .35s ease, clip-path .5s ease !important;
+    transform-origin: center center;
+}
+
+.mba-pro-layouts.mba-pro-motion-lively .mba-pro-layout-card:not(.mba-pro-uncropped-card):hover .mba-pro-card-media :is(.medbeafgallery-preview-before, .medbeafgallery-preview-after, .mba-pro-photo-image, .mba-pro-compare-image, .mba-pro-mcard-img) {
+    transform: scale(1.025) !important;
+}
+
+.mba-pro-layouts.mba-pro-motion-none .medbeafgallery-gallery-grid,
+.mba-pro-layouts.mba-pro-motion-none .mba-pro-layout-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+.mba-pro-layouts.mba-pro-motion-none .mba-pro-card-media *,
+.mba-pro-layouts.mba-pro-motion-none .mba-pro-layout-open {
+    animation: none !important;
+    transition: none !important;
+}
+
+.mba-pro-layouts .mba-pro-layout-status {
+    display: block !important;
+    position: absolute !important;
+    width: 1px !important;
+    min-width: 0 !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap !important;
+}
+
+.mba-pro-layout-window .mba-pro-pair-notice {
+    display: block !important;
+    position: relative !important;
+    flex: 0 0 auto !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 10px 16px !important;
+    border: 0 !important;
+    background: var(--mba-pro-layout-card) !important;
+    color: var(--mba-pro-layout-text) !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    overflow-wrap: anywhere;
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+    .mba-pro-layouts:not(.mba-pro-gallery-editorial):not(.mba-pro-rows-active):not(.mba-pro-gallery-masonry)[data-mba-pro-columns="3"] .medbeafgallery-gallery-grid,
+    .mba-pro-layouts:not(.mba-pro-gallery-editorial):not(.mba-pro-rows-active):not(.mba-pro-gallery-masonry)[data-mba-pro-columns="4"] .medbeafgallery-gallery-grid,
+    .mba-pro-layouts.mba-pro-gallery-spotlight:not([data-mba-pro-columns="1"]) .medbeafgallery-gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    .mba-pro-layouts.mba-pro-gallery-masonry[data-mba-pro-columns="3"] .medbeafgallery-gallery-grid,
+    .mba-pro-layouts.mba-pro-gallery-masonry[data-mba-pro-columns="4"] .medbeafgallery-gallery-grid {
+        column-count: 2 !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .mba-pro-layouts.mba-pro-gallery-masonry[data-mba-pro-columns-override="true"][data-mba-pro-columns="auto"]:not(.mba-pro-filters-drawer) .medbeafgallery-gallery-grid {
+        column-count: 2 !important;
+    }
+}
+
+@media (max-width: 1199px) {
+    .mba-pro-layouts.mba-pro-gallery-masonry[data-mba-pro-columns-override="true"][data-mba-pro-columns="auto"] .medbeafgallery-gallery-grid {
+        column-count: 2 !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .mba-pro-layouts.mba-pro-gallery-masonry[data-mba-pro-columns-override="true"][data-mba-pro-columns="auto"] .medbeafgallery-gallery-grid {
+        column-count: 1 !important;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 767px) {
+    .mba-pro-layouts[data-mba-pro-columns-override="true"][data-mba-pro-columns="auto"]:not(.mba-pro-gallery-masonry):not(.mba-pro-gallery-spotlight):not(.mba-pro-gallery-editorial):not(.mba-pro-rows-active) .medbeafgallery-gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)) !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .mba-pro-layouts .mba-pro-editorial-card {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .mba-pro-layouts .mba-pro-editorial-card:nth-child(even) > .mba-pro-card-media {
+        order: 0 !important;
+    }
+
+    .mba-pro-layouts .mba-pro-editorial-card > .mba-pro-card-media {
+        min-height: 0 !important;
+        height: auto !important;
+        aspect-ratio: var(--mba-pro-layout-aspect, 1 / 1) !important;
+    }
+
+    .mba-pro-layouts .mba-pro-editorial-card > .mba-pro-media-replaced {
+        aspect-ratio: auto !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .mba-pro-layouts {
+        --mba-pro-layout-columns: 1 !important;
+    }
+
+    .mba-pro-layouts:not(.mba-pro-gallery-masonry):not(.mba-pro-gallery-classic):not(.mba-pro-rows-active) .medbeafgallery-gallery-grid,
+    .mba-pro-layouts.mba-pro-gallery-classic:not([data-mba-pro-columns="auto"]) .medbeafgallery-gallery-grid,
+    .mba-pro-layouts[data-mba-pro-columns-override="true"][data-mba-pro-columns="auto"]:not(.mba-pro-gallery-masonry):not(.mba-pro-gallery-spotlight):not(.mba-pro-gallery-editorial):not(.mba-pro-rows-active) .medbeafgallery-gallery-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .mba-pro-layouts.mba-pro-gallery-masonry .medbeafgallery-gallery-grid,
+    .mba-pro-layouts.mba-pro-gallery-masonry[data-mba-pro-columns="auto"] .medbeafgallery-gallery-grid {
+        column-count: 1 !important;
+    }
+
+    .mba-pro-layouts.mba-pro-gallery-spotlight .mba-pro-featured-card {
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+    }
+
+    .mba-pro-layouts.mba-pro-gallery-spotlight .mba-pro-featured-card .mba-pro-card-media {
+        flex: 0 0 auto !important;
+        min-height: 0 !important;
+        aspect-ratio: var(--mba-pro-layout-aspect, 1 / 1) !important;
+    }
+
+    .mba-pro-layouts.mba-pro-gallery-spotlight .mba-pro-featured-card .mba-pro-media-replaced {
+        aspect-ratio: auto !important;
+    }
+
+    .mba-pro-layouts.mba-pro-gallery-spotlight .mba-pro-featured-card .mba-pro-card-stage {
+        flex: 0 0 auto !important;
+        height: auto !important;
+        aspect-ratio: var(--mba-pro-layout-aspect, 1 / 1) !important;
+    }
+
+    .mba-pro-layouts .mba-pro-row-rail > .mba-pro-layout-card {
+        flex-basis: 85% !important;
+        width: 85% !important;
+    }
+
+    .mba-pro-layouts .mba-pro-row-controls {
+        gap: 4px;
+    }
+
+    .mba-pro-layouts .mba-pro-row-button {
+        padding: 8px !important;
+    }
+
+    .mba-pro-layouts .mba-pro-photo-stage > .mba-pro-layout-open {
+        opacity: 1 !important;
+    }
+
+    .mba-pro-layout-window.mba-pro-preset-active :is(.medbeafgallery-modal-content, .mba-pro-mmodal-dialog, .mba-pro-viewer-dialog) {
+        border-radius: 0 !important;
+    }
+}
+
+/* A narrow embed gets the same protection even on a wide desktop viewport. */
+@container (max-width: 600px) {
+    .mba-pro-layouts:not(.mba-pro-gallery-classic):not(.mba-pro-gallery-masonry):not(.mba-pro-rows-active) .medbeafgallery-gallery-grid {
+        --mba-pro-layout-columns: 1 !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .mba-pro-layouts.mba-pro-gallery-spotlight .mba-pro-featured-card {
+        grid-column: 1 / -1 !important;
+        grid-row: auto !important;
+    }
+
+    .mba-pro-layouts .mba-pro-editorial-card {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .mba-pro-layouts .mba-pro-editorial-card:nth-child(even) > .mba-pro-card-media {
+        order: 0 !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mba-pro-layouts .medbeafgallery-gallery-grid,
+    .mba-pro-layouts .mba-pro-layout-card,
+    .mba-pro-layouts .mba-pro-layout-card *,
+    .mba-pro-layouts .mba-pro-row-rail {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+
+    .mba-pro-layouts .medbeafgallery-gallery-grid,
+    .mba-pro-layouts .mba-pro-layout-card {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .mba-pro-layouts.mba-pro-motion-lively .mba-pro-layout-card:hover .mba-pro-card-media :is(.medbeafgallery-preview-before, .medbeafgallery-preview-after, .mba-pro-photo-image, .mba-pro-compare-image, .mba-pro-mcard-img) {
+        transform: none !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Whole photos (every custom stage: slider, photo, reveal, uncropped).
+   A photo is never cropped: it sits at its own proportions over a blurred copy
+   of itself that fills the frame, so no part of a result is hidden and there
+   are no grey or black bars. (Split halves stay cropped — each half is narrow.)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.mba-pro-layouts .mba-pro-fit {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    overflow: hidden !important;
+    background: var(--mba-pro-layout-photo-bg) !important;
+}
+
+.mba-pro-layouts .mba-pro-fit-backdrop {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 100% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    object-fit: cover !important;
+    filter: blur(22px) saturate(1.1) brightness(.92) !important;
+    transform: scale(1.25) !important;
+    opacity: 1 !important;
+    pointer-events: none;
+}
+
+.mba-pro-layouts .mba-pro-fit-image {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 100% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Uncropped split: two whole photos side by side, each over its own blur. */
+.mba-pro-layouts .mba-pro-uncropped-stage .mba-pro-whole-photo {
+    display: block !important;
+    position: relative !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+.mba-pro-layouts .mba-pro-whole-photo > .mba-pro-fit {
+    position: absolute !important;
+    inset: 0 !important;
+    height: 100% !important;
+}
+
+/* The helper sentences are for screen readers only (aria-describedby). */
+.mba-pro-layouts .mba-pro-fit-note {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+}
+
+/* Before and After: small pills in the top corners of the photo. */
+.mba-pro-layouts :is(.mba-pro-compare-label, .mba-pro-photo-state, .mba-pro-whole-label) {
+    display: block !important;
+    position: absolute !important;
+    z-index: 4;
+    top: 10px !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    padding: 3px 9px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: rgb(15 23 42 / 62%) !important;
+    color: #ffffff !important;
+    font-family: var(--mbr-font, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    text-align: left !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    max-width: 45% !important;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    pointer-events: none;
+}
+
+.mba-pro-layouts .mba-pro-compare-label-before,
+.mba-pro-layouts .mba-pro-whole-label,
+.mba-pro-layouts .mba-pro-photo-state {
+    left: 10px !important;
+    right: auto !important;
+}
+
+.mba-pro-layouts .mba-pro-compare-label-after {
+    left: auto !important;
+    right: 10px !important;
+}
+
+/* A top line (doctor, New, Progress) takes the top corners: labels go below. */
+.mba-pro-layouts .mba-pro-has-topline :is(.mba-pro-compare-label, .mba-pro-whole-label, .mba-pro-photo-state) {
+    top: auto !important;
+    bottom: 10px !important;
+}
+
+/* Slider: a thin light line and a round handle with chevrons. */
+.mba-pro-layouts .mba-pro-card-slider-line {
+    width: 2px !important;
+    background: rgb(255 255 255 / 92%) !important;
+    box-shadow: 0 0 6px rgb(0 0 0 / 35%) !important;
+    transform: translateX(-1px);
+}
+
+.mba-pro-layouts .mba-pro-card-slider-handle {
+    width: 40px !important;
+    min-width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    border: 0 !important;
+    background: rgb(255 255 255 / 94%) !important;
+    color: #172735 !important;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 28%) !important;
+}
+
+.mba-pro-layouts .mba-pro-card-slider-handle svg {
+    display: block !important;
+    width: 22px !important;
+    height: 22px !important;
+    pointer-events: none;
+}
+
+@media (pointer: coarse) {
+    .mba-pro-layouts .mba-pro-card-slider-handle {
+        width: 44px !important;
+        min-width: 44px !important;
+        height: 44px !important;
+        min-height: 44px !important;
+    }
+}
+
+/* Reveal: shown once as the card comes into view (never with reduced motion). */
+.mba-pro-layouts .mba-pro-photo-reveal.mba-pro-photo-hint .mba-pro-photo-after {
+    animation: mba-pro-reveal-hint 1.5s ease-in-out both;
+}
+
+@keyframes mba-pro-reveal-hint {
+    0% { clip-path: inset(0 100% 0 0); }
+    45%, 60% { clip-path: inset(0 0 0 0); }
+    100% { clip-path: inset(0 100% 0 0); }
+}
+
+/* Rows: arrows and "See all" only when the row overflows. */
+.mba-pro-layouts .mba-pro-row-button[hidden] {
+    display: none !important;
+}
+
+.mba-pro-layouts :is(.mba-pro-row-prev, .mba-pro-row-next) svg {
+    display: block !important;
+    width: 18px !important;
+    height: 18px !important;
+    pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Refined cards (.mba-pro-refined: every 1.6.0 look; the earlier classic or
+   masonry split card with no preset keeps its look). The photo is the card;
+   the caption sits under it on the page — no box, no shadow, one quiet link.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.mba-pro-layouts.mba-pro-refined :is(.medbeafgallery-gallery-item, .mba-pro-mcard).mba-pro-layout-card {
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card > .mba-pro-card-media {
+    border: 0 !important;
+    border-radius: var(--mba-pro-layout-radius) !important;
+    overflow: hidden !important;
+    box-shadow: none !important;
+    transition: filter .2s ease !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card:hover > .mba-pro-card-media {
+    filter: brightness(1.04);
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card :is(.medbeafgallery-gallery-item-info, .mba-pro-mcard-body) {
+    display: block !important;
+    margin: 0 !important;
+    padding: 12px 2px 6px !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-align: left !important;
+}
+
+/* Category: plain muted text, several joined by commas. */
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card :is(.medbeafgallery-gallery-categories, .mba-pro-mcard-cats) {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card :is(.medbeafgallery-gallery-category, .mba-pro-mcard-cat) {
+    display: inline !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: var(--mba-pro-layout-muted) !important;
+    font-family: var(--mbr-font, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    line-height: 1.45 !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card :is(.medbeafgallery-gallery-category, .mba-pro-mcard-cat) + :is(.medbeafgallery-gallery-category, .mba-pro-mcard-cat)::before {
+    content: ", ";
+}
+
+/* Title: the strongest line, two lines at most. */
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card :is(.medbeafgallery-gallery-item-info h3, .mba-pro-mcard-title) {
+    display: -webkit-box !important;
+    margin: 4px 0 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: var(--mba-pro-layout-text) !important;
+    font-family: var(--mba-pro-layout-heading) !important;
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+    text-transform: none !important;
+    letter-spacing: -0.005em !important;
+    text-decoration: underline transparent !important;
+    text-underline-offset: 3px !important;
+    transition: text-decoration-color .2s ease !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card:hover :is(.medbeafgallery-gallery-item-info h3, .mba-pro-mcard-title) {
+    text-decoration-color: currentColor !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card :is(.mba-pro-ccard-desc, .mba-pro-mcard-desc, .mba-pro-editorial-excerpt) {
+    display: -webkit-box !important;
+    margin: 6px 0 0 !important;
+    padding: 0 !important;
+    color: var(--mba-pro-layout-muted) !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden !important;
+}
+
+/* Details: one quiet line of icons and text, no pills. */
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card :is(.mba-pro-ccard-meta, .mba-pro-mcard-meta) {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 4px 14px !important;
+    margin: 8px 0 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card :is(.mba-pro-ccard-pill, .mba-pro-mcard-pill) {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: var(--mba-pro-layout-muted) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    line-height: 1.45 !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card :is(.mba-pro-ccard-pill, .mba-pro-mcard-pill) svg {
+    flex: 0 0 13px !important;
+    width: 13px !important;
+    height: 13px !important;
+    opacity: .8;
+}
+
+/* Masonry's decorative numbers and its emptied footer go. */
+.mba-pro-layouts.mba-pro-refined .mba-pro-mcard-num,
+.mba-pro-layouts.mba-pro-refined .mba-pro-mcard-foot:empty {
+    display: none !important;
+}
+
+/* One quiet link closes the caption; the whole card opens the case. */
+.mba-pro-layouts.mba-pro-refined .mba-pro-caption-foot {
+    display: flex !important;
+    margin: 6px 0 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-caption-foot > .mba-pro-caption-open {
+    display: inline-flex !important;
+    position: static !important;
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 36px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: var(--mba-pro-layout-accent) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+    text-align: left !important;
+    text-decoration: underline transparent !important;
+    text-underline-offset: 3px !important;
+    opacity: 1 !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-caption-foot > .mba-pro-caption-open:hover,
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card:hover .mba-pro-caption-open {
+    background: transparent !important;
+    color: var(--mbr-accent, var(--mba-pro-layout-accent)) !important;
+    text-decoration-color: currentColor !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-caption-open svg {
+    display: none !important;
+}
+
+@media (pointer: coarse) {
+    .mba-pro-layouts.mba-pro-refined .mba-pro-caption-foot > .mba-pro-caption-open {
+        min-height: 44px !important;
+    }
+}
+
+/* Photo cards: the case opens from the photo; the button shows on keyboard focus. */
+.mba-pro-layouts.mba-pro-refined .mba-pro-photo-stage > .mba-pro-layout-open:not(:focus-visible) {
+    position: absolute !important;
+    width: 1px !important;
+    min-width: 0 !important;
+    height: 1px !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip-path: inset(50%) !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-photo-caption {
+    padding: 44px 14px 14px !important;
+    background: linear-gradient(transparent, rgb(4 12 20 / 80%) 62%) !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-photo-title {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+}
+
+/* Editorial: photo and caption side by side, the caption on the page. */
+.mba-pro-layouts.mba-pro-refined .mba-pro-editorial-card {
+    gap: clamp(16px, 3vw, 40px) !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-editorial-card > .medbeafgallery-gallery-item-info {
+    align-self: center !important;
+    padding: 8px 0 !important;
+}
+
+.mba-pro-layouts.mba-pro-refined.mba-pro-gallery-editorial .mba-pro-editorial-card .medbeafgallery-gallery-item-info h3 {
+    font-size: clamp(20px, 2.2vw, 28px) !important;
+    -webkit-line-clamp: 3;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-editorial-card :is(.mba-pro-ccard-desc, .mba-pro-editorial-excerpt) {
+    -webkit-line-clamp: 4;
+    font-size: 15px !important;
+    line-height: 1.6 !important;
+}
+
+/* Rows: round arrows and a quiet "See all". */
+.mba-pro-layouts.mba-pro-refined :is(.mba-pro-row-prev, .mba-pro-row-next) {
+    width: 40px !important;
+    min-width: 40px !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    background: transparent !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-row-all {
+    min-height: 40px !important;
+    padding: 6px 14px !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-row-rail {
+    gap: 20px !important;
+    padding: 6px 2px 14px !important;
+}
+
+@media (pointer: coarse) {
+    .mba-pro-layouts.mba-pro-refined :is(.mba-pro-row-prev, .mba-pro-row-next, .mba-pro-row-all) {
+        min-height: 44px !important;
+        min-width: 44px !important;
+    }
+}
+
+/* Photo cards keep their caption over the photo, so the card text stays hidden. */
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card.mba-pro-photo-card:not(.mba-pro-editorial-card) > .medbeafgallery-gallery-item-info {
+    display: none !important;
+}
+
+/* "N more" sits at the photo's bottom left, clear of the Before and After labels. */
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card:not(.mba-pro-photo-card) .medbeafgallery-multi-view-indicator {
+    top: auto !important;
+    bottom: 10px !important;
+    left: 10px !important;
+    right: auto !important;
+    border-radius: 999px !important;
+    background: rgb(15 23 42 / 62%) !important;
+}
+
+/* Category bar (carousel and grid styles) in the 1.6.0 looks: a quiet row of
+   round photos with the name underneath; the chosen one gets an accent ring. */
+.mba-pro-layouts.mba-pro-refined :is(.medbeafgallery-cat-mode-carousel, .medbeafgallery-cat-mode-grid) .medbeafgallery-carousel-item {
+    min-height: 0 !important;
+    padding: 10px 6px 8px !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+.mba-pro-layouts.mba-pro-refined :is(.medbeafgallery-cat-mode-carousel, .medbeafgallery-cat-mode-grid) .medbeafgallery-carousel-item:hover {
+    background: var(--mba-pro-layout-soft) !important;
+}
+
+.mba-pro-layouts.mba-pro-refined :is(.medbeafgallery-cat-mode-carousel, .medbeafgallery-cat-mode-grid) .medbeafgallery-carousel-item::after {
+    display: none !important;
+}
+
+/* The photo's box must be as big as the photo (free sizes it 60px), or the ring
+   spills over the tile's top edge. */
+.mba-pro-layouts.mba-pro-refined :is(.medbeafgallery-cat-mode-carousel, .medbeafgallery-cat-mode-grid) .medbeafgallery-carousel-item .medbeafgallery-category-image {
+    width: 72px !important;
+    height: 72px !important;
+    margin: 0 auto 10px !important;
+    padding: 0 !important;
+    overflow: visible !important;
+}
+
+.mba-pro-layouts.mba-pro-refined :is(.medbeafgallery-cat-mode-carousel, .medbeafgallery-cat-mode-grid) .medbeafgallery-carousel-item .medbeafgallery-category-image :is(img, svg) {
+    margin: 0 !important;
+}
+
+.mba-pro-layouts.mba-pro-refined :is(.medbeafgallery-cat-mode-carousel, .medbeafgallery-cat-mode-grid) .medbeafgallery-carousel-item :is(img, svg) {
+    width: 72px !important;
+    max-width: none !important;
+    height: 72px !important;
+    max-height: none !important;
+    margin: 0 0 10px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    box-shadow: 0 0 0 1px var(--mba-pro-layout-line) !important;
+    transform: none !important;
+}
+
+.mba-pro-layouts.mba-pro-refined :is(.medbeafgallery-cat-mode-carousel, .medbeafgallery-cat-mode-grid) .medbeafgallery-carousel-item.active :is(img, svg) {
+    box-shadow: 0 0 0 3px var(--mba-pro-layout-card, #ffffff), 0 0 0 5px var(--mba-pro-layout-accent) !important;
+}
+
+.mba-pro-layouts.mba-pro-refined :is(.medbeafgallery-cat-mode-carousel, .medbeafgallery-cat-mode-grid) .medbeafgallery-carousel-item :is(p, .medbeafgallery-category-name) {
+    color: var(--mba-pro-layout-text) !important;
+    font-family: var(--mbr-font, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+}
+
+.mba-pro-layouts.mba-pro-refined :is(.medbeafgallery-cat-mode-carousel, .medbeafgallery-cat-mode-grid) .medbeafgallery-carousel-item.active :is(p, .medbeafgallery-category-name) {
+    color: var(--mba-pro-layout-accent) !important;
+    font-weight: 650 !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-photo-card .medbeafgallery-multi-view-indicator,
+.mba-pro-layouts.mba-pro-refined .mba-pro-photo-card:not(.mba-pro-has-topline) .medbeafgallery-multi-view-indicator {
+    top: 10px !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: 10px !important;
+    border-radius: 999px !important;
+    background: rgb(15 23 42 / 62%) !important;
+}
+
+/* Photo cards: the caption owns the bottom, so Before / After stays top left
+   (the top line's badges sit on the right). */
+.mba-pro-layouts.mba-pro-refined .mba-pro-photo-card.mba-pro-has-topline .mba-pro-photo-state {
+    top: 10px !important;
+    bottom: auto !important;
+    left: 10px !important;
+    right: auto !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-photo-card .mba-pro-card-topline {
+    justify-content: flex-end !important;
+}
+
+/* Grid category style on phones: four to a row, smaller photos. */
+@media (max-width: 600px) {
+    .mba-pro-layouts.mba-pro-refined .medbeafgallery-cat-mode-grid .medbeafgallery-carousel-items {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 6px 4px !important;
+    }
+
+    .mba-pro-layouts.mba-pro-refined .medbeafgallery-cat-mode-grid .medbeafgallery-carousel-item {
+        padding: 6px 2px !important;
+    }
+
+    .mba-pro-layouts.mba-pro-refined .medbeafgallery-cat-mode-grid .medbeafgallery-carousel-item :is(img, svg) {
+        width: 56px !important;
+        height: 56px !important;
+        margin-bottom: 6px !important;
+    }
+
+    .mba-pro-layouts.mba-pro-refined .medbeafgallery-cat-mode-grid .medbeafgallery-carousel-item :is(p, .medbeafgallery-category-name) {
+        font-size: 12.5px !important;
+        line-height: 1.25 !important;
+    }
+
+    .mba-pro-layouts.mba-pro-refined .medbeafgallery-cat-mode-grid .medbeafgallery-carousel-wrapper {
+        padding: 8px 0 !important;
+        margin: 8px 0 16px !important;
+    }
+}
+
+/* Angles: small thumbnails inside the caption, one per extra view. */
+.mba-pro-layouts.mba-pro-refined .mba-pro-angle-strip {
+    gap: 10px !important;
+    margin: 10px 0 0 !important;
+    padding: 0 0 2px !important;
+    background: transparent !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-angle-button {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    gap: 4px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-angle-image {
+    width: 64px !important;
+    height: 48px !important;
+    border-radius: 8px !important;
+    object-fit: cover !important;
+    box-shadow: 0 0 0 1px var(--mba-pro-layout-line) !important;
+    transition: box-shadow .2s ease !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-angle-button:hover .mba-pro-angle-image {
+    box-shadow: 0 0 0 2px var(--mba-pro-layout-accent) !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-angle-label {
+    color: var(--mba-pro-layout-muted) !important;
+    font-size: 12px !important;
+    text-align: left !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Card frames and styling hooks (1.6.0 looks).
+
+   Theme CSS does not reach the cards (every rule is scoped and armoured), but a
+   site can restyle them without !important through these custom properties,
+   which the plugin never sets itself — set them on :root, the page or
+   .medbeafgallery-container:
+     --mbg-font, --mbg-heading-font, --mbg-text, --mbg-muted, --mbg-accent,
+     --mbg-card-bg, --mbg-card-border, --mbg-card-radius, --mbg-card-shadow,
+     --mbg-card-shadow-hover, --mbg-card-padding
+   ═══════════════════════════════════════════════════════════════════════════ */
+.mba-pro-layouts.mba-pro-refined {
+    --mbr-font: var(--mbg-font, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
+    --mbr-heading: var(--mbg-heading-font, var(--mba-pro-layout-heading, var(--mbr-font)));
+    --mbr-text: var(--mbg-text, var(--mba-pro-layout-text));
+    --mbr-muted: var(--mbg-muted, var(--mba-pro-layout-muted));
+    --mbr-accent: var(--mbg-accent, var(--mba-pro-layout-accent));
+    --mbr-card: var(--mbg-card-bg, var(--mba-pro-layout-card));
+    --mbr-border: var(--mbg-card-border, var(--mba-pro-layout-line));
+    --mbr-radius: var(--mbg-card-radius, var(--mba-pro-layout-radius, 12px));
+    --mbr-shadow: var(--mbg-card-shadow, 0 1px 2px rgb(16 24 40 / 6%), 0 2px 8px rgb(16 24 40 / 4%));
+    --mbr-shadow-hover: var(--mbg-card-shadow-hover, 0 2px 4px rgb(16 24 40 / 6%), 0 12px 28px rgb(16 24 40 / 10%));
+    --mbr-pad: var(--mbg-card-padding, 16px);
+    font-family: var(--mbr-font) !important;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Theme type rules stop at the gallery: every element in the cards, the category
+   bar and the toolbar uses the gallery's own font, even when the theme styles the
+   divs or spans in between. Headings get the heading font further down. */
+.mba-pro-layouts.mba-pro-refined :is(.medbeafgallery-gallery-grid, .medbeafgallery-category-carousel, .mba-pro-row-heading, .mba-pro-mtoolbar, .medbeafgallery-pro-toolbar, .mba-pro-filters-btn) :where(*),
+.mba-pro-layouts.mba-pro-refined :is(.mba-pro-mtoolbar, .medbeafgallery-pro-toolbar, .mba-pro-filters-btn) {
+    font-family: var(--mbr-font) !important;
+    font-style: normal !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+}
+
+/* Boxed and framed: each case is a card. */
+.mba-pro-layouts.mba-pro-refined:is(.mba-pro-frame-boxed, .mba-pro-frame-framed) :is(.medbeafgallery-gallery-item, .mba-pro-mcard).mba-pro-layout-card {
+    position: relative !important;
+    border: 1px solid var(--mbr-border) !important;
+    border-radius: var(--mbr-radius) !important;
+    background: var(--mbr-card) !important;
+    box-shadow: var(--mbr-shadow) !important;
+    overflow: hidden !important;
+    transition: box-shadow .2s ease, border-color .2s ease !important;
+}
+
+.mba-pro-layouts.mba-pro-refined:is(.mba-pro-frame-boxed, .mba-pro-frame-framed) :is(.medbeafgallery-gallery-item, .mba-pro-mcard).mba-pro-layout-card:not(.mba-pro-editorial-card) {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.mba-pro-layouts.mba-pro-refined:is(.mba-pro-frame-boxed, .mba-pro-frame-framed) .mba-pro-layout-card:hover {
+    box-shadow: var(--mbr-shadow-hover) !important;
+}
+
+.mba-pro-layouts.mba-pro-refined:is(.mba-pro-frame-boxed, .mba-pro-frame-framed) .mba-pro-layout-card:hover > .mba-pro-card-media {
+    filter: none;
+}
+
+/* Boxed: the photo runs across the top of the card. */
+.mba-pro-layouts.mba-pro-refined.mba-pro-frame-boxed .mba-pro-layout-card > .mba-pro-card-media {
+    flex: 0 0 auto !important;
+    border-radius: 0 !important;
+}
+
+/* Framed: the photo sits inside the card with a margin, like a print. */
+.mba-pro-layouts.mba-pro-refined.mba-pro-frame-framed :is(.medbeafgallery-gallery-item, .mba-pro-mcard).mba-pro-layout-card {
+    padding: 8px !important;
+}
+
+.mba-pro-layouts.mba-pro-refined.mba-pro-frame-framed .mba-pro-layout-card > .mba-pro-card-media {
+    flex: 0 0 auto !important;
+    border-radius: calc(var(--mbr-radius) - 4px) !important;
+}
+
+/* The caption inside the card. */
+.mba-pro-layouts.mba-pro-refined:is(.mba-pro-frame-boxed, .mba-pro-frame-framed) .mba-pro-layout-card :is(.medbeafgallery-gallery-item-info, .mba-pro-mcard-body) {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 14px var(--mbr-pad) 14px !important;
+}
+
+.mba-pro-layouts.mba-pro-refined.mba-pro-frame-framed .mba-pro-layout-card :is(.medbeafgallery-gallery-item-info, .mba-pro-mcard-body) {
+    padding: 14px calc(var(--mbr-pad) - 8px) 6px !important;
+}
+
+.mba-pro-layouts.mba-pro-refined:is(.mba-pro-frame-boxed, .mba-pro-frame-framed) .mba-pro-caption-foot {
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    margin: auto 0 0 !important;
+    padding: 12px 0 0 !important;
+    border-top: 1px solid color-mix(in srgb, var(--mbr-border) 70%, transparent) !important;
+}
+
+.mba-pro-layouts.mba-pro-refined:is(.mba-pro-frame-boxed, .mba-pro-frame-framed) .mba-pro-caption-foot > .mba-pro-caption-open {
+    margin-inline-start: auto !important;
+    min-height: 32px !important;
+}
+
+/* Something to read before the footer line. */
+.mba-pro-layouts.mba-pro-refined:is(.mba-pro-frame-boxed, .mba-pro-frame-framed) .mba-pro-layout-card :is(.mba-pro-ccard-meta, .mba-pro-mcard-meta, .mba-pro-angle-strip) {
+    margin-bottom: 12px !important;
+}
+
+/* Every caption part uses the gallery's own colours. */
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card :is(.medbeafgallery-gallery-item-info h3, .mba-pro-mcard-title) {
+    color: var(--mbr-text) !important;
+    font-family: var(--mbr-heading) !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card :is(.medbeafgallery-gallery-category, .mba-pro-mcard-cat, .mba-pro-ccard-desc, .mba-pro-mcard-desc, .mba-pro-editorial-excerpt, .mba-pro-ccard-pill, .mba-pro-mcard-pill) {
+    color: var(--mbr-muted) !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-caption-foot > .mba-pro-caption-open,
+.mba-pro-layouts.mba-pro-refined .mba-pro-caption-foot > .mba-pro-caption-open:hover {
+    color: var(--mbr-accent) !important;
+}
+
+/* The doctor (card extra) in the footer. */
+.mba-pro-layouts.mba-pro-refined .mba-pro-caption-foot > .mba-pro-card-doctor {
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: var(--mbr-muted) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-caption-foot > .mba-pro-card-doctor .mba-pro-card-avatar {
+    flex-basis: 24px !important;
+    width: 24px !important;
+    min-width: 24px !important;
+    max-width: 24px !important;
+    height: 24px !important;
+}
+
+/* Editorial in a box: photo and caption side by side inside one card. */
+.mba-pro-layouts.mba-pro-refined:is(.mba-pro-frame-boxed, .mba-pro-frame-framed) .mba-pro-editorial-card {
+    gap: 0 !important;
+}
+
+.mba-pro-layouts.mba-pro-refined:is(.mba-pro-frame-boxed, .mba-pro-frame-framed) .mba-pro-editorial-card > .medbeafgallery-gallery-item-info {
+    justify-content: center !important;
+    padding: clamp(18px, 3vw, 36px) !important;
+}
+
+.mba-pro-layouts.mba-pro-refined.mba-pro-frame-boxed .mba-pro-editorial-card > .mba-pro-card-media {
+    border-radius: 0 !important;
+}
+
+/* Photo cards in a box: the photo is the whole card. */
+.mba-pro-layouts.mba-pro-refined.mba-pro-frame-boxed .mba-pro-photo-card > .mba-pro-card-media {
+    border-radius: 0 !important;
+}
+
+/* ═══ Before / after switch ═══ */
+.mba-pro-layouts .mba-pro-toggle-layer {
+    transition: opacity .25s ease !important;
+}
+
+.mba-pro-layouts .mba-pro-toggle-stage[data-side="after"] .mba-pro-toggle-before,
+.mba-pro-layouts .mba-pro-toggle-stage[data-side="before"] .mba-pro-toggle-after {
+    opacity: 0 !important;
+}
+
+.mba-pro-layouts .mba-pro-toggle-switch {
+    display: inline-flex !important;
+    position: absolute !important;
+    z-index: 5;
+    left: 50% !important;
+    bottom: 12px !important;
+    gap: 2px !important;
+    margin: 0 !important;
+    padding: 3px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: rgb(15 23 42 / 64%) !important;
+    transform: translateX(-50%) !important;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+}
+
+.mba-pro-layouts .mba-pro-toggle-switch > .mba-pro-toggle-option {
+    appearance: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 32px !important;
+    margin: 0 !important;
+    padding: 5px 14px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #ffffff !important;
+    font-family: var(--mbr-font, system-ui, sans-serif) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    cursor: pointer !important;
+}
+
+.mba-pro-layouts .mba-pro-toggle-switch > .mba-pro-toggle-option[aria-pressed="true"] {
+    background: #ffffff !important;
+    color: #111827 !important;
+}
+
+.mba-pro-layouts .mba-pro-toggle-switch > .mba-pro-toggle-option:focus-visible {
+    outline: 2px solid #ffffff !important;
+    outline-offset: 2px !important;
+}
+
+@media (pointer: coarse) {
+    .mba-pro-layouts .mba-pro-toggle-switch > .mba-pro-toggle-option {
+        min-height: 40px !important;
+        padding: 6px 16px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mba-pro-layouts .mba-pro-toggle-layer {
+        transition: none !important;
+    }
+}
+
+/* ═══ Stacked: before above after, both whole ═══ */
+.mba-pro-layouts .mba-pro-uncropped-stage.mba-pro-stacked-stage {
+    flex-direction: column !important;
+}
+
+.mba-pro-layouts .mba-pro-stacked-stage .mba-pro-whole-photo {
+    flex: 1 1 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+}
+
+/* Spotlight's featured case: its photo fills the card's full height. */
+.mba-pro-layouts.mba-pro-refined:is(.mba-pro-frame-boxed, .mba-pro-frame-framed) .mba-pro-featured-card > .mba-pro-card-media {
+    flex: 1 1 auto !important;
+}
+
+/* Category tabs follow the preset's colours (light text on the dark preset). */
+.mba-pro-layouts.mba-pro-preset-active .mba-pro-cat-tabs .medbeafgallery-carousel-item :is(p, .medbeafgallery-category-name) {
+    color: var(--mba-pro-layout-muted) !important;
+}
+
+.mba-pro-layouts.mba-pro-preset-active .mba-pro-cat-tabs .medbeafgallery-carousel-item:hover :is(p, .medbeafgallery-category-name) {
+    color: var(--mba-pro-layout-text) !important;
+}
+
+.mba-pro-layouts.mba-pro-preset-active .mba-pro-cat-tabs .medbeafgallery-carousel-item.active :is(p, .medbeafgallery-category-name) {
+    color: var(--mba-pro-layout-accent) !important;
+}
+
+/* Headings outside the cards use the heading font too, at a fixed weight. */
+.mba-pro-layouts.mba-pro-refined :is(.mba-pro-row-title, .mba-pro-photo-title) {
+    font-family: var(--mbr-heading) !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-row-title {
+    font-weight: 500 !important;
+}
+
+/* Touch screens: the footer link keeps a 44px target inside boxed and framed cards. */
+@media (pointer: coarse) {
+    .mba-pro-layouts.mba-pro-refined:is(.mba-pro-frame-boxed, .mba-pro-frame-framed) .mba-pro-caption-foot > .mba-pro-caption-open {
+        min-height: 44px !important;
+    }
+}

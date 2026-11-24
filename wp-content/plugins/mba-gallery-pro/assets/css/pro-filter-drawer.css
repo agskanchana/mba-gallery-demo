@@ -1,0 +1,113 @@
+/**
+ * MBA Gallery Pro — Filter Drawer
+ *
+ * The "Open on click" filter placement: hides the server-rendered left sidebar,
+ * squares the gallery to full width, and styles the click-to-open "Filters"
+ * toolbar + drawer that pro-filter-drawer.js builds. Independent of the card
+ * layout (Classic grid or Masonry cards) — driven solely by the Filter Display
+ * setting and scoped to `.medbeafgallery-container.mba-pro-filters-drawer`.
+ *
+ * @package MBA_Gallery_Pro
+ */
+
+.mba-pro-hidden { display: none !important; }
+
+/* The toolbar/drawer are injected into arbitrary themes; not every theme applies
+   the common `* { box-sizing: border-box }` reset that the padding/width combos
+   below assume, so own it for this subtree. */
+.mba-pro-mtoolbar,
+.mba-pro-mtoolbar *,
+.mba-pro-mtoolbar *::before,
+.mba-pro-mtoolbar *::after {
+    box-sizing: border-box;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   1. LAYOUT — drop the two-column flex; the grid goes full width
+   ════════════════════════════════════════════════════════════════════════ */
+.medbeafgallery-container.mba-pro-filters-drawer .medbeafgallery-gallery-layout {
+    display: block;
+    gap: 0;
+}
+.medbeafgallery-container.mba-pro-filters-drawer .medbeafgallery-gallery-layout .medbeafgallery-main-content {
+    width: 100%;
+}
+.medbeafgallery-container.mba-pro-filters-drawer .medbeafgallery-filter-sidebar {
+    display: none; /* hidden until JS turns it into a drawer */
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   2. FILTER TOOLBAR + DRAWER (open on click)
+   ════════════════════════════════════════════════════════════════════════ */
+.mba-pro-filters-drawer .mba-pro-mtoolbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 24px;
+    z-index: 20;
+}
+.mba-pro-filters-drawer .mba-pro-filters-btn {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    background: #ffffff;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+.mba-pro-filters-drawer .mba-pro-filters-btn:hover {
+    border-color: var(--medbeafgallery-primary-50, #93c5fd);
+    color: var(--medbeafgallery-primary-solid, #1d4ed8);
+}
+.mba-pro-filters-drawer .mba-pro-filters-btn:focus-visible {
+    outline: 2px solid var(--medbeafgallery-primary-solid, #3b82f6);
+    outline-offset: 2px;
+}
+.mba-pro-filters-drawer .mba-pro-filters-btn.mba-pro-filters-active {
+    border-color: var(--medbeafgallery-primary-solid, #2563eb);
+    color: var(--medbeafgallery-primary-solid, #1d4ed8);
+}
+.mba-pro-filters-drawer .mba-pro-filters-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 9999px;
+    background: var(--medbeafgallery-primary-solid, #2563eb);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+}
+.mba-pro-filters-drawer .mba-pro-drawer {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: min(360px, 100%);
+    max-width: 100%;
+    margin: 0;
+    flex-shrink: initial;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.14);
+    z-index: 40;
+}
+.mba-pro-filters-drawer .mba-pro-mtoolbar.mba-pro-drawer-open .mba-pro-drawer { display: block; }
+.mba-pro-filters-drawer .mba-pro-drawer .medbeafgallery-filter-sidebar-header { display: none; }
+.mba-pro-filters-drawer .mba-pro-drawer .medbeafgallery-filter-groups { max-height: min(60vh, 440px); }
+/* The drawer is its own open/close mechanic. The sidebar's mobile collapse
+   (.collapsed, expanded via the sidebar-header toggle hidden above) would
+   otherwise leave the drawer with no visible filters on small screens. */
+.mba-pro-filters-drawer .mba-pro-drawer .medbeafgallery-filter-groups.collapsed { display: block; }
+@media (max-width: 600px) {
+    .mba-pro-filters-drawer .mba-pro-drawer { width: 100%; }
+}

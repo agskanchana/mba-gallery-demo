@@ -1,0 +1,433 @@
+/* All rules belong to Discovery; the toolbar is moved into the main column. */
+.mba-pro-discovery,
+.mba-pro-discovery-tags {
+    --mba-discovery-bg: #fff;
+    --mba-discovery-text: #202b38;
+    --mba-discovery-muted: #536273;
+    --mba-discovery-line: #b2becb;
+    --mba-discovery-soft: #edf3f8;
+    --mba-discovery-accent: #174e87;
+    --mba-discovery-selected: #dcecfb;
+    box-sizing: border-box !important;
+    color: var(--mba-discovery-text) !important;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    text-align: start !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+}
+
+.mba-pro-dark .mba-pro-discovery,
+.mba-pro-dark .mba-pro-discovery-tags,
+.mba-pro-discovery.mba-pro-discovery-dark,
+.mba-pro-discovery-tags.mba-pro-discovery-dark {
+    --mba-discovery-bg: #192430;
+    --mba-discovery-text: #f0f4fa;
+    --mba-discovery-muted: #bac9d8;
+    --mba-discovery-line: #8094aa;
+    --mba-discovery-soft: #273848;
+    --mba-discovery-accent: #a7d4ff;
+    --mba-discovery-selected: #294c6d;
+    color-scheme: dark;
+}
+
+.mba-pro-discovery *,
+.mba-pro-discovery *::before,
+.mba-pro-discovery *::after,
+.mba-pro-discovery-tags .mba-pro-discovery-chip {
+    box-sizing: border-box !important;
+}
+
+.mba-pro-discovery [hidden] {
+    display: none !important;
+}
+
+.mba-pro-discovery button.mba-pro-discovery-button,
+.mba-pro-discovery-tags button.mba-pro-discovery-chip {
+    appearance: none !important;
+    display: inline-flex !important;
+    position: relative !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 10px 14px !important;
+    border: 1px solid var(--mba-discovery-line) !important;
+    border-radius: 8px !important;
+    background: var(--mba-discovery-bg) !important;
+    color: var(--mba-discovery-text) !important;
+    font: inherit !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    text-decoration: none !important;
+    text-indent: 0 !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    min-height: 44px !important;
+    min-width: 44px !important;
+    max-width: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    float: none !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+    touch-action: manipulation !important;
+    transition: none !important;
+}
+
+.mba-pro-discovery button.mba-pro-discovery-button::before,
+.mba-pro-discovery button.mba-pro-discovery-button::after,
+.mba-pro-discovery-tags button.mba-pro-discovery-chip::before,
+.mba-pro-discovery-tags button.mba-pro-discovery-chip::after {
+    content: none !important;
+    display: none !important;
+}
+
+.mba-pro-discovery button.mba-pro-discovery-button:hover:not(:disabled),
+.mba-pro-discovery-tags button.mba-pro-discovery-chip:hover {
+    background: var(--mba-discovery-soft) !important;
+    border-color: var(--mba-discovery-accent) !important;
+}
+
+.mba-pro-discovery button.mba-pro-discovery-button:focus-visible,
+.mba-pro-discovery-tags button.mba-pro-discovery-chip:focus-visible,
+.mba-pro-discovery .mba-pro-discovery-question:focus {
+    outline: 3px solid var(--mba-discovery-accent) !important;
+    outline-offset: 3px !important;
+}
+
+.mba-pro-discovery button.mba-pro-discovery-button:disabled {
+    opacity: 0.55 !important;
+    cursor: default !important;
+}
+
+.mba-pro-discovery button[aria-selected="true"],
+.mba-pro-discovery button[aria-pressed="true"],
+.mba-pro-discovery button.mba-pro-discovery-highlight,
+.mba-pro-discovery button.mba-pro-discovery-primary {
+    background: var(--mba-discovery-selected) !important;
+    border-color: var(--mba-discovery-accent) !important;
+    color: var(--mba-discovery-text) !important;
+    box-shadow: inset 0 0 0 1px var(--mba-discovery-accent) !important;
+}
+
+.mba-pro-discovery.mba-pro-discovery-toolbar {
+    display: none !important;
+    position: relative !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 0 18px !important;
+    border: 0 !important;
+    background: transparent !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+}
+
+.mba-pro-discovery.mba-pro-discovery-toolbar.mba-pro-discovery-ready,
+.mba-pro-discovery-active {
+    display: flex !important;
+}
+
+.mba-pro-discovery-active,
+.mba-pro-discovery-tags {
+    flex-wrap: wrap !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    gap: 8px !important;
+}
+
+.mba-pro-discovery-tags {
+    display: flex !important;
+}
+
+.mba-pro-discovery-tags button.mba-pro-discovery-chip {
+    font-size: 14px !important;
+    background: var(--mba-discovery-soft) !important;
+    border-radius: 24px !important;
+}
+
+.mba-pro-discovery.mba-pro-discovery-inline {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    max-width: 620px !important;
+    min-width: 0 !important;
+    margin: 16px 0 !important;
+    padding: 16px !important;
+    border: 1px solid var(--mba-discovery-line) !important;
+    border-radius: 12px !important;
+    background: var(--mba-discovery-bg) !important;
+}
+
+.mba-pro-discovery.mba-pro-discovery-overlay {
+    display: flex !important;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 100000 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: rgba(12, 20, 30, 0.6) !important;
+    justify-content: flex-end !important;
+    overscroll-behavior: contain !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-panel {
+    display: flex !important;
+    position: relative !important;
+    flex-direction: column !important;
+    width: min(540px, 100%) !important;
+    height: 100% !important;
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: var(--mba-discovery-bg) !important;
+    color: var(--mba-discovery-text) !important;
+    box-shadow: -8px 0 40px rgba(0, 0, 0, 0.2) !important;
+    overflow: hidden !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-header {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    padding: max(16px, env(safe-area-inset-top)) 20px 16px !important;
+    border-bottom: 1px solid var(--mba-discovery-line) !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-heading,
+.mba-pro-discovery .mba-pro-discovery-question {
+    display: block !important;
+    position: static !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: var(--mba-discovery-text) !important;
+    font: inherit !important;
+    font-size: 22px !important;
+    font-weight: 650 !important;
+    line-height: 1.4 !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    overflow-wrap: anywhere !important;
+}
+
+.mba-pro-discovery button.mba-pro-discovery-close {
+    flex: 0 0 44px !important;
+    font-size: 24px !important;
+    padding: 4px !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-dialog-content {
+    display: block !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    padding: 20px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain !important;
+}
+
+.mba-pro-discovery p {
+    display: block !important;
+    position: static !important;
+    margin: 0 0 14px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: var(--mba-discovery-text) !important;
+    font: inherit !important;
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    overflow-wrap: anywhere !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-tabs,
+.mba-pro-discovery .mba-pro-discovery-guide-nav {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    margin: 0 0 18px !important;
+    padding: 0 !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-guide-nav {
+    margin: 18px 0 0 !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-map-content {
+    display: block !important;
+    min-width: 0 !important;
+    width: 100% !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-figure {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 320px !important;
+    max-height: 50vh !important;
+    margin: 0 auto 16px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    color: var(--mba-discovery-text) !important;
+    background: transparent !important;
+    fill: none !important;
+    stroke: currentColor !important;
+    overflow: visible !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-region {
+    fill: var(--mba-discovery-soft) !important;
+    stroke: currentColor !important;
+    stroke-width: 1.4px !important;
+    vector-effect: non-scaling-stroke !important;
+    cursor: pointer !important;
+    touch-action: manipulation !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-region[aria-disabled="true"] {
+    fill: none !important;
+    opacity: 0.35 !important;
+    cursor: default !important;
+    pointer-events: none !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-region:focus,
+.mba-pro-discovery .mba-pro-discovery-region.mba-pro-discovery-highlight {
+    fill: var(--mba-discovery-selected) !important;
+    stroke: var(--mba-discovery-accent) !important;
+    stroke-width: 3px !important;
+    outline: 2px solid var(--mba-discovery-accent) !important;
+    outline-offset: 3px !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-outline {
+    fill: none !important;
+    stroke: currentColor !important;
+    stroke-width: 1.2px !important;
+    vector-effect: non-scaling-stroke !important;
+    pointer-events: none !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-region-list,
+.mba-pro-discovery .mba-pro-discovery-answers {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    gap: 8px !important;
+    margin: 0 0 16px !important;
+    padding: 0 !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-region-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.mba-pro-discovery button.mba-pro-discovery-region-choice,
+.mba-pro-discovery button.mba-pro-discovery-answer {
+    justify-content: flex-start !important;
+    text-align: start !important;
+    width: 100% !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-question {
+    margin: 0 0 18px !important;
+    font-size: 20px !important;
+}
+
+.mba-pro-discovery p.mba-pro-discovery-progress,
+.mba-pro-discovery p.mba-pro-discovery-hint {
+    color: var(--mba-discovery-muted) !important;
+    font-size: 14px !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-count {
+    font-weight: 650 !important;
+}
+
+.mba-pro-discovery p.mba-pro-discovery-medical-note {
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    padding: 14px 20px max(16px, env(safe-area-inset-bottom)) !important;
+    border-top: 1px solid var(--mba-discovery-line) !important;
+    color: var(--mba-discovery-muted) !important;
+    font-size: 13px !important;
+    background: var(--mba-discovery-bg) !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-empty {
+    padding: 14px !important;
+    border: 1px solid var(--mba-discovery-line) !important;
+    border-radius: 8px !important;
+    background: var(--mba-discovery-soft) !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-empty p:last-child {
+    margin: 10px 0 0 !important;
+}
+
+.mba-pro-discovery-lock {
+    overflow: hidden !important;
+}
+
+.mba-pro-discovery .mba-pro-discovery-sr {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    border: 0 !important;
+    overflow: hidden !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+}
+
+@media (max-width: 600px) {
+    .mba-pro-discovery .mba-pro-discovery-panel {
+        width: 100% !important;
+        max-width: none !important;
+        height: 100% !important;
+    }
+
+    .mba-pro-discovery .mba-pro-discovery-dialog-content {
+        padding: 16px !important;
+    }
+
+    .mba-pro-discovery .mba-pro-discovery-region-list {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .mba-pro-discovery .mba-pro-discovery-tabs > button {
+        flex: 1 1 calc(50% - 8px) !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mba-pro-discovery *,
+    .mba-pro-discovery-tags .mba-pro-discovery-chip {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}

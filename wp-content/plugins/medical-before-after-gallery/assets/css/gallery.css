@@ -1,0 +1,3215 @@
+/* Modern Category Grid Layout */
+.medbeafgallery-category-carousel {
+  position: relative;
+  margin: 30px 0 40px;
+  z-index: 1;
+}
+
+/* Add balanced spacing for carousel mode */
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode {
+  padding: 0;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-grid-mode {
+  padding: 0;
+}
+
+/* Base navigation buttons - hidden by default for grid mode */
+.medbeafgallery-nav-buttons {
+  position: absolute;
+  top: 50%;
+  /* Inset slightly so the arrows sit inside the gutters the carousel reserves
+     for them, rather than flush against the container edge. */
+  left: 6px;
+  right: 6px;
+  transform: translateY(-50%);
+  display: none;
+  justify-content: space-between;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.medbeafgallery-nav-btn {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #e5e7eb;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  pointer-events: auto; /* Enable clicks on buttons */
+  color: #374151;
+  backdrop-filter: blur(8px); /* Enhanced blur for overlay effect */
+  z-index: 15; /* High z-index to appear over carousel items */
+}
+
+.medbeafgallery-nav-btn:hover {
+  background: #ffffff;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  transform: scale(1.05);
+  color: #3b82f6;
+}
+
+.medbeafgallery-nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.medbeafgallery-nav-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* Arrow styles for text-based arrows */
+.medbeafgallery-arrow-left,
+.medbeafgallery-arrow-right {
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1;
+  color: currentColor;
+  user-select: none;
+}
+
+/* These were `left`/`right` offsets, which do nothing on a flex child — the
+   buttons are laid out by justify-content: space-between on .medbeafgallery-nav-
+   buttons, not positioned individually. The inset now lives on that container
+   instead (see above), and the carousel reserves matching gutters below. */
+.medbeafgallery-prev-btn {
+  margin-right: auto;
+}
+
+.medbeafgallery-next-btn {
+  margin-left: auto;
+}
+
+/* Show navigation only in carousel mode */
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-nav-buttons {
+  display: flex;
+}
+
+/* Hide navigation in grid mode */
+.medbeafgallery-category-carousel.medbeafgallery-grid-mode .medbeafgallery-nav-buttons {
+  display: none !important;
+}
+
+/* Category Grid Container */
+.medbeafgallery-carousel-wrapper {
+  position: relative;
+  border-radius: 16px;
+  padding: 24px;
+  overflow: hidden;
+}
+
+
+
+/* Grid Layout for Categories - Default for both modes */
+.medbeafgallery-carousel-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  padding: 0;
+  max-width: 100%;
+  transition: transform 0.3s ease;
+}
+
+/* Carousel mode specific styles */
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-wrapper {
+  overflow: hidden; /* Prevent overflow in carousel mode */
+}
+
+/* Reserve gutters for the overlay arrows (6px inset + 44px button + 6px gap),
+   so the first and last category tiles are no longer sitting underneath them.
+   The :not()s lift this above the Pro add-on's own rule for the same selector:
+   Pro 1.4.1 and older set 30px there and load after this file, which put the
+   arrows back over the tiles. Pro's "all tiles fit" and tab styles keep their
+   own padding. */
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode:not(.mba-pro-cat-fits):not(.mba-pro-cat-tabs) .medbeafgallery-carousel-wrapper {
+  padding-left: 56px;
+  padding-right: 56px;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-items {
+  display: flex;
+  grid-template-columns: none;
+  gap: 20px;
+  overflow: visible; /* The wrapper handles overflow */
+  scroll-behavior: smooth;
+  flex-wrap: nowrap;
+  width: fit-content; /* Allow natural width calculation */
+  transition: transform 0.3s ease;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-item {
+  flex: 0 0 auto;
+  min-width: 140px;
+  max-width: 140px;
+}
+
+/* Grid mode uses the default responsive grid */
+.medbeafgallery-category-carousel.medbeafgallery-grid-mode .medbeafgallery-carousel-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+/* Modern Category Item */
+.medbeafgallery-carousel-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  background: #ffffff;
+  border: 2px solid #f1f5f9;
+  min-height: 140px;
+  justify-content: center;
+}
+
+.medbeafgallery-carousel-item:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.medbeafgallery-carousel-item.active {
+  background: #eff6ff;
+  transform: translateY(-2px);
+  box-shadow:
+    0 10px 15px -3px rgba(37, 99, 235, 0.1),
+    0 4px 6px -2px rgba(37, 99, 235, 0.05);
+}
+
+.medbeafgallery-carousel-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+  border-radius: 2px;
+}
+
+/* Category Images */
+.medbeafgallery-carousel-item img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #e5e7eb;
+  transition: all 0.3s ease;
+  margin-bottom: 12px;
+}
+
+.medbeafgallery-carousel-item:hover img {
+  border-color: #3b82f6;
+  transform: scale(1.05);
+}
+
+.medbeafgallery-carousel-item.active img {
+  border-color: #2563eb;
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+/* Category Names */
+.medbeafgallery-carousel-item p,
+.medbeafgallery-category-name {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  text-align: center;
+  line-height: 1.3;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.medbeafgallery-carousel-item:hover p,
+.medbeafgallery-carousel-item:hover .medbeafgallery-category-name {
+  color: #1f2937;
+}
+
+.medbeafgallery-carousel-item.active p,
+.medbeafgallery-carousel-item.active .medbeafgallery-category-name {
+  color: #1e40af;
+  font-weight: 700;
+}
+
+/* Focus states for accessibility */
+.medbeafgallery-carousel-item:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.1),
+    0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Grid */
+@media (max-width: 1024px) {
+  .medbeafgallery-carousel-items {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+  }
+
+  /* Carousel mode adjustments */
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-items {
+    gap: 16px;
+  }
+
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-item {
+    min-width: 120px;
+    max-width: 120px;
+  }
+
+  .medbeafgallery-carousel-item {
+    padding: 16px 12px;
+    min-height: 120px;
+  }
+
+  .medbeafgallery-carousel-item img {
+    width: 56px;
+    height: 56px;
+  }
+
+  .medbeafgallery-carousel-item p,
+  .medbeafgallery-category-name {
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Remove responsive padding adjustments - keep arrows overlaid */
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode {
+    padding: 0; /* No padding needed */
+  }
+
+  .medbeafgallery-carousel-wrapper {
+    padding: 20px 16px;
+    margin: 20px 0 30px;
+  }
+
+  .medbeafgallery-carousel-items {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 10px;
+  }
+
+  /* Carousel mode adjustments */
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-items {
+    gap: 12px;
+  }
+
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-item {
+    min-width: 100px;
+    max-width: 100px;
+  }
+
+  /* Navigation button adjustments for mobile */
+  .medbeafgallery-nav-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .medbeafgallery-prev-btn {
+    left: 8px; /* Overlay position for mobile */
+  }
+
+  .medbeafgallery-next-btn {
+    right: 8px; /* Overlay position for mobile */
+  }
+
+  .medbeafgallery-carousel-item {
+    padding: 14px 10px;
+    min-height: 110px;
+  }
+
+  .medbeafgallery-carousel-item img {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+  }
+
+  .medbeafgallery-carousel-item p,
+  .medbeafgallery-category-name {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* No additional padding needed - keep overlay approach */
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode {
+    padding: 0;
+  }
+
+  .medbeafgallery-carousel-items {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 8px;
+  }
+
+  /* Carousel mode adjustments */
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-items {
+    gap: 10px;
+  }
+
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-item {
+    min-width: 90px;
+    max-width: 90px;
+  }
+
+  /* Smaller navigation on very small screens */
+  .medbeafgallery-nav-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .medbeafgallery-prev-btn {
+    left: 5px; /* Overlay position for small screens */
+  }
+
+  .medbeafgallery-next-btn {
+    right: 5px; /* Overlay position for small screens */
+  }
+
+  .medbeafgallery-carousel-item {
+    padding: 12px 8px;
+    min-height: 100px;
+  }
+
+  .medbeafgallery-carousel-item img {
+    width: 44px;
+    height: 44px;
+  }
+
+  .medbeafgallery-carousel-item p,
+  .medbeafgallery-category-name {
+    font-size: 0.6875rem;
+  }
+}
+
+
+/* Base container styles */
+.medbeafgallery-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  position: relative; /* Required for absolute positioning of the overlay */
+}
+
+.medbeafgallery-gallery-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+/* Gallery Grid Styles */
+.medbeafgallery-gallery-container {
+  margin: 20px 0;
+}
+
+.medbeafgallery-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-gap: 25px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 767px) {
+  .medbeafgallery-gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 20px;
+  }
+
+  .medbeafgallery-gallery-item-info h3 {
+    font-size: 0.9375rem;
+  }
+
+  .medbeafgallery-gallery-view-btn {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Enhanced Gallery Item Styling */
+.medbeafgallery-gallery-item {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.medbeafgallery-gallery-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+}
+
+.medbeafgallery-gallery-item:nth-child(1) { animation: fadeInUp 0.5s ease forwards 0.1s; }
+.medbeafgallery-gallery-item:nth-child(2) { animation: fadeInUp 0.5s ease forwards 0.15s; }
+.medbeafgallery-gallery-item:nth-child(3) { animation: fadeInUp 0.5s ease forwards 0.2s; }
+.medbeafgallery-gallery-item:nth-child(4) { animation: fadeInUp 0.5s ease forwards 0.25s; }
+.medbeafgallery-gallery-item:nth-child(5) { animation: fadeInUp 0.5s ease forwards 0.3s; }
+.medbeafgallery-gallery-item:nth-child(6) { animation: fadeInUp 0.5s ease forwards 0.35s; }
+.medbeafgallery-gallery-item:nth-child(n+7) { animation: fadeInUp 0.5s ease forwards 0.4s; }
+
+/* Image container styling */
+.medbeafgallery-gallery-image-container {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  background-color: #f4f4f5;
+}
+
+/* Preview container setup */
+.medbeafgallery-preview-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+/* Before and after preview images */
+.medbeafgallery-preview-before,
+.medbeafgallery-preview-after {
+  width: 50%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Shown in place of an <img> when the attachment has been deleted from the
+   media library but a case still references it. */
+.medbeafgallery-preview-missing {
+  background-color: #eef1f5;
+  background-image:
+    linear-gradient(45deg, rgba(0, 0, 0, 0.04) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.04) 75%),
+    linear-gradient(45deg, rgba(0, 0, 0, 0.04) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.04) 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 8px 8px;
+}
+
+/* Improved divider between before/after */
+.medbeafgallery-preview-divider {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 3px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateX(-50%);
+  z-index: 2;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.medbeafgallery-gallery-item:hover .medbeafgallery-preview-divider {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+/* Enhanced view button */
+.medbeafgallery-gallery-view-btn {
+  all: unset;
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translate(-50%, 10px);
+  background: rgba(255, 255, 255, 0.95);
+  color: #1f2937;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  z-index: 5;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.medbeafgallery-gallery-view-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.medbeafgallery-gallery-item:hover .medbeafgallery-gallery-view-btn {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+.medbeafgallery-gallery-view-btn:hover {
+  color: white;
+}
+
+/* Item info container */
+.medbeafgallery-gallery-item-info {
+  padding: 16px;
+  padding-bottom: 0;
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  border-top: 1px solid rgba(230, 232, 236, 0.6);
+}
+
+/* Item title */
+.medbeafgallery-gallery-item-info h3 {
+  font-size: 1rem;
+  margin: 0 0 8px 0;
+  color: #111827;
+  line-height: 1.4;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Category badge */
+.medbeafgallery-gallery-category {
+  background: #f3f4f6;
+  color: #4b5563;
+  font-size: 0.75rem;
+  margin-top: 1rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+/* A lone category badge sits in the info column, a flex column that would stretch
+   it across the card; several badges come wrapped in their own row. */
+.medbeafgallery-gallery-item-info > .medbeafgallery-gallery-category {
+  align-self: flex-start;
+  max-width: 100%;
+}
+
+/* Item metadata */
+.medbeafgallery-gallery-meta {
+  display: flex;
+  align-items: center;
+  font-size: 0.8125rem;
+  color: #6b7280;
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px dashed #e5e7eb;
+}
+
+.medbeafgallery-gallery-meta span:not(:last-child) {
+  margin-right: 8px;
+  padding-right: 8px;
+  border-right: 1px solid #e5e7eb;
+}
+
+/* Category-specific styling */
+.medbeafgallery-gallery-item[data-category="ba_category_face"] .medbeafgallery-gallery-category {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.medbeafgallery-gallery-item[data-category="ba_category_nose"] .medbeafgallery-gallery-category {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.medbeafgallery-gallery-item[data-category="ba_category_breast"] .medbeafgallery-gallery-category {
+  background: #fce4ec;
+  color: #c2185b;
+}
+
+.medbeafgallery-gallery-item[data-category="ba_category_body"] .medbeafgallery-gallery-category {
+  background: #e8eaf6;
+  color: #3949ab;
+}
+
+/* Loading skeleton animation */
+@keyframes skeletonPulse {
+  0% { background-position: -200px 0; }
+  100% { background-position: 200px 0; }
+}
+
+.medbeafgallery-gallery-item.loading .medbeafgallery-preview-container {
+  background: linear-gradient(90deg, #f0f0f0, #f8f8f8, #f0f0f0);
+  background-size: 200px 100%;
+  animation: skeletonPulse 1.5s infinite;
+}
+
+.medbeafgallery-gallery-item.loading h3,
+.medbeafgallery-gallery-item.loading .medbeafgallery-gallery-category {
+  background: linear-gradient(90deg, #f0f0f0, #f8f8f8, #f0f0f0);
+  background-size: 200px 100%;
+  animation: skeletonPulse 1.5s infinite;
+  color: transparent;
+}
+
+/* Pagination/Load More */
+.medbeafgallery-pagination {
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.medbeafgallery-load-more {
+  padding: 10px 24px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+
+
+/* Modal Styles */
+.medbeafgallery-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.9);
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 0;
+  box-sizing: border-box;
+  backdrop-filter: blur(5px);
+}
+
+.medbeafgallery-modal.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.medbeafgallery-modal-content {
+  background: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tablet modal */
+@media (min-width: 768px) and (max-width: 991px) {
+  .medbeafgallery-modal-content {
+    width: 95%;
+    max-height: 95vh;
+    height: 95vh;
+    overflow: hidden;
+  }
+}
+
+/* Mobile modal - full screen */
+@media (max-width: 767px) {
+  .medbeafgallery-modal-content {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100dvh;
+    height: 100dvh;
+    border-radius: 0;
+    overflow: hidden;
+  }
+}
+
+/* Modal Header */
+.medbeafgallery-modal-header {
+  padding: 20px 25px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  gap: 15px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.medbeafgallery-modal-header h2 {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.3;
+  flex: 1;
+  order: 3;
+  /* The close button is absolutely positioned at the right edge of the
+     header; keep a long title from running underneath it. */
+  box-sizing: border-box;
+  padding-right: 48px;
+}
+
+/* Image Controls in Header - Desktop first */
+.medbeafgallery-modal-header .medbeafgallery-image-controls {
+  position: static;
+  top: auto;
+  left: auto;
+  display: flex;
+  gap: 8px;
+  z-index: auto;
+  order: 1;
+}
+
+/* Pair Info in Header - Desktop second */
+.medbeafgallery-modal-header .medbeafgallery-pair-info {
+  position: static;
+  top: auto;
+  right: auto;
+  background: #e5e7eb;
+  color: #374151;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  z-index: auto;
+  box-shadow: none;
+  order: 2;
+}
+
+.medbeafgallery-modal-close {
+  all: unset;
+  background: #f3f4f6;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4b5563;
+  transition: all 0.2s ease;
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.medbeafgallery-modal-close:hover {
+  background: #e5e7eb;
+  color: #111827;
+  transform: rotate(90deg);
+}
+
+/* Modal Body */
+.medbeafgallery-modal-body {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: auto;
+  min-height: 0;
+}
+#medbeafgallery-case-description {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+#medbeafgallery-case-description p,
+#medbeafgallery-case-description h2,
+#medbeafgallery-case-description h3,
+#medbeafgallery-case-description h4 {
+  margin-bottom: 1em;
+}
+@media (min-width: 992px) {
+  .medbeafgallery-modal-body {
+    flex-direction: row;
+    height: calc(90vh - 140px); /* Subtract header and nav heights */
+    overflow: hidden;
+  }
+}
+
+/* Image Controls */
+.medbeafgallery-image-controls {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.medbeafgallery-control-btn {
+  all: unset;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 6px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #4b5563;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.medbeafgallery-control-btn.active {
+  color: white;
+}
+
+.medbeafgallery-control-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Before-After Comparison Container */
+.medbeafgallery-comparison-container {
+  flex: 1.2;
+  min-width: 0;
+  position: relative;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 992px) {
+  .medbeafgallery-comparison-container {
+    height: 100%;
+    max-height: none;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .medbeafgallery-comparison-container {
+    width: 100%;
+    min-height: 60vh;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .medbeafgallery-comparison-container {
+    width: 100%;
+    min-height: 50vh;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+}
+
+.medbeafgallery-before-after-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+}
+
+.medbeafgallery-before-after-wrapper.active {
+  animation: fadeInScale 0.4s ease forwards;
+}
+
+@media (min-width: 992px) {
+  .medbeafgallery-before-after-wrapper {
+    max-height: 100%;
+    aspect-ratio: auto;
+  }
+}
+
+@media (max-width: 991px) {
+  .medbeafgallery-before-after-wrapper {
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+  }
+}
+
+.medbeafgallery-before-img,
+.medbeafgallery-after-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (min-width: 992px) {
+  .medbeafgallery-before-img,
+  .medbeafgallery-after-img {
+    max-height: 100%;
+  }
+}
+
+@media (max-width: 991px) {
+  .medbeafgallery-before-img,
+  .medbeafgallery-after-img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+/* clip-path handled by Cocoen slider */
+
+/* Labels */
+.medbeafgallery-labels {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+.medbeafgallery-before-label,
+.medbeafgallery-after-label {
+  padding: 8px 16px;
+  background: rgba(15, 23, 42, 0.75);
+  color: white;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Case Details */
+.medbeafgallery-case-details {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  position: relative;
+}
+
+@media (max-width: 991px) {
+  .medbeafgallery-case-details {
+    border-top: 1px solid #e5e7eb;
+  }
+}
+
+@media (min-width: 992px) {
+  .medbeafgallery-case-details {
+    border-left: 1px solid #e5e7eb;
+    height: 100%;
+    overflow-y: auto;
+  }
+}
+
+/* Tabs */
+.medbeafgallery-case-tabs {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.medbeafgallery-tab {
+  padding: 15px 20px;
+  background: transparent !important;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-weight: 500;
+  color: #6b7280;
+  transition: all 0.2s ease;
+  flex: 1;
+  text-align: center;
+}
+
+.medbeafgallery-tab:hover {
+  color: #2563eb;
+  background: #f3f4f6;
+}
+
+.medbeafgallery-tab.active {
+  position: relative;
+}
+
+.medbeafgallery-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #2563eb;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+/* Tab Content */
+.medbeafgallery-tab-content {
+  padding: 25px;
+  display: none;
+  flex-grow: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  height: 0;
+  overflow: hidden;
+}
+
+.medbeafgallery-tab-content.active {
+  display: block;
+  opacity: 1;
+  height: auto;
+}
+
+.medbeafgallery-tab-content p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+/* Detail Grid */
+.medbeafgallery-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.medbeafgallery-detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.medbeafgallery-detail-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 5px;
+  letter-spacing: 0.5px;
+}
+
+.medbeafgallery-detail-value {
+  font-size: 1rem;
+  color: #111827;
+  font-weight: 500;
+}
+
+/* CTA Section */
+.medbeafgallery-cta-container {
+  padding: 20px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Align to right since no button */
+  background: #f9fafb;
+}
+
+/* Enhanced Social Share Section */
+.medbeafgallery-social-share {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.medbeafgallery-social-share span {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.medbeafgallery-share-btn {
+  all: unset;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e5e7eb;
+  background: white;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Platform-specific colors on hover */
+.medbeafgallery-share-btn.medbeafgallery-share-facebook:hover {
+  background: #1877f2;
+  color: white;
+  border-color: #1877f2;
+  box-shadow: 0 2px 5px rgba(24, 119, 242, 0.3);
+}
+
+.medbeafgallery-share-btn.medbeafgallery-share-twitter:hover {
+  background: #1da1f2;
+  color: white;
+  border-color: #1da1f2;
+  box-shadow: 0 2px 5px rgba(29, 161, 242, 0.3);
+}
+
+.medbeafgallery-share-btn.medbeafgallery-share-email:hover {
+  background: #6366f1;
+  color: white;
+  border-color: #6366f1;
+  box-shadow: 0 2px 5px rgba(99, 102, 241, 0.3);
+}
+
+/* CTA Button in Nav */
+.medbeafgallery-modal-nav .medbeafgallery-cta-button {
+  all: unset;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.medbeafgallery-modal-nav .medbeafgallery-cta-button:hover {
+  transform: translateY(-1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .medbeafgallery-modal-nav {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .medbeafgallery-modal-nav-container {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .medbeafgallery-modal-nav .medbeafgallery-cta-button {
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+  }
+
+  .medbeafgallery-cta-container {
+    justify-content: center;
+  }
+}
+
+/* For very small screens */
+@media (max-width: 360px) {
+  .medbeafgallery-share-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .medbeafgallery-social-share {
+    gap: 8px;
+  }
+}
+
+/* Modal Navigation */
+/* Modal Navigation - fixed footer */
+.medbeafgallery-modal-nav {
+  padding: 15px 25px;
+  background: linear-gradient(to top, rgba(249, 250, 251, 1), rgba(249, 250, 251, 0.95));
+  border-top: 1px solid rgba(229, 231, 235, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+/* New navigation container */
+.medbeafgallery-modal-nav-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+}
+
+/* Improved navigation buttons */
+.medbeafgallery-modal-prev,
+.medbeafgallery-modal-next {
+  all: unset;
+  padding: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: white !important;
+  border: 1px solid #e5e7eb;
+  color: #4b5563;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.medbeafgallery-modal-prev:hover,
+.medbeafgallery-modal-next:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #2563eb;
+  border-color: #d1d5db;
+}
+
+.medbeafgallery-modal-prev svg,
+.medbeafgallery-modal-next svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.5;
+}
+
+/* Counter with sliding animation */
+.medbeafgallery-modal-counter-wrapper {
+  position: relative;
+  overflow: hidden;
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.medbeafgallery-modal-counter {
+  background: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  font-size: 0.9375rem;
+  color: #4b5563;
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.medbeafgallery-modal-counter .medbeafgallery-counter-current {
+  font-weight: 700;
+}
+
+.medbeafgallery-modal-counter .medbeafgallery-counter-separator {
+  color: #9ca3af;
+  margin: 0 2px;
+}
+
+/* Mobile adjustments for navigation */
+@media (max-width: 767px) {
+  .medbeafgallery-modal-nav {
+    padding: 12px 15px;
+  }
+
+  .medbeafgallery-modal-prev,
+  .medbeafgallery-modal-next {
+    width: 40px;
+    height: 40px;
+  }
+
+  .medbeafgallery-modal-counter {
+    padding: 5px 12px;
+    font-size: 0.875rem;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 767px) {
+  .medbeafgallery-modal-header {
+    padding: 15px 20px;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  /* Centred full-width title with the close button pinned top-right: reserve
+     the button's width on both sides so the title clears it and stays centred. */
+  .medbeafgallery-modal-header h2 {
+    font-size: 1.125rem;
+    width: 100%;
+    order: 1;
+    text-align: center;
+    box-sizing: border-box;
+    padding-left: 44px;
+    padding-right: 44px;
+  }
+
+  .medbeafgallery-modal-header .medbeafgallery-image-controls {
+    width: 100%;
+    justify-content: center;
+    order: 2;
+  }
+
+  .medbeafgallery-modal-header .medbeafgallery-pair-info {
+    width: 100%;
+    text-align: center;
+    order: 3;
+  }
+
+  .medbeafgallery-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    order: 4;
+  }
+
+  .medbeafgallery-tab {
+    padding: 12px 10px;
+    font-size: 0.875rem;
+  }
+
+  .medbeafgallery-tab-content {
+    padding: 20px;
+  }
+
+  .medbeafgallery-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .medbeafgallery-cta-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .medbeafgallery-cta-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .medbeafgallery-social-share {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .medbeafgallery-modal-nav {
+    padding: 12px;
+  }
+
+  .medbeafgallery-modal-prev span,
+  .medbeafgallery-modal-next span {
+    display: none;
+  }
+}
+
+/* Animation effects */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.medbeafgallery-modal.active .medbeafgallery-modal-content {
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+.medbeafgallery-modal.active {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 767px) {
+  .medbeafgallery-gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+  }
+
+  .medbeafgallery-gallery-title {
+    font-size: 1.75rem;
+    margin-bottom: 20px;
+  }
+
+
+
+  .medbeafgallery-modal-body {
+    padding: 0;
+  }
+
+  .medbeafgallery-case-details h3 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .medbeafgallery-gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .medbeafgallery-modal-nav {
+    padding: 10px 20px 20px;
+  }
+}
+
+
+
+/* Wrapper constraints removed - images should fill available space */
+
+/* Enhanced Modal Image Container for Better Responsiveness */
+
+/* Modal base structure - consistent across all devices */
+
+/* Before-After Comparison Container - core styles */
+.medbeafgallery-comparison-container {
+  position: relative;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Desktop specific image container */
+@media (min-width: 992px) {
+  .medbeafgallery-comparison-container {
+    flex: 1.2;
+    height: 100%;
+    max-height: none;
+    overflow: hidden;
+  }
+}
+
+/* Tablet specific image container */
+@media (min-width: 768px) and (max-width: 991px) {
+  .medbeafgallery-comparison-container {
+    width: 100%;
+    min-height: 60vh;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+}
+
+/* Mobile specific image container */
+@media (max-width: 767px) {
+  .medbeafgallery-comparison-container {
+    width: 100%;
+    min-height: 50vh;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+}
+
+/* Before-after wrapper - shared styles */
+.medbeafgallery-before-after-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  overflow: hidden;
+}
+
+/* Desktop specific wrapper */
+@media (min-width: 992px) {
+  .medbeafgallery-before-after-wrapper {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+  }
+}
+
+/* Mobile specific wrapper */
+@media (max-width: 991px) {
+  .medbeafgallery-before-after-wrapper {
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+  }
+}
+
+/* Before and after images - shared styles */
+.medbeafgallery-before-img,
+.medbeafgallery-after-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Desktop specific images */
+@media (min-width: 992px) {
+  .medbeafgallery-before-img,
+  .medbeafgallery-after-img {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+  }
+}
+
+/* Mobile specific images */
+@media (max-width: 991px) {
+  .medbeafgallery-before-img,
+  .medbeafgallery-after-img {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+/* After image clip-path handled by Cocoen slider */
+
+/* Fix modal body height for proper overflow */
+@media (min-width: 992px) {
+  .medbeafgallery-modal-body {
+    flex-direction: row;
+    height: calc(90vh - 140px); /* Subtract header and nav heights */
+    overflow: hidden;
+  }
+
+  .medbeafgallery-case-details {
+    flex: 1;
+    overflow-y: auto;
+    height: 100%;
+  }
+}
+
+@media (max-width: 991px) {
+  .medbeafgallery-modal-body {
+    flex-direction: column;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .medbeafgallery-case-details {
+    flex: none;
+    overflow: visible;
+  }
+}
+
+/* Slider handle styles - handled by Cocoen library */
+
+/* Cocoen before-after slider integration */
+.medbeafgallery-before-after-wrapper cocoen-component {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  cursor: ew-resize;
+}
+
+.medbeafgallery-before-after-wrapper .cocoen {
+  width: 100%;
+}
+
+/* Style the Cocoen drag handle via ::part */
+.medbeafgallery-before-after-wrapper cocoen-component::part(drag) {
+  background: rgba(255, 255, 255, 0.9);
+  width: 3px;
+}
+
+/* Standalone images for before-only / after-only view modes */
+.medbeafgallery-standalone-before,
+.medbeafgallery-standalone-after {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  display: none;
+}
+
+/* Hide Cocoen in before/after only modes */
+.view-before cocoen-component,
+.view-after cocoen-component {
+  display: none !important;
+}
+
+.view-before .medbeafgallery-standalone-before {
+  display: block !important;
+}
+
+.view-after .medbeafgallery-standalone-after {
+  display: block !important;
+}
+
+.view-split cocoen-component {
+  display: block !important;
+}
+
+.view-split .medbeafgallery-standalone-before,
+.view-split .medbeafgallery-standalone-after {
+  display: none !important;
+}
+
+/* Mobile specific slider adjustments */
+@media (max-width: 767px) {
+  .medbeafgallery-before-after-wrapper cocoen-component::part(drag) {
+    width: 2px;
+  }
+}
+
+/* Fix for scrollbar at 992px breakpoint */
+
+
+
+/* Multiple Image Pairs Navigation Styles */
+
+/* Image Sets Container */
+.medbeafgallery-image-sets-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Hide all wrappers by default */
+.medbeafgallery-before-after-wrapper {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+/* Show only active wrapper */
+.medbeafgallery-before-after-wrapper.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Image Pairs Navigation */
+.medbeafgallery-image-pairs-nav {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 23, 42, 0.75);
+  border-radius: 30px;
+  padding: 8px 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Pair Navigation Buttons */
+.medbeafgallery-pair-nav {
+  all: unset;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.medbeafgallery-pair-nav:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}
+
+.medbeafgallery-pair-nav:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Indicators Container */
+.medbeafgallery-pair-indicators {
+  display: flex;
+  gap: 6px;
+}
+
+/* Indicator Dots */
+.medbeafgallery-pair-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.medbeafgallery-pair-indicator:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.medbeafgallery-pair-indicator.active {
+  background: white;
+  width: 12px;
+  height: 12px;
+}
+
+/* Hide navigation when there's only one pair */
+.medbeafgallery-image-pairs-nav.single-pair {
+  display: none;
+}
+
+/* Image Pair Info/Description */
+.medbeafgallery-pair-info,
+.medbeafgallery-pair-description {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(15, 23, 42, 0.75);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Make sure the image controls don't overlap with pair info */
+.medbeafgallery-image-controls {
+  left: 15px;
+  right: auto;
+}
+
+/* Adjust labels position to not overlap with pair navigation */
+.medbeafgallery-labels {
+  bottom: 65px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+  .medbeafgallery-image-pairs-nav {
+    bottom: 10px;
+    padding: 6px 10px;
+    gap: 8px;
+  }
+
+  .medbeafgallery-pair-nav {
+    width: 24px;
+    height: 24px;
+  }
+
+  .medbeafgallery-pair-indicator {
+    width: 6px;
+    height: 6px;
+  }
+
+  .medbeafgallery-pair-indicator.active {
+    width: 10px;
+    height: 10px;
+  }
+
+  .medbeafgallery-pair-info {
+    top: 60px; /* Move below the image controls on mobile */
+    right: 15px;
+    font-size: 0.75rem;
+    padding: 6px 12px;
+  }
+
+  /* Adjust labels to avoid overlap with navigation */
+  .medbeafgallery-labels {
+    bottom: 55px;
+  }
+}
+
+/* Touch-friendly targets for mobile devices */
+@media (max-width: 480px) {
+  .medbeafgallery-pair-nav {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Animation for image pair transitions */
+@keyframes fadePairIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.medbeafgallery-before-after-wrapper.active {
+  animation: fadePairIn 0.3s ease forwards;
+}
+
+/* Cocoen handles its own z-indexing for slider elements */
+
+/* Hide view mode controls when there are no images */
+.medbeafgallery-image-controls.no-images {
+  display: none;
+}
+
+/* Hide indicators when there's no navigation */
+.medbeafgallery-pair-indicators:empty {
+  display: none;
+}
+
+/* Status message when no images */
+.medbeafgallery-no-images-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(15, 23, 42, 0.75);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  display: none;
+}
+
+.medbeafgallery-no-images-message.active {
+  display: block;
+}
+
+
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Smoother tab transitions */
+.medbeafgallery-tab-content {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  height: 0;
+  overflow: hidden;
+}
+
+.medbeafgallery-tab-content.active {
+  opacity: 1;
+  height: auto;
+}
+
+/* Improved mobile experience */
+@media (max-width: 767px) {
+  .medbeafgallery-modal-content {
+    width: 95%;
+    border-radius: 0;
+    /* height: 95vh; */
+    max-height: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .medbeafgallery-comparison-container {
+    flex: none;
+    /* height: 50vh; */
+  }
+
+  .medbeafgallery-modal-body {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .medbeafgallery-modal-nav {
+    position: sticky;
+    bottom: 0;
+    z-index: 5;
+  }
+
+  /* Swipe hint for mobile users */
+  .medbeafgallery-swipe-hint {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    opacity: 0.8;
+    animation: fadeInOut 3s ease forwards;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  @keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    20%, 80% { opacity: 0.8; }
+  }
+}
+
+/* Better accessibility */
+.medbeafgallery-tab.active {
+  position: relative;
+}
+
+.medbeafgallery-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+/* Focus states for keyboard navigation */
+.medbeafgallery-gallery-item:focus-visible,
+.medbeafgallery-tab:focus-visible,
+.medbeafgallery-modal-prev:focus-visible,
+.medbeafgallery-modal-next:focus-visible,
+.medbeafgallery-control-btn:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Improved color contrast */
+.medbeafgallery-gallery-item-info h3 {
+  color: #111827;
+}
+
+.medbeafgallery-gallery-category {
+  color: #4b5563;
+}
+
+/* New case indicator */
+.medbeafgallery-new-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #2563eb;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 2;
+  box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
+}
+
+/* Additional styling for loading state */
+.medbeafgallery-loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  z-index: 10;
+}
+
+.medbeafgallery-loading-spinner svg {
+  animation: spin 1s linear infinite;
+}
+
+.medbeafgallery-loading-spinner circle {
+  stroke: #2563eb;
+  stroke-dasharray: 80;
+  stroke-dashoffset: 60;
+  transform-origin: center;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* Multiple views indicator */
+.medbeafgallery-multi-view-indicator {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.medbeafgallery-multi-view-indicator svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Enhanced loading spinner styles */
+.medbeafgallery-loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  z-index: 10;
+  pointer-events: none; /* Allows clicking through the spinner */
+}
+
+.medbeafgallery-loading-spinner svg {
+  animation: spin 1.2s linear infinite;
+  width: 100%;
+  height: 100%;
+}
+
+.medbeafgallery-loading-spinner circle {
+  stroke: #2563eb;
+  stroke-linecap: round;
+  stroke-dasharray: 90, 150;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Make sure loading state is properly represented */
+.medbeafgallery-before-after-wrapper.loading .medbeafgallery-before-img,
+.medbeafgallery-before-after-wrapper.loading .medbeafgallery-after-img {
+  opacity: 0.6;
+}
+
+/* Hide spinner when not in loading state */
+.medbeafgallery-before-after-wrapper:not(.loading) .medbeafgallery-loading-spinner {
+  display: none;
+}
+
+.medbeafgallery-category-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6;
+  border-radius: 8px;
+  color: #6b7280;
+}
+
+.medbeafgallery-category-placeholder svg {
+  width: 60px;
+  height: 60px;
+  opacity: 0.7;
+}
+
+.medbeafgallery-category-image {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.medbeafgallery-category-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.medbeafgallery-category-svg-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.medbeafgallery-category-count {
+  display: inline-block;
+  background-color: rgba(74, 144, 226, 0.15);
+  color: #4A90E2;
+  font-size: 0.75rem;
+  border-radius: 10px;
+  padding: 0 6px;
+  margin-left: 4px;
+}
+
+/* Modal Portal Styling */
+#medbeafgallery-modal-portal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999; /* see createModalPortal() in gallery.js */
+    pointer-events: none;
+}
+
+#medbeafgallery-modal-portal .medbeafgallery-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: auto;
+}
+
+#medbeafgallery-modal-portal .medbeafgallery-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Ensure modal content has proper styling */
+
+.medbeafgallery-toggle-filters-btn:hover {
+    background-color: var(--medbeafgallery-primary-20, #e5e7eb);
+    border-color: var(--medbeafgallery-primary-solid, #d1d5db);
+}
+
+/* Consolidated Mobile Sidebar Styles */
+
+
+/* Overlay styles */
+.medbeafgallery-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Fix horizontal scroll issues */
+html, body {
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.medbeafgallery-gallery-layout {
+  overflow-x: hidden;
+}
+
+.medbeafgallery-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  backdrop-filter: blur(2px);
+}
+
+/* Improved empty states and user feedback */
+.medbeafgallery-no-results {
+  text-align: center;
+  padding: 60px 20px; /* Increased padding */
+  border-radius: 12px;
+  background-color: #f9fafb;
+  border: 1px dashed #e5e7eb;
+  margin: 30px 0;
+}
+
+.medbeafgallery-no-results p {
+  font-size: 1rem;
+  color: #6b7280;
+  margin: 0 0 20px; /* Increased margin */
+}
+
+.medbeafgallery-no-results-icon {
+  margin-bottom: 30px; /* Increased margin */
+  color: #9ca3af;
+}
+
+.medbeafgallery-no-results-icon svg {
+  width: 70px; /* Larger icon */
+  height: 70px;
+  opacity: 0.6; /* Slightly more visible */
+}
+
+.medbeafgallery-no-results .medbeafgallery-reset-suggestion {
+  display: inline-block;
+  padding: 10px 20px; /* Larger button */
+  background-color: #f3f4f6;
+  border-radius: 8px; /* More rounded */
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #4b5563;
+  margin-top: 20px; /* Increased margin */
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.medbeafgallery-no-results .medbeafgallery-reset-suggestion:hover {
+  background-color: #e5e7eb;
+  color: #1f2937;
+}
+
+
+
+
+
+/* Hide appropriate labels based on view mode */
+.medbeafgallery-comparison-container.view-before .medbeafgallery-after-label {
+  display: none;
+}
+
+.medbeafgallery-comparison-container.view-after .medbeafgallery-before-label {
+  display: none;
+}
+
+/* Ensure labels appear in split view */
+.medbeafgallery-comparison-container.view-split .medbeafgallery-before-label,
+.medbeafgallery-comparison-container.view-split .medbeafgallery-after-label {
+  display: block;
+}
+
+
+
+/* Procedure Info */
+.medbeafgallery-procedure-info {
+  color: #333;
+  line-height: 1.6;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.medbeafgallery-procedure-info p {
+  margin-bottom: 1em;
+}
+
+.medbeafgallery-procedure-info h1,
+.medbeafgallery-procedure-info h2,
+.medbeafgallery-procedure-info h3,
+.medbeafgallery-procedure-info h4 {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.medbeafgallery-procedure-info ul,
+.medbeafgallery-procedure-info ol {
+  margin-left: 1.5em;
+  margin-bottom: 1em;
+}
+
+.medbeafgallery-procedure-info img {
+  max-width: 100%;
+  height: auto;
+  margin: 1em 0;
+}
+
+/* Active Filter Tags */
+.medbeafgallery-active-filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 0;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.medbeafgallery-filter-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+}
+
+.medbeafgallery-filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background: var(--medbeafgallery-primary-10, #eef2ff);
+  color: var(--medbeafgallery-primary-solid, #4338ca);
+  border: 1px solid var(--medbeafgallery-primary-20, #c7d2fe);
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.medbeafgallery-filter-tag:hover {
+  background: var(--medbeafgallery-primary-20, #e0e7ff);
+}
+
+.medbeafgallery-filter-tag-remove {
+  cursor: pointer;
+  font-size: 0.875rem;
+  line-height: 1;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  margin-left: 2px;
+}
+
+.medbeafgallery-filter-tag-remove:hover {
+  opacity: 1;
+}
+
+.medbeafgallery-clear-filters {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 14px;
+  background: var(--medbeafgallery-primary-10, #eef2ff);
+  color: var(--medbeafgallery-primary-solid, #4338ca);
+  border: 1px solid var(--medbeafgallery-primary-20, #c7d2fe);
+  border-radius: 9999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+.medbeafgallery-clear-filters:hover {
+  background: var(--medbeafgallery-primary-20, #e0e7ff);
+  color: var(--medbeafgallery-primary-solid, #4338ca);
+  border-color: var(--medbeafgallery-primary-30, #a5b4fc);
+}
+
+/* ── Accessibility ─────────────────────────────────────────────────────────
+   Added alongside the ARIA/keyboard work in gallery.js. Visual output for
+   sighted mouse users is unchanged; these only affect keyboard focus, screen
+   readers, and visitors who have asked for reduced motion.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Visually hidden but still announced. Mirrors core WordPress' utility so it
+   behaves the same way when a theme already defines it. */
+.medbeafgallery-modal .screen-reader-text,
+.medbeafgallery-container .screen-reader-text {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Keyboard focus must be visible on every interactive element, including the
+   ones that only became reachable once role="button"/tabindex were added. */
+.medbeafgallery-carousel-item:focus-visible,
+.medbeafgallery-gallery-view-btn:focus-visible,
+.medbeafgallery-modal-close:focus-visible,
+.medbeafgallery-pair-nav:focus-visible,
+.medbeafgallery-nav-btn:focus-visible,
+.medbeafgallery-load-more:focus-visible,
+.medbeafgallery-clear-filters:focus-visible,
+.medbeafgallery-pair-indicator:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* The modal itself is focusable (tabindex="-1") so focus can land in it, but it
+   should not draw a focus ring when it receives focus programmatically. */
+.medbeafgallery-modal:focus {
+  outline: none;
+}
+
+/* Respect a reduced-motion preference: keep state changes instant rather than
+   animated. Transforms are neutralised too, since the card lift and image
+   scaling are the most motion-heavy parts of the gallery. */
+@media (prefers-reduced-motion: reduce) {
+  .medbeafgallery-container *,
+  .medbeafgallery-modal * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .medbeafgallery-carousel-item:hover,
+  .medbeafgallery-carousel-item.active,
+  .medbeafgallery-carousel-item:hover img,
+  .medbeafgallery-carousel-item.active img,
+  .medbeafgallery-gallery-item:hover {
+    transform: none;
+  }
+}
+
+/* ── Category carousel polish ──────────────────────────────────────────────
+   Companion rules to the arrow-gutter fix earlier in this file.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Reserve two lines of label space on every tile. Without this, a category
+   whose name wraps ("Laser Tattoo Removal") pushes its own tile taller than the
+   single-word tiles beside it, so the avatar circles no longer line up. */
+.medbeafgallery-carousel-item .medbeafgallery-category-name {
+  min-height: 2.6em; /* 2 lines at the 1.3 line-height set above */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Narrower gutters on small screens — 56px each side is too much of the
+   viewport on a phone, and the arrows are smaller there anyway. */
+@media (max-width: 768px) {
+  .medbeafgallery-category-carousel.medbeafgallery-carousel-mode:not(.mba-pro-cat-fits):not(.mba-pro-cat-tabs) .medbeafgallery-carousel-wrapper {
+    padding-left: 44px;
+    padding-right: 44px;
+  }
+
+  .medbeafgallery-nav-btn {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* The arrows float over the tile background, so give them enough contrast to
+   read as controls rather than as part of a card. */
+.medbeafgallery-nav-btn {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+/* ── Loading skeletons ─────────────────────────────────────────────────────
+   Replaces a bare "Loading gallery…" line with placeholder cards, so the
+   gallery has shape immediately and the page does not reflow when the real
+   cards arrive. Server-rendered, so it is painted before gallery.js runs.
+
+   The shimmer needs no reduced-motion rule of its own: the block above already
+   neutralises every animation inside .medbeafgallery-container. */
+.medbeafgallery-skeleton-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
+  gap: 24px !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.medbeafgallery-skeleton-card {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  padding: 12px !important;
+  border-radius: 10px !important;
+  background: rgba(148, 163, 184, 0.06) !important;
+  border: 1px solid rgba(148, 163, 184, 0.16) !important;
+}
+
+.medbeafgallery-skeleton {
+  display: block !important;
+  border-radius: 6px !important;
+  /* Three stops so the highlight can travel across a 200% wide background. */
+  background: linear-gradient(
+    90deg,
+    rgba(148, 163, 184, 0.16) 25%,
+    rgba(148, 163, 184, 0.30) 37%,
+    rgba(148, 163, 184, 0.16) 63%
+  ) !important;
+  background-size: 200% 100% !important;
+  animation: medbeafgallerySkeletonShimmer 1.4s ease-in-out infinite;
+}
+
+.medbeafgallery-skeleton-image {
+  width: 100% !important;
+  aspect-ratio: 4 / 3 !important;
+  border-radius: 8px !important;
+}
+
+/* Fallback for browsers without aspect-ratio: keeps the block from collapsing. */
+@supports not (aspect-ratio: 4 / 3) {
+  .medbeafgallery-skeleton-image { height: 190px !important; }
+}
+
+.medbeafgallery-skeleton-line {
+  height: 0.75rem !important;
+  width: 100% !important;
+}
+
+.medbeafgallery-skeleton-title {
+  height: 1rem !important;
+  width: 72% !important;
+}
+
+.medbeafgallery-skeleton-short {
+  width: 45% !important;
+}
+
+@keyframes medbeafgallerySkeletonShimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* gallery.js sets display:flex inline on this element, which wins over any
+   stylesheet rule, so shape it rather than fight it: one full-width column so
+   the skeleton grid below spans the container. */
+.medbeafgallery-loading-indicator {
+  flex-direction: column !important;
+  align-items: stretch !important;
+  width: 100% !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Hover-reveal cards (Design → Card Style "Hover reveal")
+   The before photo fills the card; the after photo wipes in from the left on
+   hover, keyboard focus, a press-and-hold (.is-revealed) and the one-time
+   intro wipe (.is-peeking). The wipe only clips the after photo — both photos
+   are shown unaltered.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.medbeafgallery-cards-reveal .medbeafgallery-reveal-card .medbeafgallery-preview-container {
+  display: block !important;
+  position: relative !important;
+}
+
+.medbeafgallery-cards-reveal .medbeafgallery-reveal-card .medbeafgallery-preview-before,
+.medbeafgallery-cards-reveal .medbeafgallery-reveal-card .medbeafgallery-preview-after,
+.medbeafgallery-cards-reveal .medbeafgallery-reveal-card .medbeafgallery-preview-backdrop {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  object-fit: contain !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Each photo is shown whole over a blurred, slightly darkened copy of itself. */
+.medbeafgallery-cards-reveal .medbeafgallery-reveal-card .medbeafgallery-preview-backdrop {
+  object-fit: cover !important;
+  filter: blur(22px) saturate(1.1) brightness(0.92);
+  transform: scale(1.25);
+  pointer-events: none;
+}
+
+.medbeafgallery-cards-reveal .medbeafgallery-reveal-card .medbeafgallery-preview-container {
+  overflow: hidden !important;
+}
+
+.medbeafgallery-cards-reveal .medbeafgallery-reveal-card :is(.medbeafgallery-preview-after, .medbeafgallery-preview-backdrop-after) {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.65s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: 1;
+}
+
+.medbeafgallery-cards-reveal .medbeafgallery-reveal-card:hover :is(.medbeafgallery-preview-after, .medbeafgallery-preview-backdrop-after),
+.medbeafgallery-cards-reveal .medbeafgallery-reveal-card:focus-within :is(.medbeafgallery-preview-after, .medbeafgallery-preview-backdrop-after),
+.medbeafgallery-cards-reveal .medbeafgallery-reveal-card.is-revealed :is(.medbeafgallery-preview-after, .medbeafgallery-preview-backdrop-after) {
+  clip-path: inset(0 0 0 0);
+}
+
+/* The divider rides the wipe edge while it moves, then fades. */
+.medbeafgallery-cards-reveal .medbeafgallery-reveal-card .medbeafgallery-preview-divider {
+  left: 0;
+  opacity: 0;
+  z-index: 2;
+}
+
+.medbeafgallery-cards-reveal .medbeafgallery-reveal-card:hover .medbeafgallery-preview-divider,
+.medbeafgallery-cards-reveal .medbeafgallery-reveal-card:focus-within .medbeafgallery-preview-divider,
+.medbeafgallery-cards-reveal .medbeafgallery-reveal-card.is-revealed .medbeafgallery-preview-divider {
+  animation: medbeafgallery-reveal-edge 0.65s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes medbeafgallery-reveal-edge {
+  0%   { left: 0;    opacity: 1; }
+  85%  { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+/* Before / After chip, top right. */
+.medbeafgallery-card-state {
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  z-index: 3 !important;
+  display: grid !important;
+  pointer-events: none;
+}
+
+.medbeafgallery-card-state > span {
+  grid-area: 1 / 1;
+  justify-self: end;
+  padding: 4px 10px !important;
+  border-radius: 999px !important;
+  background: rgba(17, 24, 39, 0.72) !important;
+  color: #fff !important;
+  font-size: 0.6875rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  line-height: 1.4 !important;
+  text-transform: uppercase !important;
+  transition: opacity 0.25s ease;
+}
+
+.medbeafgallery-card-state-after { opacity: 0; }
+
+.medbeafgallery-reveal-card:hover .medbeafgallery-card-state-before,
+.medbeafgallery-reveal-card:focus-within .medbeafgallery-card-state-before,
+.medbeafgallery-reveal-card.is-revealed .medbeafgallery-card-state-before { opacity: 0; }
+
+.medbeafgallery-reveal-card:hover .medbeafgallery-card-state-after,
+.medbeafgallery-reveal-card:focus-within .medbeafgallery-card-state-after,
+.medbeafgallery-reveal-card.is-revealed .medbeafgallery-card-state-after { opacity: 1; }
+
+/* One-time intro wipe: before → after, hold, back to before. */
+.medbeafgallery-cards-reveal .medbeafgallery-reveal-card.is-peeking :is(.medbeafgallery-preview-after, .medbeafgallery-preview-backdrop-after) {
+  animation: medbeafgallery-peek-after 2.1s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.medbeafgallery-cards-reveal .medbeafgallery-reveal-card.is-peeking .medbeafgallery-preview-divider {
+  animation: medbeafgallery-peek-edge 2.1s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.medbeafgallery-reveal-card.is-peeking .medbeafgallery-card-state-before {
+  animation: medbeafgallery-peek-label-before 2.1s linear both;
+}
+
+.medbeafgallery-reveal-card.is-peeking .medbeafgallery-card-state-after {
+  animation: medbeafgallery-peek-label-after 2.1s linear both;
+}
+
+@keyframes medbeafgallery-peek-after {
+  0%   { clip-path: inset(0 100% 0 0); }
+  35%  { clip-path: inset(0 0 0 0); }
+  65%  { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 100% 0 0); }
+}
+
+@keyframes medbeafgallery-peek-edge {
+  0%   { left: 0;    opacity: 0; }
+  4%   { opacity: 1; }
+  35%  { left: 100%; opacity: 1; }
+  38%  { left: 100%; opacity: 0; }
+  65%  { left: 100%; opacity: 0; }
+  68%  { left: 100%; opacity: 1; }
+  97%  { left: 0;    opacity: 1; }
+  100% { left: 0;    opacity: 0; }
+}
+
+@keyframes medbeafgallery-peek-label-before {
+  0%, 30%   { opacity: 1; }
+  34%, 68%  { opacity: 0; }
+  72%, 100% { opacity: 1; }
+}
+
+@keyframes medbeafgallery-peek-label-after {
+  0%, 30%   { opacity: 0; }
+  34%, 68%  { opacity: 1; }
+  72%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medbeafgallery-cards-reveal .medbeafgallery-reveal-card .medbeafgallery-preview-after,
+  .medbeafgallery-cards-reveal .medbeafgallery-reveal-card .medbeafgallery-preview-backdrop-after,
+  .medbeafgallery-card-state > span {
+    transition: none !important;
+  }
+  .medbeafgallery-cards-reveal .medbeafgallery-reveal-card .medbeafgallery-preview-divider {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Case window: blurred copy of the photo behind it instead of black bars
+   (Design → Case Window Background). gallery.js sets --medbeafgallery-backdrop
+   on each pair wrapper to the photo being shown.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.medbeafgallery-backdrop-blur .medbeafgallery-before-after-wrapper {
+  isolation: isolate;
+}
+
+.medbeafgallery-backdrop-blur .medbeafgallery-before-after-wrapper::before {
+  content: "" !important;
+  position: absolute !important;
+  top: -48px !important;
+  right: -48px !important;
+  bottom: -48px !important;
+  left: -48px !important;
+  z-index: -1 !important;
+  display: block !important;
+  background-image: var(--medbeafgallery-backdrop, none) !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  filter: blur(32px) brightness(0.55) saturate(1.15);
+  transform: scale(1.08);
+  pointer-events: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Doctor card in the case window (free modal; Pro shows it in its own panel)
+   A bar under the photo on every screen size.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.medbeafgallery-doctor-strip {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  padding: 14px 18px !important;
+  margin: 0 !important;
+  background: #fff !important;
+  border-top: 1px solid #e5e7eb !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.medbeafgallery-doctor-strip[hidden] {
+  display: none !important;
+}
+
+.medbeafgallery-doctor-strip .medbeafgallery-doctor-photo {
+  width: 56px !important;
+  height: 56px !important;
+  max-width: none !important;
+  margin: 0 !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  flex-shrink: 0 !important;
+}
+
+.medbeafgallery-doctor-strip .medbeafgallery-doctor-initials {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--medbeafgallery-primary-solid, #2563eb) !important;
+  color: #fff !important;
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+}
+
+.medbeafgallery-doctor-text {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+  line-height: 1.35 !important;
+}
+
+.medbeafgallery-doctor-label {
+  color: #6b7280 !important;
+  font-size: 0.6875rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+
+.medbeafgallery-doctor-name {
+  color: #111827 !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+}
+
+a.medbeafgallery-doctor-name:hover,
+a.medbeafgallery-doctor-name:focus-visible {
+  text-decoration: underline !important;
+}
+
+.medbeafgallery-doctor-credentials {
+  color: #374151 !important;
+  font-size: 0.875rem !important;
+}
+
+.medbeafgallery-doctor-location {
+  color: #6b7280 !important;
+  font-size: 0.8125rem !important;
+}
+
+/* Desktop: a bar under the photo, like on phones. (It used to be a 240px
+   column beside the photo, which left a tall, mostly empty panel.) The body
+   is a row on desktop for the Pro details panel; with only the doctor bar it
+   stacks instead. Browsers without :has() keep the row and the bar beside. */
+@media (min-width: 992px) {
+  .medbeafgallery-modal-body:has(> .medbeafgallery-doctor-strip:not([hidden])) {
+    flex-direction: column !important;
+  }
+
+  .medbeafgallery-modal-body:has(> .medbeafgallery-doctor-strip:not([hidden])) > .medbeafgallery-comparison-container {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+  }
+
+  .medbeafgallery-doctor-strip {
+    padding: 14px 24px !important;
+  }
+}
+
+/* ==========================================================================
+   Case window: comparison views as one labelled, segmented control.
+   Layout only (sizes, spacing); colours stay with the base rules, the
+   colour setting and the Pro add-on. The selectors out-rank Pro 1.5's
+   fixed 38px buttons so the labels fit with any Pro version.
+   ========================================================================== */
+.medbeafgallery-modal .medbeafgallery-modal-header .medbeafgallery-image-controls {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 2px !important;
+  padding: 4px !important;
+  margin: 0 !important;
+  border-radius: 12px !important;
+  background: #f1f5f9 !important;
+  box-shadow: inset 0 0 0 1px #e2e8f0 !important;
+}
+
+.medbeafgallery-modal .medbeafgallery-modal-header .medbeafgallery-image-controls .medbeafgallery-control-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  width: auto !important;
+  min-width: 44px !important;
+  height: 36px !important;
+  padding: 0 12px !important;
+  border-radius: 9px !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.medbeafgallery-modal .medbeafgallery-modal-header .medbeafgallery-image-controls .medbeafgallery-control-btn:not(.active) {
+  background: transparent !important;
+  color: #475569 !important;
+}
+
+.medbeafgallery-modal .medbeafgallery-modal-header .medbeafgallery-image-controls .medbeafgallery-control-btn:not(.active):hover {
+  background: #ffffff !important;
+  color: #0f172a !important;
+}
+
+.medbeafgallery-modal .medbeafgallery-modal-header .medbeafgallery-image-controls .medbeafgallery-control-btn.active {
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18) !important;
+}
+
+.medbeafgallery-modal .medbeafgallery-image-controls .medbeafgallery-control-btn svg {
+  width: 16px !important;
+  height: 16px !important;
+  flex: 0 0 16px !important;
+}
+
+.medbeafgallery-control-label {
+  display: inline-block !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  white-space: nowrap !important;
+  color: inherit !important;
+}
+
+/* Older Pro versions draw these controls themselves elsewhere; the label is
+   only for the header control group. */
+.medbeafgallery-image-controls:not(.medbeafgallery-modal-header *) .medbeafgallery-control-label {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Category bar styles (Design → Category Navigation, or the shortcode's
+   category_style): carousel (above), grid, buttons and drop-down. Every style
+   keeps the same .medbeafgallery-carousel-item tiles in the page, so the
+   gallery's category handling and the Pro add-on work identically in each.
+   ========================================================================== */
+
+/* Grid: every category visible as image cards, wrapping onto new rows. */
+.medbeafgallery-category-carousel.medbeafgallery-grid-mode .medbeafgallery-carousel-wrapper {
+  padding: 8px 0 !important;
+  overflow: visible !important;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-grid-mode .medbeafgallery-carousel-items {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+  gap: 14px !important;
+  width: auto !important;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-grid-mode .medbeafgallery-carousel-item {
+  min-width: 0 !important;
+  max-width: none !important;
+  width: auto !important;
+}
+
+@media (max-width: 600px) {
+  .medbeafgallery-category-carousel.medbeafgallery-grid-mode .medbeafgallery-carousel-items {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  /* Compact tiles, so eight categories do not fill the whole first screen. */
+  .medbeafgallery-category-carousel.medbeafgallery-grid-mode .medbeafgallery-carousel-item {
+    min-height: 0 !important;
+    padding: 10px 6px !important;
+  }
+
+  .medbeafgallery-category-carousel.medbeafgallery-grid-mode .medbeafgallery-carousel-item img,
+  .medbeafgallery-category-carousel.medbeafgallery-grid-mode .medbeafgallery-category-image svg {
+    width: 48px !important;
+    height: 48px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .medbeafgallery-category-carousel.medbeafgallery-grid-mode .medbeafgallery-carousel-item .medbeafgallery-category-name {
+    font-size: 0.75rem !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .medbeafgallery-category-carousel.medbeafgallery-grid-mode .medbeafgallery-carousel-items {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Buttons: compact text buttons that wrap — suits long or many category names. */
+.medbeafgallery-category-carousel.medbeafgallery-buttons-mode .medbeafgallery-nav-buttons,
+.medbeafgallery-category-carousel.medbeafgallery-dropdown-mode .medbeafgallery-nav-buttons {
+  display: none !important;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-buttons-mode {
+  margin: 24px 0 28px !important;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-buttons-mode .medbeafgallery-carousel-wrapper {
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  border-radius: 0 !important;
+  background: none !important;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-buttons-mode .medbeafgallery-carousel-items {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  width: auto !important;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-buttons-mode .medbeafgallery-carousel-item {
+  flex: 0 0 auto !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  min-height: 44px !important;
+  margin: 0 !important;
+  padding: 10px 20px !important;
+  border: 1px solid #d5dde6 !important;
+  border-radius: 999px !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease !important;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-buttons-mode .medbeafgallery-carousel-item::after {
+  display: none !important;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-buttons-mode .medbeafgallery-category-image {
+  display: none !important;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-buttons-mode .medbeafgallery-carousel-item .medbeafgallery-category-name {
+  min-height: 0 !important;
+  font-size: 0.9375rem !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+  color: #334155 !important;
+  white-space: nowrap !important;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-buttons-mode .medbeafgallery-carousel-item:hover {
+  border-color: var(--medbeafgallery-primary-solid, #2563eb) !important;
+  background: var(--medbeafgallery-primary-10, rgba(37, 99, 235, 0.08)) !important;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-buttons-mode .medbeafgallery-carousel-item.active {
+  border-color: var(--medbeafgallery-primary-solid, #2563eb) !important;
+  background: var(--medbeafgallery-primary-solid, #2563eb) !important;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-buttons-mode .medbeafgallery-carousel-item.active .medbeafgallery-category-name {
+  color: #ffffff !important;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-buttons-mode .medbeafgallery-carousel-item:focus-visible {
+  outline: 3px solid var(--medbeafgallery-primary-solid, #2563eb) !important;
+  outline-offset: 2px !important;
+}
+
+@media (max-width: 600px) {
+  /* One scrollable row on phones instead of a tall stack of buttons. */
+  .medbeafgallery-category-carousel.medbeafgallery-buttons-mode .medbeafgallery-carousel-wrapper {
+    overflow-x: auto !important;
+    margin: 0 -16px !important;
+    padding: 2px 16px 6px !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .medbeafgallery-category-carousel.medbeafgallery-buttons-mode .medbeafgallery-carousel-wrapper::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .medbeafgallery-category-carousel.medbeafgallery-buttons-mode .medbeafgallery-carousel-items {
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    width: max-content !important;
+  }
+
+  .medbeafgallery-category-carousel.medbeafgallery-buttons-mode .medbeafgallery-carousel-item {
+    padding: 10px 16px !important;
+  }
+}
+
+/* Drop-down menu: one compact control; the tiles stay in the page, hidden. */
+.medbeafgallery-category-carousel.medbeafgallery-dropdown-mode {
+  margin: 24px 0 28px !important;
+}
+
+.medbeafgallery-category-carousel.medbeafgallery-dropdown-mode .medbeafgallery-carousel-wrapper {
+  display: none !important;
+}
+
+.medbeafgallery-category-select-wrap {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px 14px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.medbeafgallery-category-select-label {
+  display: inline-block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 0.9375rem !important;
+  font-weight: 600 !important;
+  line-height: 1.3 !important;
+  color: #334155 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+}
+
+.medbeafgallery-category-select-shell {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  min-width: min(320px, 100%) !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+
+.medbeafgallery-category-select-wrap select.medbeafgallery-category-select {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  box-sizing: border-box !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 48px !important;
+  min-height: 48px !important;
+  margin: 0 !important;
+  padding: 0 46px 0 18px !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 12px !important;
+  background: #ffffff none !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06) !important;
+  color: #0f172a !important;
+  font-family: inherit !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  line-height: 46px !important;
+  text-indent: 0 !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  cursor: pointer !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.medbeafgallery-category-select-wrap select.medbeafgallery-category-select:hover {
+  border-color: var(--medbeafgallery-primary-solid, #2563eb) !important;
+}
+
+.medbeafgallery-category-select-wrap select.medbeafgallery-category-select:focus,
+.medbeafgallery-category-select-wrap select.medbeafgallery-category-select:focus-visible {
+  outline: none !important;
+  border-color: var(--medbeafgallery-primary-solid, #2563eb) !important;
+  box-shadow: 0 0 0 3px var(--medbeafgallery-primary-20, rgba(37, 99, 235, 0.2)) !important;
+}
+
+.medbeafgallery-category-select-icon {
+  position: absolute !important;
+  top: 50% !important;
+  right: 16px !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin: -9px 0 0 !important;
+  color: #475569 !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  pointer-events: none !important;
+}
+
+@media (max-width: 600px) {
+  .medbeafgallery-category-select-wrap {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 6px !important;
+  }
+
+  .medbeafgallery-category-select-shell {
+    display: flex !important;
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+}
