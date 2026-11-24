@@ -2546,9 +2546,11 @@
 }
 
 /* Photo and progress timeline fit the column together (fitStageToTimeline()
-   in pro-viewer.js sets the height). Four classes: wins over every style's rule. */
+   in pro-viewer.js sets the height). Four classes: wins over every style's rule.
+   The height is also the minimum: the desk's photo has no height of its own, so
+   pair thumbnails or a stage note below it would otherwise squeeze it away. */
 .mba-pro-viewer.mba-pro-viewer-stage-fit .mba-pro-viewer-main .mba-pro-viewer-stage {
-    min-height: 0 !important;
+    min-height: var(--mbv-stage-fit, 0px) !important;
     max-height: var(--mbv-stage-fit, none) !important;
 }
 

@@ -5,6 +5,10 @@ const medbeafgalleryRestBase = (window.medbeafgalleryGalleryConfig && window.med
     : `${window.location.origin}/wp-json/medical-before-after-gallery/v1`;// Add these global variables and functions at the top of your script
 let modalPortal = null;
 let originalModalContainer = null;
+// Timer for the delayed move back out of the portal after closing. Kept so a
+// case opened during the close transition can cancel it (otherwise the move
+// would pull the newly opened window out of its portal and leave it invisible).
+let medbeafgalleryModalRestoreTimer = null;
 
 // Add this variable to store category relationships
 let categoryRelationships = {};
@@ -58,8 +62,12 @@ function moveModalToPortal() {
     const modal = document.getElementById('medbeafgallery-modal');
     if (!modal) return;
 
-    // Store the original parent for later restoration
-    originalModalContainer = modal.parentNode;
+    // Store the original parent for later restoration. Opened again before the
+    // last close finished: it is still in the portal, and its parent is the
+    // portal itself, which must not replace the real container.
+    if (modal.parentNode !== modalPortal) {
+        originalModalContainer = modal.parentNode;
+    }
 
     // Move modal to portal
     modalPortal.appendChild(modal);
@@ -70,6 +78,9 @@ function moveModalToPortal() {
 function restoreModalPosition() {
     const modal = document.getElementById('medbeafgallery-modal');
     if (!modal || !originalModalContainer || !modalPortal) return;
+
+    // Opened again since the close: it must stay in the portal.
+    if (modal.classList.contains('active')) return;
 
     // Move modal back to original container
     originalModalContainer.appendChild(modal);
@@ -1138,7 +1149,9 @@ function closeModal() {
     medbeafgalleryLastFocused = null;
 
     // After transition completes, restore modal position
-    setTimeout(() => {
+    clearTimeout(medbeafgalleryModalRestoreTimer);
+    medbeafgalleryModalRestoreTimer = setTimeout(() => {
+        medbeafgalleryModalRestoreTimer = null;
         restoreModalPosition();
     }, 300); // Match this to your CSS transition time
 }
@@ -1981,7 +1994,10 @@ function openModal(id) {
         updateNavigationButtons();
     }
 
-    // Move modal to portal before displaying
+    // Move modal to portal before displaying. A close that is still finishing
+    // must not move it back out afterwards.
+    clearTimeout(medbeafgalleryModalRestoreTimer);
+    medbeafgalleryModalRestoreTimer = null;
     moveModalToPortal();
 
     // Show modal FIRST so Cocoen can calculate dimensions
