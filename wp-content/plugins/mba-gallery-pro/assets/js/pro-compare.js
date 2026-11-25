@@ -236,6 +236,11 @@
                     tray( context );
                 } );
                 var host = card.querySelector( '.mba-pro-journey-info, .mba-pro-story-info, .mba-pro-mcard-body, .medbeafgallery-gallery-item-info' ) || card;
+                // An Open row tile is only its photo: a corner of it.
+                if ( card.classList.contains( 'mba-pro-tile' ) ) {
+                    host = card.querySelector( '.mba-pro-card-media' ) || card;
+                    label.classList.add( 'mba-pro-compare-label-tile' );
+                }
                 // Photo cards hide their caption (the title is on the photo): under the photo instead.
                 if ( card.classList.contains( 'mba-pro-photo-card' ) && !card.classList.contains( 'mba-pro-editorial-card' ) ) {
                     host = card;

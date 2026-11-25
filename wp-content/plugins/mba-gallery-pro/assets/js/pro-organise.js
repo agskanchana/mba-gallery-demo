@@ -350,7 +350,7 @@
         genders.sort();
         var ages = items().map( ageOf ).filter( function( age ) { return !isNaN( age ); } );
         // Without gender and age on the cases there is nothing to compare: a plain gallery.
-        if ( genders.length < 2 && ages.length < 2 ) { ctx.root.classList.remove( 'mba-pro-structure-match', 'mba-pro-match-on' ); return; }
+        if ( genders.length < 2 && ages.length < 2 ) { ctx.root.classList.remove( 'mba-pro-structure-match', 'mba-pro-match-on' ); ctx.host.replaceChildren(); return; }
         ctx.root.classList.add( 'mba-pro-match-on' );
         var form = el( 'div', 'mba-pro-match' );
         form.setAttribute( 'role', 'group' ); form.setAttribute( 'aria-label', ctx.s.match );
