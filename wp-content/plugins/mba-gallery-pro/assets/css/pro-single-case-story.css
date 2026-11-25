@@ -1,0 +1,75 @@
+/**
+ * Scroll story ([mba_case layout="story"]): a list of stage photos that
+ * pro-single-case-story.js turns into one pinned photo (.is-live).
+ */
+.mba-pro-sstory {
+    --sstory-bg: #0d1724;
+    --sstory-text: #fff;
+    --sstory-soft: #c8d4e3;
+    --sstory-accent: #8fd3da;
+    position: relative !important;
+    clear: both !important;
+    margin: 32px 0 !important;
+    padding: 0 !important;
+    border-radius: 22px !important;
+    background: var(--sstory-bg) !important;
+    color: var(--sstory-text) !important;
+    text-align: start !important;
+}
+
+.mba-pro-sstory-pin { display: block !important; margin: 0 !important; padding: clamp(22px, 4vw, 48px) !important; }
+.mba-pro-sstory p.mba-pro-sstory-meta { margin: 0 0 10px !important; color: var(--sstory-accent) !important; font-size: 15px !important; font-weight: 600 !important; line-height: 1.4 !important; }
+.mba-pro-sstory .mba-pro-sstory-title { margin: 0 0 18px !important; padding: 0 !important; border: 0 !important; background: none !important; color: var(--sstory-text) !important; font-size: clamp(22px, 2.4vw, 34px) !important; font-weight: 600 !important; line-height: 1.2 !important; letter-spacing: -.02em !important; }
+.mba-pro-sstory p.mba-pro-sstory-now,
+.mba-pro-sstory p.mba-pro-sstory-line { display: none !important; margin: 0 !important; }
+
+.mba-pro-sstory ol.mba-pro-sstory-stages { display: grid !important; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)) !important; gap: 22px !important; margin: 0 !important; padding: 0 !important; list-style: none !important; }
+.mba-pro-sstory li.mba-pro-sstory-stage { display: block !important; margin: 0 !important; padding: 0 !important; list-style: none !important; }
+.mba-pro-sstory li.mba-pro-sstory-stage::before,
+.mba-pro-sstory li.mba-pro-sstory-stage::marker { content: none !important; }
+.mba-pro-sstory figure.mba-pro-sstory-figure { display: block !important; margin: 0 !important; padding: 0 !important; }
+.mba-pro-sstory .mba-pro-sstory-media { display: block !important; position: relative !important; overflow: hidden !important; border-radius: 14px !important; background: #1a2738 !important; }
+.mba-pro-sstory .mba-pro-sstory-media img { display: block !important; width: 100% !important; max-width: none !important; height: auto !important; margin: 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; }
+.mba-pro-sstory figcaption.mba-pro-sstory-caption { display: grid !important; gap: 4px !important; margin: 12px 0 0 !important; padding: 0 !important; background: none !important; color: var(--sstory-soft) !important; font-size: 15px !important; line-height: 1.5 !important; text-align: start !important; }
+.mba-pro-sstory figcaption.mba-pro-sstory-caption strong { color: var(--sstory-text) !important; font-size: 17px !important; font-weight: 600 !important; }
+
+.mba-pro-sstory a.mba-pro-sstory-cta { display: inline-flex !important; align-items: center !important; min-height: 48px !important; margin: 22px 0 !important; padding: 0 26px !important; border: 0 !important; border-radius: 999px !important; background: #fff !important; color: #0d1724 !important; font-size: 15.5px !important; font-weight: 600 !important; text-decoration: none !important; box-shadow: none !important; }
+.mba-pro-sstory a.mba-pro-sstory-cta:focus-visible { outline: 3px solid var(--sstory-accent) !important; outline-offset: 3px !important; }
+
+/* ── Pinned ──────────────────────────────────────────────────────────────── */
+.mba-pro-sstory.is-live { height: calc(var(--sstory-n) * 82vh) !important; }
+.mba-pro-sstory.is-live .mba-pro-sstory-pin {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr) !important;
+    position: sticky !important;
+    top: var(--sstory-top, 0px) !important;
+    height: min(calc(100vh - var(--sstory-top, 0px)), 900px) !important;
+    padding: 0 !important;
+    border-radius: 22px !important;
+    overflow: hidden !important;
+}
+.mba-pro-sstory.is-live .mba-pro-sstory-text { display: flex !important; flex-direction: column !important; justify-content: center !important; min-width: 0 !important; padding: clamp(20px, 5vw, 76px) !important; }
+.mba-pro-sstory.is-live p.mba-pro-sstory-now { display: block !important; margin: 0 0 14px !important; }
+.mba-pro-sstory.is-live .mba-pro-sstory-number { display: block !important; color: var(--sstory-text) !important; font-size: clamp(70px, 12vw, 180px) !important; font-weight: 600 !important; line-height: .95 !important; letter-spacing: -.06em !important; font-variant-numeric: tabular-nums !important; }
+.mba-pro-sstory.is-live.is-words .mba-pro-sstory-number { font-size: clamp(38px, 5.4vw, 84px) !important; line-height: 1.05 !important; letter-spacing: -.035em !important; overflow-wrap: anywhere !important; }
+.mba-pro-sstory.is-live .mba-pro-sstory-unit { display: block !important; margin-top: 8px !important; color: var(--sstory-accent) !important; font-size: clamp(18px, 2.1vw, 30px) !important; font-weight: 500 !important; line-height: 1.2 !important; }
+.mba-pro-sstory.is-live p.mba-pro-sstory-line { display: block !important; min-height: 4.4em !important; max-width: 30ch !important; color: var(--sstory-soft) !important; font-size: clamp(16px, 1.6vw, 21px) !important; line-height: 1.46 !important; }
+.mba-pro-sstory.is-live a.mba-pro-sstory-cta { align-self: flex-start !important; margin: 10px 0 0 !important; }
+.mba-pro-sstory.is-live ol.mba-pro-sstory-stages { display: block !important; position: relative !important; height: 100% !important; }
+.mba-pro-sstory.is-live li.mba-pro-sstory-stage,
+.mba-pro-sstory.is-live figure.mba-pro-sstory-figure,
+.mba-pro-sstory.is-live .mba-pro-sstory-media { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; border-radius: 0 !important; }
+.mba-pro-sstory.is-live .mba-pro-sstory-media img { width: 100% !important; height: 100% !important; object-fit: cover !important; object-position: 50% 40% !important; }
+/* The captions stay for screen readers; the large text shows the same words. */
+.mba-pro-sstory.is-live figcaption.mba-pro-sstory-caption { position: absolute !important; width: 1px !important; height: 1px !important; margin: 0 !important; overflow: hidden !important; clip-path: inset(50%) !important; }
+
+@media (max-width: 820px) {
+    .mba-pro-sstory.is-live .mba-pro-sstory-pin { grid-template-columns: minmax(0, 1fr) !important; grid-template-rows: auto minmax(0, 1fr) !important; }
+    .mba-pro-sstory.is-live .mba-pro-sstory-text { justify-content: flex-start !important; padding: 20px !important; }
+    .mba-pro-sstory.is-live .mba-pro-sstory-title { margin-bottom: 8px !important; font-size: 19px !important; }
+    .mba-pro-sstory.is-live p.mba-pro-sstory-now { display: flex !important; align-items: baseline !important; gap: 10px !important; margin-bottom: 6px !important; }
+    .mba-pro-sstory.is-live .mba-pro-sstory-number { font-size: 58px !important; }
+    .mba-pro-sstory.is-live.is-words .mba-pro-sstory-number { font-size: 30px !important; }
+    .mba-pro-sstory.is-live p.mba-pro-sstory-line { min-height: 3em !important; font-size: 16px !important; }
+    .mba-pro-sstory.is-live a.mba-pro-sstory-cta { min-height: 44px !important; margin-top: 6px !important; padding: 0 20px !important; }
+}

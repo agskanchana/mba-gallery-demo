@@ -2216,8 +2216,11 @@
 }
 
 /* Fix horizontal scroll issues */
+/* (clip, not hidden: hidden makes the body a scroll container, and then nothing on the
+   page can be position: sticky — a theme's header included.) */
 html, body {
   overflow-x: hidden;
+  overflow-x: clip;
   position: relative;
   width: 100%;
 }
@@ -2753,6 +2756,41 @@ html, body {
     opacity: 0 !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Refined cards (Design → Card Style "Refined"): the hover reveal on portrait
+   photos without boxes, the title and category in quiet lines under them. Only
+   the free cards (Pro's own layouts bring their own styles).
+   ═══════════════════════════════════════════════════════════════════════════ */
+.medbeafgallery-cards-refined:not(.mba-pro-layouts) .medbeafgallery-gallery-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)) !important;
+  gap: clamp(26px, 3vw, 40px) clamp(16px, 2vw, 26px) !important;
+}
+
+.medbeafgallery-cards-refined:not(.mba-pro-layouts) .medbeafgallery-gallery-item {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.medbeafgallery-cards-refined:not(.mba-pro-layouts) .medbeafgallery-gallery-item:hover { transform: none !important; box-shadow: none !important; }
+.medbeafgallery-cards-refined:not(.mba-pro-layouts) .medbeafgallery-gallery-image-container { aspect-ratio: 4 / 5 !important; border-radius: 18px !important; overflow: hidden !important; }
+.medbeafgallery-cards-refined:not(.mba-pro-layouts) .medbeafgallery-preview-container { height: 100% !important; }
+.medbeafgallery-cards-refined:not(.mba-pro-layouts) .medbeafgallery-reveal-card .medbeafgallery-preview-before,
+.medbeafgallery-cards-refined:not(.mba-pro-layouts) .medbeafgallery-reveal-card .medbeafgallery-preview-after { object-fit: cover !important; object-position: 50% 32% !important; }
+.medbeafgallery-cards-refined:not(.mba-pro-layouts) .medbeafgallery-reveal-card .medbeafgallery-preview-backdrop { display: none !important; }
+
+.medbeafgallery-cards-refined:not(.mba-pro-layouts) .medbeafgallery-card-state { top: 12px !important; right: auto !important; left: 12px !important; }
+.medbeafgallery-cards-refined:not(.mba-pro-layouts) .medbeafgallery-card-state > span { justify-self: start; background: rgba(255, 255, 255, 0.88) !important; color: #111827 !important; font-size: 0.75rem !important; font-weight: 600 !important; letter-spacing: normal !important; text-transform: none !important; }
+
+.medbeafgallery-cards-refined:not(.mba-pro-layouts) .medbeafgallery-gallery-item-info { flex-direction: column-reverse !important; justify-content: flex-end !important; padding: 14px 2px 0 !important; border: 0 !important; background: transparent !important; }
+.medbeafgallery-cards-refined:not(.mba-pro-layouts) .medbeafgallery-gallery-item-info h3 { margin: 0 !important; font-size: 1.03rem !important; line-height: 1.32 !important; text-align: start !important; }
+.medbeafgallery-cards-refined:not(.mba-pro-layouts) .medbeafgallery-gallery-item-info > .medbeafgallery-gallery-category { margin: 3px 0 0 !important; padding: 0 !important; border: 0 !important; border-radius: 0 !important; background: none !important; color: #6b7280 !important; font-size: 0.85rem !important; font-weight: 400 !important; }
+
+/* The whole card opens the case; its button is there for the keyboard. */
+.medbeafgallery-cards-refined:not(.mba-pro-layouts) .medbeafgallery-gallery-view-btn:not(:focus-visible) { opacity: 0 !important; pointer-events: none !important; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    Case window: blurred copy of the photo behind it instead of black bars

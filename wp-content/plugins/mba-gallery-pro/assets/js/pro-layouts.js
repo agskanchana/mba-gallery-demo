@@ -14,7 +14,7 @@
     var darkQuery = window.matchMedia ? window.matchMedia( '(prefers-color-scheme: dark)' ) : null;
     var motionQuery = window.matchMedia ? window.matchMedia( '(prefers-reduced-motion: reduce)' ) : null;
     var presets = [ 'default', 'clinical', 'luxury', 'spa', 'midnight' ];
-    var layouts = [ 'classic', 'masonry', 'spotlight', 'rows', 'editorial', 'angles', 'uncropped', 'collections' ];
+    var layouts = [ 'classic', 'masonry', 'spotlight', 'rows', 'editorial', 'angles', 'uncropped', 'collections', 'refined', 'wall', 'strips', 'openrow' ];
     var windowSelector = '#medbeafgallery-modal, .mba-pro-mmodal, .mba-pro-viewer';
 
     function plain( value ) {
@@ -98,12 +98,13 @@
         } catch ( error ) {}
         var options = Object.assign( {}, input );
         options.layout = layouts.indexOf( options.layout ) !== -1 ? options.layout : 'classic';
-        options.structure = [ 'gallery', 'hub', 'concerns', 'doctors' ].indexOf( options.structure ) !== -1 ? options.structure : 'gallery';
+        options.structure = [ 'gallery', 'hub', 'index', 'concerns', 'doctors', 'map', 'match' ].indexOf( options.structure ) !== -1 ? options.structure : 'gallery';
         options.compare = options.compare === 'on' ? 'on' : 'off';
         options.preset = presets.indexOf( options.preset ) !== -1 ? options.preset : 'default';
         options.motion = [ 'none', 'subtle', 'lively' ].indexOf( options.motion ) !== -1 ? options.motion : 'subtle';
-        options.card_style = [ 'split', 'reveal', 'slider', 'photo', 'toggle', 'stacked' ].indexOf( options.card_style ) !== -1 ? options.card_style : 'split';
+        options.card_style = [ 'split', 'reveal', 'reveal-after', 'slider', 'toggle', 'stacked' ].indexOf( options.card_style ) !== -1 ? options.card_style : 'split';
         options.card_frame = [ 'boxed', 'framed', 'open' ].indexOf( options.card_frame ) !== -1 ? options.card_frame : 'boxed';
+        if ( options.layout === 'refined' ) { options.card_frame = 'open'; }
         options.columns = /^(auto|[1-4])$/.test( String( options.columns ) ) ? String( options.columns ) : 'auto';
         options.new_days = Math.max( 1, Math.min( 365, parseInt( options.new_days, 10 ) || 30 ) );
         options.i18n = options.i18n || ( config.proLayouts && config.proLayouts.i18n ) || {};
@@ -132,12 +133,13 @@
         [ 'boxed', 'framed', 'open' ].forEach( function( frame ) { root.classList.toggle( 'mba-pro-frame-' + frame, options.card_frame === frame ); } );
         root.setAttribute( 'data-mba-pro-columns', options.columns );
         root.setAttribute( 'data-mba-pro-columns-override', truthy( options.columns_override ) ? 'true' : 'false' );
-        if ( options.card_style === 'reveal' ) { root.classList.add( 'medbeafgallery-cards-reveal' ); }
+        if ( options.card_style === 'reveal' || options.card_style === 'reveal-after' ) { root.classList.add( 'medbeafgallery-cards-reveal' ); }
         root.setAttribute( 'data-mba-pro-layout-dark', isDark( options ) ? 'true' : 'false' );
         if ( /^[1-4]$/.test( options.columns ) ) {
             root.style.setProperty( '--mba-pro-layout-columns', options.columns );
         }
-        var ratios = { '1-1': '1 / 1', '4-3': '4 / 3', '3-2': '3 / 2' };
+        var ratios = { '1-1': '1 / 1', '4-3': '4 / 3', '3-2': '3 / 2', '4-5': '4 / 5' };
+        if ( options.layout === 'refined' && !ratios[ options.aspect_ratio ] ) { root.style.setProperty( '--mba-pro-layout-aspect', '4 / 5' ); }
         if ( ratios[ options.aspect_ratio ] ) {
             root.style.setProperty( '--mba-pro-layout-aspect', ratios[ options.aspect_ratio ] );
         }
@@ -286,6 +288,7 @@
         var trigger = card.querySelector( '.medbeafgallery-gallery-view-btn, .mba-pro-mcard-view' );
         focusElement( trigger );
         if ( typeof window.openModal === 'function' ) { window.openModal( item.id ); }
+        if ( card.mbaProView ) { goToPair( item, card.mbaProView, context ); }
     }
 
     function replacementStage( card, media, item, context ) {
@@ -480,26 +483,29 @@
 
     // Hover reveal in every layout but masonry (which has its own toggle): the
     // whole before photo wipes to the whole after photo; the caption stays below.
+    // 'reveal-after' is the same wipe the other way round: the result first.
     function decorateReveal( card, media, item, context ) {
-        decoratePhoto( card, media, item, context, true );
-    }
-
-    function decoratePhoto( card, media, item, context, revealOnly ) {
         var options = context.options;
+        var afterFirst = options.card_style === 'reveal-after';
         var stage = replacementStage( card, media, item, context );
-        card.classList.add( revealOnly ? 'mba-pro-reveal-card' : 'mba-pro-photo-card' );
+        card.classList.add( 'mba-pro-reveal-card' );
         stage.classList.add( 'mba-pro-photo-stage' );
-        var reveal = ( revealOnly || config.cardStyle === 'reveal' ) && safeUrl( item.beforeImg ) && safeUrl( item.afterImg );
+        var reveal = safeUrl( item.beforeImg ) && safeUrl( item.afterImg );
         if ( reveal ) {
             card.classList.add( 'mba-pro-photo-reveal' );
-            stage.appendChild( fitLayer( item.beforeImg, item.beforeThumb, item.beforeAlt || beforeLabel( options ), 'mba-pro-photo-image mba-pro-photo-before', options ) );
+            stage.appendChild( afterFirst
+                ? fitLayer( item.afterImg, item.afterThumb, item.afterAlt || afterLabel( options ), 'mba-pro-photo-image mba-pro-photo-before', options )
+                : fitLayer( item.beforeImg, item.beforeThumb, item.beforeAlt || beforeLabel( options ), 'mba-pro-photo-image mba-pro-photo-before', options ) );
         }
-        stage.appendChild( fitLayer( item.afterImg || item.beforeImg, item.afterThumb || item.beforeThumb, item.afterAlt || item.beforeAlt || afterLabel( options ), 'mba-pro-photo-image mba-pro-photo-after', options ) );
+        // (The class names say which layer wipes, not which photo is in it.)
+        stage.appendChild( reveal && afterFirst
+            ? fitLayer( item.beforeImg, item.beforeThumb, item.beforeAlt || beforeLabel( options ), 'mba-pro-photo-image mba-pro-photo-after', options )
+            : fitLayer( item.afterImg || item.beforeImg, item.afterThumb || item.beforeThumb, item.afterAlt || item.beforeAlt || afterLabel( options ), 'mba-pro-photo-image mba-pro-photo-after', options ) );
         if ( reveal ) {
             revealHint( card, stage );
             var state = node( 'span', 'mba-pro-photo-state' );
-            state.appendChild( node( 'span', 'mba-pro-photo-state-before', beforeLabel( options ) ) );
-            state.appendChild( node( 'span', 'mba-pro-photo-state-after', afterLabel( options ) ) );
+            state.appendChild( node( 'span', 'mba-pro-photo-state-before', afterFirst ? afterLabel( options ) : beforeLabel( options ) ) );
+            state.appendChild( node( 'span', 'mba-pro-photo-state-after', afterFirst ? beforeLabel( options ) : afterLabel( options ) ) );
             stage.appendChild( state );
             var timer = null;
             stage.addEventListener( 'pointerdown', function( event ) {
@@ -517,48 +523,91 @@
             }
             [ 'pointerup', 'pointercancel', 'pointerleave' ].forEach( function( event ) { stage.addEventListener( event, endHold ); } );
         }
-        if ( revealOnly ) { return; } // The card's own caption stays under the photo.
-        var caption = node( 'div', 'mba-pro-photo-caption' );
-        if ( !truthy( config.hideCaseCategory ) ) { caption.appendChild( node( 'span', 'mba-pro-photo-category', categoryNames( item ) ) ); }
-        if ( !truthy( config.hideCaseTitle ) ) { caption.appendChild( node( 'h3', 'mba-pro-photo-title', plain( item.title ) ) ); }
-        // (No per-card "matching centre crops" note: every grid card is a display
-        // crop of both photos alike, and repeating it on each card was noise.)
-        stage.appendChild( caption );
     }
 
-    function decorateEditorial( card, item, options ) {
+    function capital( value ) {
+        var text = plain( value );
+        return text ? text.charAt( 0 ).toUpperCase() + text.slice( 1 ) : '';
+    }
+
+    // Everything recorded about a case that the visitor may see, as labelled facts.
+    function caseFacts( item, options ) {
+        var shown = function( key ) { return !Array.isArray( config.enabledDetails ) || config.enabledDetails.indexOf( key ) !== -1; };
+        var facts = [];
+        var add = function( name, value ) { if ( value ) { facts.push( { label: name, value: value } ); } };
+        if ( shown( 'procedure' ) ) { add( detailLabel( options, 'procedure' ), capital( item.procedureType || item.procedure ) ); }
+        detailEntries( item, options ).forEach( function( entry ) { add( entry.label, capital( entry.value ) ); } );
+        var patient = [ shown( 'gender' ) ? capital( item.gender ) : '', shown( 'age' ) ? plain( item.age ) : '' ].filter( Boolean ).join( ', ' );
+        add( label( options, 'patient' ), patient );
+        var builtIn = [ 'procedure', 'duration', 'recovery', 'results', 'age', 'gender' ];
+        ( Array.isArray( config.proFilterDefs ) ? config.proFilterDefs : [] ).forEach( function( definition ) {
+            if ( !definition || builtIn.indexOf( definition.name ) !== -1 || !item.proFilters ) { return; }
+            var value = item.proFilters[ definition.name ];
+            add( plain( definition.label ), capital( Array.isArray( value ) ? value.join( ', ' ) : value ) );
+        } );
+        var views = ( Array.isArray( item.imagePairs ) ? item.imagePairs.length : 0 ) + ( item.beforeImg && item.afterImg ? 1 : 0 );
+        if ( views > 1 ) { add( label( options, 'views' ), String( views ) ); }
+        return facts.slice( 0, 8 );
+    }
+
+    // The photo's own proportions decide how wide it is, so a portrait photo leaves
+    // the room to the text instead of to empty bars beside it.
+    function editorialRatio( card, media, options ) {
+        var photos = media.querySelectorAll( '.mba-pro-fit-image, .medbeafgallery-preview-before, .medbeafgallery-preview-after' );
+        if ( !photos.length ) { return; }
+        var pairs = !media.classList.contains( 'mba-pro-media-replaced' ) || media.querySelector( '.mba-pro-uncropped-stage:not(.mba-pro-stacked-stage)' ) ? 2 : 1;
+        var stacked = !!media.querySelector( '.mba-pro-stacked-stage' );
+        function measure() {
+            var photo = this && this.naturalWidth ? this : photos[0];
+            if ( !photo.naturalWidth || !photo.naturalHeight ) { return; }
+            var ratio = Math.min( 2, Math.max( 0.6, photo.naturalWidth / photo.naturalHeight ) );
+            ratio = stacked ? ratio / 2 : ratio * pairs;
+            card.style.setProperty( '--mba-pro-editorial-ratio', String( Math.round( ratio * 1000 ) / 1000 ) );
+            // Within a few percent of its side, the photo fills it.
+            var stage = media.querySelector( '.mba-pro-card-stage' );
+            if ( !stage || pairs > 1 || stacked || !( 'ResizeObserver' in window ) || media.mbaProSnug ) { return; }
+            media.mbaProSnug = new ResizeObserver( function() {
+                if ( !stage.clientWidth || !stage.clientHeight ) { return; }
+                var fit = ( stage.clientWidth / stage.clientHeight ) / ( photo.naturalWidth / photo.naturalHeight );
+                card.classList.toggle( 'mba-pro-editorial-snug', fit > 0.92 && fit < 1.09 );
+            } );
+            media.mbaProSnug.observe( stage );
+        }
+        if ( photos[0].complete && photos[0].naturalWidth ) { measure(); } else { photos[0].addEventListener( 'load', measure, { once: true } ); }
+    }
+
+    function decorateEditorial( card, item, options, context ) {
         card.classList.add( 'mba-pro-editorial-card', 'mba-pro-custom-card' );
+        var media = card.querySelector( '.mba-pro-card-media' );
+        if ( media ) { editorialRatio( card, media, options ); }
         var info = card.querySelector( '.medbeafgallery-gallery-item-info' );
         if ( !info ) { return; }
-        if ( !info.querySelector( '.mba-pro-ccard-desc, .mba-pro-mcard-desc' ) ) {
-            var summary = excerpt( item.description || item.content, 220 );
-            if ( summary ) { info.appendChild( node( 'p', 'mba-pro-editorial-excerpt', summary ) ); }
-        }
-        if ( !info.querySelector( '.mba-pro-ccard-meta, .mba-pro-mcard-meta' ) ) {
-            var details = node( 'dl', 'mba-pro-editorial-details' );
-            detailEntries( item, options ).forEach( function( entry ) {
-                var pair = node( 'div', 'mba-pro-editorial-detail' );
-                pair.appendChild( node( 'dt', '', entry.label ) );
-                pair.appendChild( node( 'dd', '', entry.value ) );
-                details.appendChild( pair );
-            } );
-            if ( details.children.length ) { info.appendChild( details ); }
-        }
+        // The caption has the room for the whole story: the full text (up to a
+        // paragraph) and every recorded fact, not the grid card's two-line summary.
+        info.querySelectorAll( '.mba-pro-ccard-desc, .mba-pro-mcard-desc, .mba-pro-ccard-meta, .mba-pro-mcard-meta' ).forEach( function( part ) { part.remove(); } );
+        var summary = excerpt( item.description || item.content, 420 );
+        if ( summary ) { info.appendChild( node( 'p', 'mba-pro-editorial-excerpt', summary ) ); }
+        var details = node( 'dl', 'mba-pro-editorial-details' );
+        caseFacts( item, options ).forEach( function( entry ) {
+            var pair = node( 'div', 'mba-pro-editorial-detail' );
+            pair.appendChild( node( 'dt', '', entry.label ) );
+            pair.appendChild( node( 'dd', '', entry.value ) );
+            details.appendChild( pair );
+        } );
+        if ( details.children.length ) { info.appendChild( details ); }
+        if ( context ) { decorateAngles( card, item, context ); }
     }
 
     function pairIndex( item, extraIndex ) {
         return extraIndex + ( item.beforeImg && item.afterImg ? 1 : 0 );
     }
 
-    function openAngle( card, item, index, context, trigger ) {
-        lastOpenRoot = context.root;
-        focusElement( trigger );
-        if ( typeof window.openModal !== 'function' ) { return; }
-        window.openModal( item.id );
+    // The case window is open: show the view chosen on the card.
+    function goToPair( item, index, context ) {
         // Classic indicators update both the active pair and its navigation state.
         var viewer = window.mbaProViewer;
         if ( viewer && typeof viewer.isOpen === 'function' && viewer.isOpen() ) {
-            if ( typeof viewer.openPair === 'function' ) { viewer.openPair( item.id, index ); return; }
+            if ( typeof viewer.openPair === 'function' && viewer.openPair( item.id, index ) ) { return; }
         } else {
             var classic = document.getElementById( 'medbeafgallery-modal' );
             if ( classic && classic.classList.contains( 'active' ) ) {
@@ -583,37 +632,375 @@
         }
     }
 
+    // Which of the case's photos each image on the card shows, found by address, so
+    // the same photo of another view can take its place in any card style.
+    var PHOTO_FIELDS = [ 'beforeImg', 'afterImg', 'beforeThumb', 'afterThumb' ];
+    function photoSlots( media, views ) {
+        var known = new Map();
+        views.forEach( function( view ) {
+            PHOTO_FIELDS.forEach( function( field ) {
+                var src = safeUrl( view[ field ] );
+                // A thumbnail may be the photo itself: the full photo's slot wins.
+                if ( src && !known.has( src ) ) { known.set( src, field ); }
+            } );
+        } );
+        return Array.prototype.slice.call( media.querySelectorAll( 'img' ) ).map( function( img ) {
+            return { img: img, field: known.get( safeUrl( img.getAttribute( 'src' ) ) ) };
+        } ).filter( function( slot ) { return slot.field; } );
+    }
+
+    function showView( card, media, views, index ) {
+        var view = views[ index ];
+        if ( !view || !media ) { return; }
+        photoSlots( media, views ).forEach( function( slot ) {
+            var side = slot.field.indexOf( 'before' ) === 0 ? 'before' : 'after';
+            var other = side === 'before' ? 'after' : 'before';
+            var src = safeUrl( view[ slot.field ] ) || safeUrl( view[ side + 'Img' ] ) || safeUrl( view[ side + 'Thumb' ] ) || safeUrl( view[ other + 'Img' ] );
+            if ( !src ) { return; }
+            slot.img.removeAttribute( 'srcset' );
+            slot.img.src = src;
+            if ( slot.img.alt ) { slot.img.alt = plain( view[ side + 'Alt' ] ) || slot.img.alt; }
+        } );
+        card.mbaProView = index;
+        card.querySelectorAll( '.mba-pro-angle-button' ).forEach( function( button, position ) {
+            button.setAttribute( 'aria-pressed', String( position === index ) );
+        } );
+        var name = media.querySelector( '.mba-pro-angle-name' );
+        if ( name ) { name.textContent = view.name; }
+    }
+
+    /*
+     * A case photographed from several sides: one thumbnail per view (the main one
+     * first). Choosing one changes the card's own photos, in whatever card style;
+     * opening the case then starts on that view.
+     */
     function decorateAngles( card, item, context ) {
         if ( !Array.isArray( item.imagePairs ) || !item.imagePairs.length ) { return; }
         var options = context.options;
-        var strip = node( 'div', 'mba-pro-angle-strip' );
-        strip.setAttribute( 'role', 'group' );
-        strip.setAttribute( 'aria-label', label( options, 'openView', [ label( options, 'mainView' ), plain( item.title ) ] ) );
+        var media = card.querySelector( '.mba-pro-card-media' );
+        var views = [];
+        if ( item.beforeImg && item.afterImg ) {
+            views.push( {
+                name: excerpt( item.main_description, 48 ) || label( options, 'mainView' ),
+                beforeImg: item.beforeImg, afterImg: item.afterImg, beforeThumb: item.beforeThumb, afterThumb: item.afterThumb,
+                beforeAlt: item.beforeAlt, afterAlt: item.afterAlt
+            } );
+        }
         item.imagePairs.forEach( function( pair, index ) {
             if ( !pair || ( !safeUrl( pair.afterThumb || pair.afterImg ) && !safeUrl( pair.beforeThumb || pair.beforeImg ) ) ) { return; }
-            // Numbered from the main view ("View 2" is the first extra angle).
-            var name = excerpt( pair.description, 48 ) || label( options, 'viewNumber', [ pairIndex( item, index ) + 1 ] );
+            views.push( {
+                name: excerpt( pair.description, 48 ) || label( options, 'viewNumber', [ pairIndex( item, index ) + 1 ] ),
+                beforeImg: pair.beforeImg, afterImg: pair.afterImg, beforeThumb: pair.beforeThumb, afterThumb: pair.afterThumb,
+                beforeAlt: pair.beforeAlt, afterAlt: pair.afterAlt
+            } );
+        } );
+        if ( views.length < 2 || !media ) { return; }
+        var strip = node( 'div', 'mba-pro-angle-strip' );
+        strip.setAttribute( 'role', 'group' );
+        strip.setAttribute( 'aria-label', label( options, 'viewsOf', [ plain( item.title ) ] ) );
+        views.forEach( function( view, index ) {
             var button = node( 'button', 'mba-pro-angle-button' );
             button.type = 'button';
-            button.setAttribute( 'aria-label', label( options, 'openView', [ plain( pair.description ) || name, plain( item.title ) ] ) );
-            button.appendChild( image( pair.afterThumb || pair.afterImg || pair.beforeThumb || pair.beforeImg, '', 'mba-pro-angle-image', options ) );
-            button.appendChild( node( 'span', 'mba-pro-angle-label', name ) );
+            button.setAttribute( 'aria-pressed', String( index === 0 ) );
+            button.setAttribute( 'aria-label', label( options, 'showView', [ view.name, plain( item.title ) ] ) );
+            var frame = node( 'span', 'mba-pro-angle-frame' );
+            frame.appendChild( image( view.afterThumb || view.afterImg || view.beforeThumb || view.beforeImg, '', 'mba-pro-angle-image', options ) );
+            button.appendChild( frame );
+            button.appendChild( node( 'span', 'mba-pro-angle-label', view.name ) );
             button.addEventListener( 'pointerdown', function( event ) { event.stopPropagation(); } );
             button.addEventListener( 'click', function( event ) {
                 event.preventDefault();
                 event.stopPropagation();
-                openAngle( card, item, pairIndex( item, index ), context, button );
+                showView( card, media, views, index );
             } );
             strip.appendChild( button );
         } );
-        if ( !strip.children.length ) { return; }
-        // In the refined look the angles belong to the caption (before its link).
-        // Photo cards hide that caption (their title sits on the photo), so there
-        // the strip goes under the photo instead — inside it, it had no height.
-        var photoCard = card.classList.contains( 'mba-pro-photo-card' ) && !card.classList.contains( 'mba-pro-editorial-card' );
-        var info = !photoCard && context.root.classList.contains( 'mba-pro-refined' ) && card.querySelector( '.medbeafgallery-gallery-item-info, .mba-pro-mcard-body' );
-        if ( photoCard ) { strip.classList.add( 'mba-pro-angle-strip-below' ); }
-        ( info || card ).appendChild( strip );
+        strip.style.setProperty( '--mba-pro-angle-count', String( Math.min( 5, Math.max( 3, views.length ) ) ) );
+        if ( views.length === 2 ) { strip.classList.add( 'mba-pro-angle-two' ); }
+        card.classList.add( 'mba-pro-has-angles' );
+        // Whatever opens the case (the photo, the title, the button) opens the view on show.
+        card.addEventListener( 'click', function() {
+            if ( !card.mbaProView ) { return; }
+            window.setTimeout( function() {
+                if ( document.querySelector( '.medbeafgallery-modal.active, .mba-pro-viewer, .mba-pro-mmodal' ) ) { goToPair( item, card.mbaProView, context ); }
+            }, 0 );
+        } );
+        // Under the photo: at the top of the caption, or below a photo card (its
+        // caption sits on the photo). Editorial has it after the facts.
+        var editorial = card.classList.contains( 'mba-pro-editorial-card' );
+        var photoCard = card.classList.contains( 'mba-pro-photo-card' ) && !editorial;
+        var info = card.querySelector( '.medbeafgallery-gallery-item-info, .mba-pro-mcard-body' );
+        if ( editorial && info ) { info.appendChild( strip ); }
+        else if ( photoCard || !info ) { strip.classList.add( 'mba-pro-angle-strip-below' ); media.insertAdjacentElement( 'afterend', strip ); }
+        else { strip.classList.add( 'mba-pro-angle-strip-top' ); info.insertBefore( strip, info.firstChild ); }
+    }
+
+    /*
+     * Flip wall: a photo tile with both photos on top of each other. One switch above
+     * the wall turns all of them (syncWall); pointing at a tile turns only that one.
+     */
+    function decorateWall( card, media, item, context ) {
+        var options = context.options;
+        var stage = replacementStage( card, media, item, context );
+        card.classList.add( 'mba-pro-photo-card', 'mba-pro-wall-card' );
+        stage.classList.add( 'mba-pro-photo-stage', 'mba-pro-wall-stage' );
+        var both = safeUrl( item.beforeImg ) && safeUrl( item.afterImg );
+        [ 'before', 'after' ].forEach( function( side ) {
+            if ( !both && !safeUrl( item[ side + 'Img' ] ) ) { return; }
+            var name = side === 'before' ? beforeLabel( options ) : afterLabel( options );
+            stage.appendChild( image( item[ side + 'Thumb' ] || item[ side + 'Img' ], item[ side + 'Alt' ] || name, 'mba-pro-wall-photo mba-pro-wall-' + side, options ) );
+        } );
+        if ( both ) { card.classList.add( 'mba-pro-wall-pair' ); }
+        var caption = node( 'div', 'mba-pro-wall-caption' );
+        if ( !truthy( config.hideCaseTitle ) ) { caption.appendChild( node( 'h3', 'mba-pro-wall-title', plain( item.title ) ) ); }
+        if ( !truthy( config.hideCaseCategory ) ) { caption.appendChild( node( 'span', 'mba-pro-wall-category', categoryNames( item ) ) ); }
+        if ( caption.children.length ) { stage.appendChild( caption ); }
+    }
+
+    function syncWall( context, grid, cards ) {
+        cards.forEach( function( card, index ) { card.style.setProperty( '--mba-pro-wall-i', Math.min( index, 40 ) ); } );
+        if ( context.wall ) { return; }
+        var options = context.options;
+        context.wall = node( 'div', 'mba-pro-wall-switch' );
+        context.wall.setAttribute( 'role', 'group' );
+        context.wall.setAttribute( 'aria-label', label( options, 'wallSwitch' ) );
+        var buttons = [ [ 'before', beforeLabel( options ) ], [ 'after', afterLabel( options ) ] ].map( function( entry ) {
+            var button = node( 'button', 'mba-pro-wall-button', entry[1] );
+            button.type = 'button';
+            button.addEventListener( 'click', function() { show( entry[0] ); } );
+            context.wall.appendChild( button );
+            return [ button, entry[0] ];
+        } );
+        function show( side ) {
+            context.root.classList.toggle( 'mba-pro-wall-after-on', side === 'after' );
+            buttons.forEach( function( entry ) { entry[0].setAttribute( 'aria-pressed', String( entry[1] === side ) ); } );
+        }
+        show( config.defaultViewMode === 'after' ? 'after' : 'before' );
+        grid.parentNode.insertBefore( context.wall, grid );
+    }
+
+    /*
+     * Expanding strips: an ordinary card (with the chosen way of comparing) that stands
+     * as a narrow strip until it is pointed at, focused or tapped. The closed strip shows
+     * a cover photo with the title along it. One strip in each row is always open, so the
+     * widths in a row always add up and nothing wraps while they change.
+     */
+    function decorateStrip( card, media, item, options ) {
+        if ( !media ) { return; }
+        card.classList.add( 'mba-pro-strip' );
+        var cover = node( 'span', 'mba-pro-strip-cover' );
+        cover.setAttribute( 'aria-hidden', 'true' );
+        var before = config.defaultViewMode === 'before' || options.card_style === 'reveal';
+        var photo = before ? [ item.beforeThumb, item.beforeImg ] : [ item.afterThumb, item.afterImg ];
+        cover.appendChild( image( photo[0] || photo[1] || item.beforeThumb || item.beforeImg, '', 'mba-pro-strip-photo', options ) );
+        if ( !truthy( config.hideCaseTitle ) ) { cover.appendChild( node( 'span', 'mba-pro-strip-name', plain( item.title ) ) ); }
+        media.appendChild( cover );
+        card.addEventListener( 'mouseenter', function() { openStrip( card ); } );
+        card.addEventListener( 'focusin', function() { openStrip( card ); } );
+        // The first tap opens the strip; the next one, on the open strip, opens the case.
+        card.addEventListener( 'click', function( event ) {
+            if ( !card.classList.contains( 'mba-pro-strip-on' ) ) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                openStrip( card );
+            } else if ( Date.now() - ( card.mbaProStripOpened || 0 ) < 350 && event.detail && window.matchMedia && window.matchMedia( '(hover: none)' ).matches ) {
+                event.preventDefault(); // The tap that has just opened it.
+                event.stopImmediatePropagation();
+            }
+        }, true );
+    }
+
+    /*
+     * Open row: the cards are photo tiles. A tile opens its case in a panel under its own
+     * row (the chosen way of comparing, the facts, and a button to the full case window);
+     * the rows below move down. One panel at a time.
+     */
+    function decorateTile( card, media, item, context ) {
+        var options = context.options;
+        card.classList.add( 'mba-pro-tile' );
+        var before = config.defaultViewMode === 'before' || options.card_style === 'reveal';
+        var photo = before ? [ item.beforeThumb, item.beforeImg, item.beforeAlt || beforeLabel( options ) ] : [ item.afterThumb, item.afterImg, item.afterAlt || afterLabel( options ) ];
+        media.appendChild( image( photo[0] || photo[1] || item.beforeThumb || item.beforeImg, photo[2], 'mba-pro-tile-photo', options ) );
+        card.addEventListener( 'click', function( event ) {
+            if ( event.target.closest( 'a, input, label, .mba-pro-veil, .mba-pro-compare-label' ) ) { return; }
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            toggleRow( card, item, context, !event.detail );
+        }, true );
+        card.addEventListener( 'keydown', function( event ) {
+            if ( ( event.key === 'Enter' || event.key === ' ' ) && event.target === card ) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                toggleRow( card, item, context, true );
+            }
+        }, true );
+    }
+
+    function markTile( card, on ) {
+        if ( !card ) { return; }
+        card.classList.toggle( 'mba-pro-tile-on', on );
+        var button = card.querySelector( '.medbeafgallery-gallery-view-btn' );
+        if ( button ) { button.setAttribute( 'aria-expanded', String( on ) ); }
+    }
+
+    function closeRow( context, focus ) {
+        var open = context.openRow;
+        if ( !open ) { return; }
+        context.openRow = null;
+        markTile( open.card, false );
+        open.panel.remove();
+        if ( focus && open.card.isConnected ) { focusElement( open.card.querySelector( '.medbeafgallery-gallery-view-btn' ) || open.card ); }
+    }
+
+    function toggleRow( card, item, context, keyboard ) {
+        var same = context.openRow && context.openRow.card === card;
+        closeRow( context, false );
+        if ( same ) { if ( keyboard ) { focusElement( card.querySelector( '.medbeafgallery-gallery-view-btn' ) || card ); } return; }
+        var options = context.options;
+        var panel = node( 'div', 'mba-pro-openrow' );
+        panel.tabIndex = -1;
+        panel.setAttribute( 'role', 'region' );
+        panel.setAttribute( 'aria-label', plain( item.title ) );
+        panel.setAttribute( 'data-id', item.id );
+        var clip = node( 'div', 'mba-pro-openrow-clip' );
+        var inner = node( 'div', 'mba-pro-openrow-panel' );
+        var media = node( 'div', 'mba-pro-openrow-media' );
+        var style = options.card_style;
+        if ( style === 'slider' ) { decorateSlider( inner, media, item, context ); }
+        else if ( style === 'toggle' ) { decorateToggle( inner, media, item, context ); }
+        else if ( style === 'reveal' || style === 'reveal-after' ) { decorateReveal( inner, media, item, context ); }
+        else { decorateUncropped( inner, media, item, context, style === 'stacked' ); }
+        var text = node( 'div', 'mba-pro-openrow-text' );
+        if ( !truthy( config.hideCaseTitle ) ) { text.appendChild( node( 'h3', '', plain( item.title ) ) ); }
+        var line = [ truthy( config.hideCaseCategory ) ? '' : categoryNames( item ), item.doctor ? plain( item.doctor.name ) : '' ].filter( Boolean ).join( ' · ' );
+        if ( line ) { text.appendChild( node( 'p', '', line ) ); }
+        var facts = detailEntries( item, options );
+        if ( facts.length ) {
+            var list = node( 'dl', '' );
+            facts.forEach( function( fact ) {
+                var row = node( 'div', '' );
+                row.appendChild( node( 'dt', '', fact.label ) );
+                row.appendChild( node( 'dd', '', fact.value ) );
+                list.appendChild( row );
+            } );
+            text.appendChild( list );
+        }
+        var view = node( 'button', 'mba-pro-openrow-view', label( options, 'viewCase' ) );
+        view.type = 'button';
+        view.setAttribute( 'aria-label', label( options, 'viewCase' ) + ': ' + plain( item.title ) );
+        view.addEventListener( 'click', function() { openCase( card, item, context ); } );
+        text.appendChild( view );
+        var close = node( 'button', 'mba-pro-openrow-close' );
+        close.type = 'button';
+        close.setAttribute( 'aria-label', label( options, 'close' ) );
+        close.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+        close.addEventListener( 'click', function() { closeRow( context, true ); } );
+        panel.addEventListener( 'keydown', function( event ) {
+            if ( event.key === 'Escape' ) { event.stopPropagation(); closeRow( context, true ); }
+        } );
+        inner.appendChild( media );
+        inner.appendChild( text );
+        inner.appendChild( close );
+        clip.appendChild( inner );
+        panel.appendChild( clip );
+        context.openRow = { card: card, panel: panel };
+        markTile( card, true );
+        placeRow( context, card.parentNode );
+        void panel.offsetHeight; // Start the opening from a closed row.
+        panel.classList.add( 'is-open' );
+        if ( keyboard ) { panel.focus( { preventScroll: true } ); }
+        window.setTimeout( function() {
+            if ( !panel.isConnected ) { return; }
+            var box = panel.getBoundingClientRect();
+            if ( box.bottom > window.innerHeight || box.top < 0 ) {
+                panel.scrollIntoView( { block: 'nearest', behavior: motionQuery && motionQuery.matches || options.motion === 'none' ? 'auto' : 'smooth' } );
+            }
+        }, 520 );
+    }
+
+    // The panel goes after the last tile of its tile's row, wherever that now is.
+    function placeRow( context, grid ) {
+        var open = context.openRow;
+        if ( open && !open.card.isConnected ) { closeRow( context, false ); open = null; }
+        if ( open ) {
+            var tiles = Array.from( grid.querySelectorAll( '.mba-pro-tile' ) );
+            var index = tiles.indexOf( open.card );
+            var last = open.card;
+            for ( var i = index + 1; i < tiles.length && Math.abs( tiles[ i ].offsetTop - open.card.offsetTop ) < 4; i++ ) { last = tiles[ i ]; }
+            if ( last.nextElementSibling !== open.panel ) { last.insertAdjacentElement( 'afterend', open.panel ); }
+        }
+        if ( !context.rowObserver && 'ResizeObserver' in window ) {
+            var width = grid.clientWidth;
+            context.rowObserver = new ResizeObserver( function() {
+                if ( grid.clientWidth === width || !context.openRow ) { width = grid.clientWidth; return; }
+                width = grid.clientWidth;
+                // Out of the flow first: in it, the panel would split a row and hide where it ends.
+                context.openRow.panel.style.display = 'none';
+                placeRow( context, grid );
+                context.openRow.panel.style.display = '';
+            } );
+            context.rowObserver.observe( grid );
+        }
+    }
+
+    function openStrip( card ) {
+        if ( card.classList.contains( 'mba-pro-strip-on' ) || !card.parentNode ) { return; }
+        var row = card.getAttribute( 'data-mba-strip-row' );
+        Array.from( card.parentNode.children ).forEach( function( other ) {
+            if ( other.getAttribute( 'data-mba-strip-row' ) === row ) { other.classList.toggle( 'mba-pro-strip-on', other === card ); }
+        } );
+        card.mbaProStripOpened = Date.now();
+    }
+
+    function syncStrips( context, grid, cards ) {
+        function arrange() {
+            var width = grid.clientWidth;
+            var per = width < 680 ? 5 : width < 960 ? 5 : 7;
+            if ( /^[1-4]$/.test( context.options.columns ) && truthy( context.options.columns_override ) ) { per = Math.max( 3, parseInt( context.options.columns, 10 ) + 3 ); }
+            context.root.classList.toggle( 'mba-pro-strips-stacked', width < 680 );
+            var live = Array.from( grid.querySelectorAll( '.mba-pro-strip' ) );
+            // A last row of one or two would be mostly one giant photo: spread them out.
+            var rows = Math.max( 1, Math.ceil( live.length / per ) );
+            if ( rows > 1 && live.length % per && live.length % per < 3 ) { per = Math.ceil( live.length / rows ); }
+            live.forEach( function( card, index ) {
+                var row = Math.floor( index / per );
+                var size = Math.min( per, live.length - row * per );
+                card.setAttribute( 'data-mba-strip-row', row );
+                card.style.setProperty( '--mba-strip-n', size );
+            } );
+            for ( var row = 0; row < rows; row++ ) {
+                var members = live.filter( function( card ) { return card.getAttribute( 'data-mba-strip-row' ) === String( row ); } );
+                var open = members.filter( function( card ) { return card.classList.contains( 'mba-pro-strip-on' ); } );
+                open.slice( 1 ).forEach( function( card ) { card.classList.remove( 'mba-pro-strip-on' ); } );
+                if ( !open.length && members.length ) { members[ Math.min( context.root.classList.contains( 'mba-pro-strips-stacked' ) ? 0 : 2, members.length - 1 ) ].classList.add( 'mba-pro-strip-on' ); }
+            }
+        }
+        arrange();
+        if ( !context.strips && 'ResizeObserver' in window ) {
+            context.strips = new ResizeObserver( function() { arrange(); } );
+            context.strips.observe( grid );
+        }
+    }
+
+    // Refined grid: the title with the treatment time on one line, the category and doctor under it.
+    function decorateRefined( card, item, options ) {
+        card.classList.add( 'mba-pro-rf-card' );
+        var info = card.querySelector( '.medbeafgallery-gallery-item-info' );
+        if ( !info ) { return; }
+        info.querySelectorAll( '.mba-pro-ccard-desc, .mba-pro-ccard-meta, .medbeafgallery-gallery-category, .medbeafgallery-gallery-categories' ).forEach( function( part ) { part.remove(); } );
+        var title = info.querySelector( 'h3' );
+        var line = node( 'div', 'mba-pro-rf-line' );
+        if ( title ) { line.appendChild( title ); }
+        var time = detailEntries( item, options ).find( function( entry ) { return plain( item.duration ) && entry.value === plain( item.duration ); } );
+        if ( time ) { line.appendChild( node( 'span', 'mba-pro-rf-time', time.value ) ); }
+        info.insertBefore( line, info.firstChild );
+        var sub = [];
+        if ( !truthy( config.hideCaseCategory ) ) { sub.push( categoryNames( item ) ); }
+        // (The doctor extra has its own line with the portrait.)
+        if ( !truthy( options.show_doctor ) && item.doctor && plain( item.doctor.name ) ) { sub.push( plain( item.doctor.name ) ); }
+        sub = sub.filter( Boolean ).join( ' · ' );
+        if ( sub ) { line.insertAdjacentElement( 'afterend', node( 'p', 'mba-pro-rf-sub', sub ) ); }
+        if ( !title && !sub && !time ) { line.remove(); }
     }
 
     function decorateCard( card, item, context ) {
@@ -628,15 +1015,16 @@
             var style = options.card_style;
             // Uncropped means "never crop": the chosen card style still applies;
             // only split cards become two whole photos side by side.
-            if ( style === 'slider' ) { decorateSlider( card, media, item, context ); }
-            else if ( style === 'photo' ) { decoratePhoto( card, media, item, context ); }
-            else if ( style === 'reveal' && options.layout !== 'masonry' ) { decorateReveal( card, media, item, context ); }
+            if ( options.layout === 'wall' ) { decorateWall( card, media, item, context ); }
+            else if ( options.layout === 'openrow' ) { decorateTile( card, media, item, context ); }
+            else if ( style === 'slider' ) { decorateSlider( card, media, item, context ); }
+            else if ( ( style === 'reveal' || style === 'reveal-after' ) && options.layout !== 'masonry' ) { decorateReveal( card, media, item, context ); }
             else if ( style === 'toggle' && options.layout !== 'masonry' ) { decorateToggle( card, media, item, context ); }
             else if ( style === 'stacked' ) { decorateUncropped( card, media, item, context, true ); }
             else if ( options.layout === 'uncropped' ) { decorateUncropped( card, media, item, context ); }
             decorateExtras( card, item, media, context );
         }
-        if ( options.layout === 'editorial' ) { decorateEditorial( card, item, options ); }
+        if ( options.layout === 'editorial' ) { decorateEditorial( card, item, options, context ); }
         if ( options.layout === 'angles' ) { decorateAngles( card, item, context ); }
         var refined = context.root.classList.contains( 'mba-pro-refined' );
         var info = card.querySelector( '.medbeafgallery-gallery-item-info, .mba-pro-mcard-body' );
@@ -664,6 +1052,9 @@
                 }
             }
             info.appendChild( foot );
+            if ( options.layout === 'refined' ) { decorateRefined( card, item, options ); }
+            if ( options.layout === 'strips' ) { decorateStrip( card, media, item, options ); }
+            if ( options.layout === 'openrow' ) { button.setAttribute( 'aria-expanded', 'false' ); }
         } else if ( card.classList.contains( 'mba-pro-custom-card' ) && button ) {
             button.classList.add( 'mba-pro-layout-open' );
             if ( media && media.classList.contains( 'mba-pro-media-replaced' ) ) {
@@ -911,6 +1302,9 @@
             }
         } );
         highlightSpotlight( grid, context, cards );
+        if ( context.options.layout === 'wall' ) { syncWall( context, grid, cards ); }
+        if ( context.options.layout === 'strips' ) { syncStrips( context, grid, cards ); }
+        if ( context.options.layout === 'openrow' ) { placeRow( context, grid ); }
         if ( context.options.layout === 'rows' ) { renderRows( grid, context, cards ); }
         root.dispatchEvent( new CustomEvent( 'mba:layoutsRendered', { detail: { context: context, grid: grid, cards: cards } } ) );
         var visible = new Set();

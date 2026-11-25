@@ -306,6 +306,11 @@
     flex: 0 0 auto !important;
 }
 
+/* Its frame is as tall as two cards: the photo fills it (bands of blur above and below
+   the largest photo of the page looked like a mistake). */
+.mba-pro-layouts.mba-pro-gallery-spotlight .mba-pro-featured-card .mba-pro-fit-image { object-fit: cover !important; object-position: 50% 32% !important; }
+.mba-pro-layouts.mba-pro-gallery-spotlight .mba-pro-featured-card .mba-pro-fit-backdrop { display: none !important; }
+
 /* Procedure rows group the existing, paginated cards without a second engine. */
 .mba-pro-layouts.mba-pro-rows-active .medbeafgallery-gallery-grid {
     display: block !important;
@@ -2247,4 +2252,339 @@
     .mba-pro-layouts.mba-pro-refined:is(.mba-pro-frame-boxed, .mba-pro-frame-framed) .mba-pro-caption-foot > .mba-pro-caption-open {
         min-height: 44px !important;
     }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Editorial (1.6.0): the photo takes the width its own proportions need at one
+   height (--mba-pro-editorial-ratio, set from the photo), and the caption fills
+   the rest — the whole text, every recorded fact, the case's other views, and a
+   real button. Wide captions set the text and the facts side by side.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.mba-pro-layouts .mba-pro-editorial-card {
+    --mba-pro-editorial-h: clamp(380px, 40vw, 560px);
+    grid-template-columns: clamp(30%, calc(var(--mba-pro-editorial-ratio, 1.25) * var(--mba-pro-editorial-h)), 60%) minmax(0, 1fr) !important;
+    min-height: var(--mba-pro-editorial-h) !important;
+}
+
+.mba-pro-layouts .mba-pro-editorial-card:nth-child(even) {
+    grid-template-columns: minmax(0, 1fr) clamp(30%, calc(var(--mba-pro-editorial-ratio, 1.25) * var(--mba-pro-editorial-h)), 60%) !important;
+}
+
+.mba-pro-layouts .mba-pro-editorial-card > .mba-pro-card-media {
+    min-height: var(--mba-pro-editorial-h) !important;
+}
+
+.mba-pro-layouts .mba-pro-editorial-card > .mba-pro-media-replaced > .mba-pro-card-stage {
+    flex: 1 1 auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: auto !important;
+}
+
+.mba-pro-layouts .mba-pro-editorial-card > .medbeafgallery-gallery-item-info,
+.mba-pro-layouts.mba-pro-refined .mba-pro-editorial-card > .medbeafgallery-gallery-item-info,
+.mba-pro-layouts.mba-pro-refined:is(.mba-pro-frame-boxed, .mba-pro-frame-framed) .mba-pro-editorial-card > .medbeafgallery-gallery-item-info {
+    container-type: inline-size;
+    align-self: stretch !important;
+    justify-content: flex-start !important;
+    gap: 0 !important;
+    padding: clamp(22px, 2.6vw, 38px) !important;
+}
+
+.mba-pro-layouts.mba-pro-refined.mba-pro-frame-open .mba-pro-editorial-card > .medbeafgallery-gallery-item-info {
+    padding: clamp(8px, 1vw, 16px) 0 !important;
+}
+
+.mba-pro-layouts.mba-pro-gallery-editorial .mba-pro-editorial-card :is(.medbeafgallery-gallery-category, .medbeafgallery-gallery-categories) {
+    margin: 0 0 10px !important;
+    color: var(--mbr-accent, var(--mba-pro-layout-accent)) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}
+
+.mba-pro-layouts.mba-pro-gallery-editorial .mba-pro-editorial-card .medbeafgallery-gallery-item-info h3,
+.mba-pro-layouts.mba-pro-refined.mba-pro-gallery-editorial .mba-pro-editorial-card .medbeafgallery-gallery-item-info h3 {
+    margin: 0 0 10px !important;
+    padding: 0 0 .1em !important;
+    font-size: clamp(22px, 2.2vw, 30px) !important;
+    line-height: 1.2 !important;
+    letter-spacing: -.01em !important;
+    text-wrap: balance;
+}
+
+.mba-pro-layouts .mba-pro-editorial-card .mba-pro-editorial-excerpt,
+.mba-pro-layouts.mba-pro-refined .mba-pro-editorial-card .mba-pro-editorial-excerpt {
+    display: block !important;
+    max-width: 62ch !important;
+    margin: 0 0 18px !important;
+    font-size: clamp(15px, 1.15vw, 16.5px) !important;
+    line-height: 1.6 !important;
+    -webkit-line-clamp: none;
+    overflow: visible !important;
+}
+
+.mba-pro-layouts .mba-pro-editorial-details {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0 28px !important;
+    width: 100% !important;
+    margin: 0 0 20px !important;
+    border-top: 1px solid var(--mbr-border, var(--mba-pro-layout-line)) !important;
+}
+
+.mba-pro-layouts .mba-pro-editorial-detail {
+    display: grid !important;
+    flex: 1 1 calc(50% - 28px) !important;
+    gap: 1px !important;
+    padding: 10px 0 !important;
+    border-bottom: 1px solid var(--mbr-border, var(--mba-pro-layout-line)) !important;
+}
+
+.mba-pro-layouts .mba-pro-editorial-detail dt {
+    color: var(--mbr-muted, var(--mba-pro-layout-muted)) !important;
+    font-size: 13px !important;
+}
+
+.mba-pro-layouts .mba-pro-editorial-detail dd {
+    color: var(--mbr-text, var(--mba-pro-layout-text)) !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+}
+
+.mba-pro-layouts .mba-pro-editorial-card .mba-pro-angle-strip {
+    margin: 0 0 24px !important;
+}
+
+/* A wide caption (beside a portrait photo): larger text, three facts to a row. */
+@container (min-width: 620px) {
+    .mba-pro-layouts .mba-pro-editorial-card .mba-pro-editorial-excerpt,
+    .mba-pro-layouts.mba-pro-refined .mba-pro-editorial-card .mba-pro-editorial-excerpt { max-width: 74ch !important; font-size: 17.5px !important; line-height: 1.68 !important; margin-bottom: 26px !important; }
+    .mba-pro-layouts .mba-pro-editorial-detail { flex-basis: calc(33.33% - 28px) !important; padding: 13px 0 !important; }
+}
+
+/* The way in is a button here, not a quiet link. */
+.mba-pro-layouts.mba-pro-refined .mba-pro-editorial-card .mba-pro-caption-foot,
+.mba-pro-layouts.mba-pro-refined:is(.mba-pro-frame-boxed, .mba-pro-frame-framed) .mba-pro-editorial-card .mba-pro-caption-foot {
+    justify-content: flex-start !important;
+    gap: 18px !important;
+    margin-top: auto !important;
+    padding-top: 0 !important;
+    border-top: 0 !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-editorial-card .mba-pro-caption-foot > .mba-pro-caption-open,
+.mba-pro-layouts.mba-pro-refined .mba-pro-editorial-card .mba-pro-caption-foot > .mba-pro-caption-open:hover {
+    order: -1;
+    min-height: 46px !important;
+    margin: 0 !important;
+    padding: 11px 24px !important;
+    border-radius: 999px !important;
+    background: var(--mbr-accent, var(--mba-pro-layout-accent)) !important;
+    color: #fff !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-editorial-card .mba-pro-caption-foot > .mba-pro-caption-open:hover {
+    background: color-mix(in srgb, var(--mbr-accent, var(--mba-pro-layout-accent)) 86%, #000) !important;
+}
+
+@media (max-width: 760px) {
+    .mba-pro-layouts .mba-pro-editorial-card,
+    .mba-pro-layouts .mba-pro-editorial-card:nth-child(even) {
+        grid-template-columns: minmax(0, 1fr) !important;
+        min-height: 0 !important;
+    }
+
+    .mba-pro-layouts .mba-pro-editorial-card:nth-child(even) > .mba-pro-card-media { order: 0 !important; }
+
+    .mba-pro-layouts .mba-pro-editorial-card > .mba-pro-card-media,
+    .mba-pro-layouts .mba-pro-editorial-card > .mba-pro-media-replaced {
+        min-height: 0 !important;
+        height: auto !important;
+        aspect-ratio: clamp(.8, var(--mba-pro-editorial-ratio, 1.25), 1.6) !important;
+        max-height: 130vw !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Views of a case (Angles layout, and Editorial): one thumbnail per view, the
+   main one first; choosing one changes the photos on the card.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.mba-pro-layouts .mba-pro-angle-strip,
+.mba-pro-layouts.mba-pro-refined .mba-pro-angle-strip {
+    display: grid !important;
+    grid-template-columns: repeat(var(--mba-pro-angle-count, 4), minmax(0, 1fr)) !important;
+    grid-auto-flow: row !important;
+    gap: 10px !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    margin: 0 0 16px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    overflow: visible !important;
+}
+
+.mba-pro-layouts.mba-pro-refined .mba-pro-angle-strip.mba-pro-angle-strip-below,
+.mba-pro-layouts .mba-pro-angle-strip.mba-pro-angle-strip-below {
+    margin: 0 !important;
+    padding: 14px !important;
+}
+
+.mba-pro-layouts.mba-pro-refined.mba-pro-frame-open .mba-pro-angle-strip.mba-pro-angle-strip-below { padding: 12px 0 0 !important; }
+
+.mba-pro-layouts .mba-pro-angle-button,
+.mba-pro-layouts.mba-pro-refined .mba-pro-angle-button {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+}
+
+.mba-pro-layouts .mba-pro-angle-button:hover { background: transparent !important; }
+
+.mba-pro-layouts .mba-pro-angle-frame {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 10px !important;
+    background: var(--mba-pro-layout-photo-bg) !important;
+    overflow: hidden !important;
+    box-shadow: 0 0 0 1px var(--mba-pro-layout-line) !important;
+    transition: box-shadow .18s ease !important;
+}
+
+.mba-pro-layouts .mba-pro-angle-image,
+.mba-pro-layouts.mba-pro-refined .mba-pro-angle-image {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: 100% !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    object-fit: cover !important;
+    object-position: 50% 35% !important;
+    opacity: .82 !important;
+    transform: none !important;
+    transition: opacity .18s ease !important;
+}
+
+.mba-pro-layouts .mba-pro-angle-button:is(:hover, [aria-pressed="true"]) .mba-pro-angle-image { opacity: 1 !important; }
+
+.mba-pro-layouts .mba-pro-angle-button:hover .mba-pro-angle-frame {
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--mbr-accent, var(--mba-pro-layout-accent)) 45%, var(--mba-pro-layout-line)) !important;
+}
+
+.mba-pro-layouts .mba-pro-angle-button[aria-pressed="true"] .mba-pro-angle-frame {
+    box-shadow: 0 0 0 2px var(--mbr-accent, var(--mba-pro-layout-accent)) !important;
+}
+
+.mba-pro-layouts .mba-pro-angle-label,
+.mba-pro-layouts.mba-pro-refined .mba-pro-angle-label {
+    display: block !important;
+    width: 100% !important;
+    color: var(--mbr-muted, var(--mba-pro-layout-muted)) !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.mba-pro-layouts .mba-pro-angle-button[aria-pressed="true"] .mba-pro-angle-label {
+    color: var(--mbr-text, var(--mba-pro-layout-text)) !important;
+    font-weight: 600 !important;
+}
+
+/* The photo fills its side when it is within a hair of it (the script says when):
+   no slivers of blur at the edges, at most a few percent of the photo outside. */
+.mba-pro-layouts .mba-pro-editorial-card.mba-pro-editorial-snug .mba-pro-fit-image { object-fit: cover !important; }
+
+/* Two views: thumbnail and name side by side, so the pair fills the card. */
+.mba-pro-layouts .mba-pro-layout-card:not(.mba-pro-editorial-card) .mba-pro-angle-strip.mba-pro-angle-two,
+.mba-pro-layouts.mba-pro-refined .mba-pro-layout-card:not(.mba-pro-editorial-card) .mba-pro-angle-strip.mba-pro-angle-two {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+.mba-pro-layouts .mba-pro-layout-card:not(.mba-pro-editorial-card) .mba-pro-angle-two .mba-pro-angle-button {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 5px !important;
+    border-radius: 12px !important;
+    box-shadow: inset 0 0 0 1px var(--mba-pro-layout-line) !important;
+}
+
+.mba-pro-layouts .mba-pro-layout-card:not(.mba-pro-editorial-card) .mba-pro-angle-two .mba-pro-angle-button[aria-pressed="true"] {
+    box-shadow: inset 0 0 0 2px var(--mbr-accent, var(--mba-pro-layout-accent)) !important;
+}
+
+.mba-pro-layouts .mba-pro-layout-card:not(.mba-pro-editorial-card) .mba-pro-angle-two .mba-pro-angle-frame,
+.mba-pro-layouts .mba-pro-layout-card:not(.mba-pro-editorial-card) .mba-pro-angle-two .mba-pro-angle-button[aria-pressed="true"] .mba-pro-angle-frame {
+    flex: 0 0 56px !important;
+    width: 56px !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+}
+
+.mba-pro-layouts .mba-pro-layout-card:not(.mba-pro-editorial-card) .mba-pro-angle-two .mba-pro-angle-label { font-size: 13px !important; text-align: start !important; }
+
+/* The thumbnails say how many views there are: no second count on the card. */
+.mba-pro-layouts.mba-pro-gallery-angles .mba-pro-has-angles .mba-pro-ccard-pill-angles { display: none !important; }
+
+/* Editorial has room to spare: thumbnails keep a sensible size. */
+.mba-pro-layouts .mba-pro-editorial-card .mba-pro-angle-strip,
+.mba-pro-layouts.mba-pro-refined .mba-pro-editorial-card .mba-pro-angle-strip {
+    grid-template-columns: repeat(var(--mba-pro-angle-count, 4), minmax(0, 104px)) !important;
+}
+
+/* Angles: a case without other views keeps its photo as tall as its neighbours'
+   photo and thumbnails together, instead of leaving an empty space under it. */
+.mba-pro-layouts.mba-pro-gallery-angles .medbeafgallery-gallery-grid > .mba-pro-layout-card {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.mba-pro-layouts.mba-pro-gallery-angles .mba-pro-layout-card:not(.mba-pro-has-angles) > .mba-pro-card-media {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    flex-direction: column !important;
+}
+
+.mba-pro-layouts.mba-pro-gallery-angles .mba-pro-layout-card:not(.mba-pro-has-angles) > .mba-pro-card-media > .mba-pro-card-stage {
+    flex: 1 1 auto !important;
+}
+
+.mba-pro-layouts.mba-pro-gallery-angles .mba-pro-layout-card > .mba-pro-card-media { flex: 1 1 auto !important; }
+.mba-pro-layouts.mba-pro-gallery-angles .mba-pro-layout-card.mba-pro-has-angles > .mba-pro-card-media { flex: 0 0 auto !important; }
+.mba-pro-layouts.mba-pro-gallery-angles .mba-pro-layout-card.mba-pro-has-angles > .medbeafgallery-gallery-item-info { flex: 1 1 auto !important; }
+.mba-pro-layouts.mba-pro-gallery-angles .mba-pro-layout-card:not(.mba-pro-has-angles) > .medbeafgallery-gallery-item-info { flex: 0 0 auto !important; }
+
+.mba-pro-layouts.mba-pro-gallery-angles .medbeafgallery-preview-container { min-height: 100% !important; }
+
+@media (pointer: coarse) {
+    .mba-pro-layouts .mba-pro-angle-button { min-height: 44px !important; min-width: 44px !important; }
 }

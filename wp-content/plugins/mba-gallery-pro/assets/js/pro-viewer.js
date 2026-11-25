@@ -2490,7 +2490,17 @@
 
     viewerOpen.__mbaProViewer = true;
     window.openModal = viewerOpen;
-    window.mbaProViewer = { open: viewerOpen, close: viewerClose, isOpen: function () { return state.open; } };
+    // openPair: show one of the open case's photo pairs (0 = the main pair), e.g. the view
+    // chosen on an Angles card (pro-layouts.js goToPair).
+    function viewerOpenPair( id, index ) {
+        var target = state.open && sameId( state.item, id ) ? state.views.findIndex( function ( view ) { return view.type === 'pair' && view.index === index; } ) : -1;
+        if ( target === -1 ) {
+            return false;
+        }
+        selectView( target );
+        return true;
+    }
+    window.mbaProViewer = { open: viewerOpen, close: viewerClose, isOpen: function () { return state.open; }, openPair: viewerOpenPair };
     window.mbaProViewerActive = true;
 
     // Preserve wrappers installed after our parse-time override (the Classic

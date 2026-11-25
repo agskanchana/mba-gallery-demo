@@ -236,6 +236,11 @@
                     tray( context );
                 } );
                 var host = card.querySelector( '.mba-pro-journey-info, .mba-pro-story-info, .mba-pro-mcard-body, .medbeafgallery-gallery-item-info' ) || card;
+                // Photo cards hide their caption (the title is on the photo): under the photo instead.
+                if ( card.classList.contains( 'mba-pro-photo-card' ) && !card.classList.contains( 'mba-pro-editorial-card' ) ) {
+                    host = card;
+                    label.classList.add( 'mba-pro-compare-label-below' );
+                }
                 host.appendChild( label );
             }
             label.querySelector( 'input' ).setAttribute( 'aria-label', t( 'select', [ plain( item.title ) ] ) );

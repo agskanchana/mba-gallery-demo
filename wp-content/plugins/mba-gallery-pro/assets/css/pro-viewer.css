@@ -3608,3 +3608,7 @@
 .mba-pro-viewer [hidden] {
     display: none !important;
 }
+
+/* The light windows: photos that do not fill their frame stand on a soft grey, not on black. */
+.mba-pro-viewer:is(.mba-pro-viewer--drawer, .mba-pro-viewer--desk, .mba-pro-viewer--story):not(.mba-pro-viewer-dark) { --mbv-stage: #e9eef3; }
+.mba-pro-viewer:is(.mba-pro-viewer--drawer, .mba-pro-viewer--desk, .mba-pro-viewer--story):not(.mba-pro-viewer-dark) .mba-pro-viewer-image-missing { color: var(--mbv-text) !important; }

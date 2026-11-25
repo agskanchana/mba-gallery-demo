@@ -1309,6 +1309,68 @@ html.mba-pro-sensitive .mba-pro-scase-media:has(.mba-pro-scase-stage.mba-pro-unv
     }
 }
 
+/* ── Room to breathe (1.6.0) ─────────────────────────────────────────────────
+   One spacing scale: the card's edge, then the groups, then what is inside a
+   group — so the photo, the facts and the text read as separate things. */
+.mba-pro-scase:not(.mba-pro-scase--layout-compact) .mba-pro-scase-grid {
+    gap: clamp(24px, 3.4cqi, 36px) !important;
+    padding: clamp(20px, 4.4cqi, 52px) !important;
+}
+.mba-pro-scase .mba-pro-scase-head { gap: 14px !important; }
+.mba-pro-scase:not(.mba-pro-scase--layout-compact) .mba-pro-scase-title { font-size: clamp(22px, 14px + 1.9cqi, 36px) !important; line-height: 1.18 !important; }
+.mba-pro-scase-viewer { gap: 20px !important; }
+.mba-pro-scase .mba-pro-scase-progress { margin-top: 26px !important; }
+.mba-pro-scase .mba-pro-scase-progress-head { margin-bottom: 8px !important; }
+.mba-pro-scase-side { gap: 36px !important; }
+.mba-pro-scase .mba-pro-scase-h { margin-bottom: 18px !important; }
+.mba-pro-scase .mba-pro-scase-tiles { gap: 12px !important; }
+.mba-pro-scase .mba-pro-scase-tile { min-height: 74px !important; padding: 14px 16px !important; padding-inline-start: 68px !important; border-radius: 14px !important; }
+.mba-pro-scase .mba-pro-scase-tile-ic { inset-inline-start: 16px !important; width: 38px !important; height: 38px !important; margin-top: -19px !important; }
+.mba-pro-scase .mba-pro-scase-tile-v { margin-top: 4px !important; }
+/* An odd last fact takes the whole row instead of leaving a hole beside it. */
+.mba-pro-scase .mba-pro-scase-tiles--n3 > .mba-pro-scase-tile:last-child,
+.mba-pro-scase .mba-pro-scase-tiles--n5 > .mba-pro-scase-tile:last-child,
+.mba-pro-scase .mba-pro-scase-tiles--n7 > .mba-pro-scase-tile:last-child { grid-column: 1 / -1 !important; }
+.mba-pro-scase .mba-pro-scase-about-body { font-size: 16.5px !important; line-height: 1.75 !important; }
+.mba-pro-scase .mba-pro-scase-about-body p { margin-bottom: 1.05em !important; }
+
+/* Compact: never wider than its photo needs, and the text stands off the edges. */
+.mba-pro-scase.mba-pro-scase--layout-compact { max-width: 600px !important; margin-inline: auto !important; }
+.mba-pro-scase--layout-compact .mba-pro-scase-grid { gap: 22px !important; padding: 16px 16px 26px !important; }
+.mba-pro-scase--layout-compact .mba-pro-scase-head { gap: 12px !important; padding: 0 12px !important; }
+.mba-pro-scase--layout-compact .mba-pro-scase-head .mba-pro-scase-title { font-size: clamp(18px, 13px + 1.6cqi, 22px) !important; }
+.mba-pro-scase--layout-compact .mba-pro-scase-footer { padding: 4px 12px 0 !important; }
+
+/* Side by side: the shorter column sits in the middle of the taller one. */
+@container mba-scase (min-width: 840px) {
+    .mba-pro-scase--layout-split:not(.mba-pro-scase--no-details) .mba-pro-scase-grid,
+    .mba-pro-scase--layout-auto:not(.mba-pro-scase--no-details):not(.mba-pro-scase--wide-photo) .mba-pro-scase-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+        grid-template-rows: minmax(0, 1fr) auto auto auto minmax(0, 1fr);
+        grid-template-areas: "media ." "media head" "media side" "media footer" "media .";
+        column-gap: clamp(36px, 5cqi, 72px) !important;
+        row-gap: 0 !important;
+    }
+    .mba-pro-scase--layout-split:not(.mba-pro-scase--no-details) .mba-pro-scase-head,
+    .mba-pro-scase--layout-auto:not(.mba-pro-scase--no-details):not(.mba-pro-scase--wide-photo) .mba-pro-scase-head { margin-bottom: 34px !important; }
+    .mba-pro-scase--layout-split:not(.mba-pro-scase--no-details) .mba-pro-scase-footer,
+    .mba-pro-scase--layout-auto:not(.mba-pro-scase--no-details):not(.mba-pro-scase--wide-photo) .mba-pro-scase-footer { margin-top: 34px !important; }
+}
+@container mba-scase (min-width: 880px) {
+    .mba-pro-scase--layout-stacked .mba-pro-scase-tiles--n3 > .mba-pro-scase-tile:last-child,
+    .mba-pro-scase--layout-auto.mba-pro-scase--wide-photo .mba-pro-scase-tiles--n3 > .mba-pro-scase-tile:last-child,
+    .mba-pro-scase--layout-stacked .mba-pro-scase-tiles--n5 > .mba-pro-scase-tile:last-child,
+    .mba-pro-scase--layout-auto.mba-pro-scase--wide-photo .mba-pro-scase-tiles--n5 > .mba-pro-scase-tile:last-child,
+    .mba-pro-scase--layout-stacked .mba-pro-scase-tiles--n7 > .mba-pro-scase-tile:last-child,
+    .mba-pro-scase--layout-auto.mba-pro-scase--wide-photo .mba-pro-scase-tiles--n7 > .mba-pro-scase-tile:last-child { grid-column: auto !important; }
+}
+@container mba-scase (max-width: 520px) {
+    .mba-pro-scase .mba-pro-scase-tile { padding: 14px !important; }
+    .mba-pro-scase .mba-pro-scase-tile-ic { width: 34px !important; height: 34px !important; margin: 0 0 10px !important; }
+    .mba-pro-scase-side { gap: 30px !important; }
+    .mba-pro-scase .mba-pro-scase-about-body { font-size: 15.5px !important; }
+}
+
 /* Touch screens: 44×44 targets everywhere. */
 @media (pointer: coarse) {
     .mba-pro-scase .mba-pro-scase-mode { min-height: 44px !important; }

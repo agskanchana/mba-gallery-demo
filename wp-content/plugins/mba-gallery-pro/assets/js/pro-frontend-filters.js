@@ -613,7 +613,7 @@
         if (item.recovery && detailEnabled('recovery')) pills += cardPill(TILE_ICON.pulse, cap(item.recovery));
         if (item.results && detailEnabled('results')) pills += cardPill(TILE_ICON.star, cap(item.results));
         const angles = pairCount(item);
-        if (angles > 1) pills += cardPill(TILE_ICON.layers, angles + ' angles');
+        if (angles > 1) pills += cardPill(TILE_ICON.layers, angles + ' angles').replace('mba-pro-ccard-pill"', 'mba-pro-ccard-pill mba-pro-ccard-pill-angles"');
         CUSTOM_FILTER_DEFS.forEach(function (def) {
             const v = item.proFilters ? item.proFilters[def.name] : '';
             if (v) pills += cardPillLabeled(def.label, cap(v));
@@ -1134,7 +1134,7 @@
         // The masonry modal is its own body-level portal (.mba-pro-mmodal) and
         // shows the largest images, so it must be covered too — as must the
         // [mba_case] / carousel embeds when they share a page with the gallery.
-        const SCOPE = '.medbeafgallery-container, .medbeafgallery-modal, .mba-pro-mmodal, .mba-pro-scase, .mba-carousel-wrapper';
+        const SCOPE = '.medbeafgallery-container, .medbeafgallery-modal, .mba-pro-mmodal, .mba-pro-scase, .mba-pro-sstory, .mba-pro-discovery, .mba-carousel-wrapper';
         const inScope = function (target) {
             return target && target.closest && target.closest(SCOPE);
         };
