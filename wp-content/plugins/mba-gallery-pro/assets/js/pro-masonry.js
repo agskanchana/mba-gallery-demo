@@ -37,6 +37,10 @@
     // Honour the gallery's custom Before/After labels (Comparison & Discovery).
     var BEFORE_LABEL = config.beforeLabel || 'Before';
     var AFTER_LABEL  = config.afterLabel  || 'After';
+    // wp_localize_script() turns every top-level scalar into a string: PHP false
+    // arrives as "", so a strict `=== false` check never matched. Only an
+    // explicit off counts; an absent value keeps the labels.
+    var LABELS_OFF = [false, '', '0', 0].indexOf(config.showLabels) !== -1;
 
     // Default View Mode (Comparison & Discovery): for masonry this is "show
     // before first" (default), "show after first", or "both" (side by side in
@@ -65,6 +69,21 @@
         '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>';
     var ICON_NEXT =
         '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+    /* Case navigation deliberately does NOT reuse ICON_PREV/ICON_NEXT. The modal
+       shows two arrow pairs at once — one steps through this case's image pairs,
+       the other jumps to a different case — and an identical chevron on both
+       made them indistinguishable. These add the "skip to start/end" bar, the
+       standard idiom for moving between items rather than within one. */
+    var ICON_CASE_PREV =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 10 12 16 6"></polyline><line x1="6" y1="6" x2="6" y2="18"></line></svg>';
+    var ICON_CASE_NEXT =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 18 14 12 8 6"></polyline><line x1="18" y1="6" x2="18" y2="18"></line></svg>';
+    var ICON_ZOOM_IN =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>';
+    var ICON_ZOOM_OUT =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>';
+    var ICON_ZOOM_RESET =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 9 4 4 9 4"></polyline><polyline points="20 9 20 4 15 4"></polyline><polyline points="4 15 4 20 9 20"></polyline><polyline points="20 15 20 20 15 20"></polyline></svg>';
     var ICON_ARROW =
         '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
     var ICON_CLOSE =
@@ -105,6 +124,23 @@
     function safeUrl(url) {
         url = (url === null || url === undefined) ? '' : String(url).trim();
         return /^(javascript|data|vbscript):/i.test(url) ? '' : url;
+    }
+    // Doctor card for the side panel: { name, photo, credentials, location, url }.
+    function doctorCardHtml(d) {
+        var initial = String(d.name || '').replace(/^dr\.?\s+/i, '').charAt(0).toUpperCase();
+        var photo = d.photo
+            ? '<img class="mba-pro-doctor-photo" src="' + esc(d.photo) + '" alt="" loading="lazy">'
+            : '<span class="mba-pro-doctor-photo mba-pro-doctor-initials" aria-hidden="true">' + esc(initial) + '</span>';
+        var url = safeUrl(d.url);
+        var name = url
+            ? '<a class="mba-pro-doctor-name" href="' + esc(url) + '">' + esc(d.name) + '</a>'
+            : '<span class="mba-pro-doctor-name">' + esc(d.name) + '</span>';
+        return '<div class="mba-pro-doctor">' + photo +
+            '<div class="mba-pro-doctor-text">' +
+                '<span class="mba-pro-doctor-label">' + esc((config && config.treatedByText) || 'Treated by') + '</span>' + name +
+                (d.credentials ? '<span class="mba-pro-doctor-cred">' + esc(d.credentials) + '</span>' : '') +
+                (d.location ? '<span class="mba-pro-doctor-loc">' + esc(d.location) + '</span>' : '') +
+            '</div></div>';
     }
     // Decode HTML entities so they aren't shown literally. WordPress encodes "&"
     // in titles as "&#038;" (the_title → convert_chars), and reading that back via
@@ -172,11 +208,17 @@
         }
         return '';
     }
+    // Each pair carries both a full-size URL (before/after, used by the modal)
+    // and a card-sized one (beforeThumb/afterThumb, used by the grid cards).
+    // beforeThumb falls back to the full URL so this still works against a free
+    // plugin older than the one that added the thumbnail fields.
     function buildPairs(item) {
         var pairs = [];
         if (item.beforeImg || item.afterImg) {
             pairs.push({
                 before: item.beforeImg, after: item.afterImg,
+                beforeThumb: item.beforeThumb || item.beforeImg,
+                afterThumb: item.afterThumb || item.afterImg,
                 beforeAlt: item.beforeAlt || 'Before', afterAlt: item.afterAlt || 'After',
                 label: item.main_description || ''
             });
@@ -185,13 +227,20 @@
             item.imagePairs.forEach(function (p) {
                 pairs.push({
                     before: p.beforeImg, after: p.afterImg,
+                    beforeThumb: p.beforeThumb || p.beforeImg,
+                    afterThumb: p.afterThumb || p.afterImg,
                     beforeAlt: p.beforeAlt || 'Before', afterAlt: p.afterAlt || 'After',
                     label: p.description || ''
                 });
             });
         }
         if (!pairs.length) {
-            pairs.push({ before: item.beforeImg, after: item.afterImg, beforeAlt: 'Before', afterAlt: 'After', label: '' });
+            pairs.push({
+                before: item.beforeImg, after: item.afterImg,
+                beforeThumb: item.beforeThumb || item.beforeImg,
+                afterThumb: item.afterThumb || item.afterImg,
+                beforeAlt: 'Before', afterAlt: 'After', label: ''
+            });
         }
         return pairs;
     }
@@ -225,11 +274,15 @@
 
         var card = document.createElement('div');
         card.className = 'mba-pro-mcard';
+        // The free plugin gives the grid role="list"; its own cards are
+        // listitems, and these must be too or the list is invalid ARIA.
+        card.setAttribute('role', 'listitem');
         card.dataset.id = item.id;
         card.dataset.category = item.category;
 
         var num = itemNumber(item);
-        var numHtml = num ? '<span class="mba-pro-mcard-num">' + pad2(num) + '</span>' : '';
+        // Decorative index ("01") — hidden from assistive tech.
+        var numHtml = num ? '<span class="mba-pro-mcard-num" aria-hidden="true">' + pad2(num) + '</span>' : '';
 
         var navHtml = multi
             ? '<button type="button" class="mba-pro-mcard-arrow mba-pro-mcard-prev" aria-label="Previous image pair">' + ICON_PREV + '</button>' +
@@ -299,9 +352,10 @@
 
         function paint() {
             var p = pairs[state.idx];
-            beforeI.src = p.before || '';
+            // Card context — use the card-sized variant, not the original.
+            beforeI.src = p.beforeThumb || p.before || '';
             beforeI.alt = p.beforeAlt;
-            afterI.src = p.after || '';
+            afterI.src = p.afterThumb || p.after || '';
             afterI.alt = p.afterAlt;
             card.classList.toggle('mba-pro-show-after', state.after);
             // Keep the hidden side of the cross-fade out of the a11y tree.
@@ -359,8 +413,9 @@
         root.setAttribute('role', 'dialog');
         root.setAttribute('aria-modal', 'true');
         root.setAttribute('aria-labelledby', 'mba-pro-mmodal-title');
-        // Honour the "Show labels" setting for the side-by-side captions.
-        if (config.showLabels === false) root.classList.add('mba-pro-no-caps');
+        // Honour the "Show labels" setting for the side-by-side captions. The
+        // value is localised, so false arrives as "" (see LABELS_OFF).
+        if (LABELS_OFF) root.classList.add('mba-pro-no-caps');
         // With "Both" as the default there is nothing to toggle — hide the
         // Before/After segmented control so only the side-by-side view shows.
         if (DEFAULT_BOTH) root.classList.add('mba-pro-both-default');
@@ -383,6 +438,11 @@
                                 '<span class="mba-pro-mmodal-paircount"></span>' +
                                 '<img class="mba-pro-mmodal-img mba-pro-mmodal-before" alt="">' +
                                 '<img class="mba-pro-mmodal-img mba-pro-mmodal-after" alt="" aria-hidden="true">' +
+                                '<div class="mba-pro-mmodal-zoom" role="group" aria-label="Zoom">' +
+                                    '<button type="button" class="mba-pro-mmodal-zbtn" data-zoom="in" aria-label="Zoom in">' + ICON_ZOOM_IN + '</button>' +
+                                    '<button type="button" class="mba-pro-mmodal-zbtn" data-zoom="out" aria-label="Zoom out" disabled>' + ICON_ZOOM_OUT + '</button>' +
+                                    '<button type="button" class="mba-pro-mmodal-zbtn" data-zoom="reset" aria-label="Reset zoom">' + ICON_ZOOM_RESET + '</button>' +
+                                '</div>' +
                                 '<div class="mba-pro-mmodal-sbs" aria-hidden="true">' +
                                     '<figure class="mba-pro-mmodal-sbs-cell">' +
                                         '<img class="mba-pro-mmodal-sbs-img mba-pro-mmodal-sbs-before" alt="">' +
@@ -401,7 +461,10 @@
                             '</div>' +
                         '</div>' +
                     '</div>' +
-                    '<aside class="mba-pro-mmodal-side">' +
+                    // Focusable so keyboard users can scroll it: on desktop it is
+                    // the only scrolling area and holds no controls of its own.
+                    '<aside class="mba-pro-mmodal-side" tabindex="0" aria-label="Case details">' +
+                        '<div class="mba-pro-mmodal-doctor mba-pro-hidden"></div>' +
                         '<div class="mba-pro-mmodal-tabs" role="tablist">' +
                             '<button type="button" class="mba-pro-mmodal-tab is-active" data-tab="overview" role="tab" aria-selected="true">Treatment Overview</button>' +
                             '<button type="button" class="mba-pro-mmodal-tab" data-tab="about" role="tab" aria-selected="false">About This Case</button>' +
@@ -418,9 +481,9 @@
                 '</div>' +
                 '<footer class="mba-pro-mmodal-footer">' +
                     '<div class="mba-pro-mmodal-foot-nav">' +
-                        '<button type="button" class="mba-pro-mmodal-casenav mba-pro-mmodal-caseprev" aria-label="Previous case">' + ICON_PREV + '</button>' +
+                        '<button type="button" class="mba-pro-mmodal-casenav mba-pro-mmodal-caseprev" aria-label="Previous case">' + ICON_CASE_PREV + '</button>' +
                         '<span class="mba-pro-mmodal-counter"></span>' +
-                        '<button type="button" class="mba-pro-mmodal-casenav mba-pro-mmodal-casenext" aria-label="Next case">' + ICON_NEXT + '</button>' +
+                        '<button type="button" class="mba-pro-mmodal-casenav mba-pro-mmodal-casenext" aria-label="Next case">' + ICON_CASE_NEXT + '</button>' +
                     '</div>' +
                     '<div class="mba-pro-mmodal-cta mba-pro-hidden"></div>' +
                 '</footer>' +
@@ -449,6 +512,7 @@
             about:    root.querySelector('.mba-pro-mmodal-about'),
             aboutBody: root.querySelector('.mba-pro-mmodal-about-body'),
             side:     root.querySelector('.mba-pro-mmodal-side'),
+            doctor:   root.querySelector('.mba-pro-mmodal-doctor'),
             tabs:     root.querySelector('.mba-pro-mmodal-tabs'),
             tabBtns:  root.querySelectorAll('.mba-pro-mmodal-tab'),
             footNav:  root.querySelector('.mba-pro-mmodal-foot-nav'),
@@ -462,9 +526,36 @@
 
         var state = { pairs: [], idx: 0, after: false, both: false, itemId: null };
 
+        // Zoom (pro-zoom.js). The before and after images share one transform,
+        // so flipping while zoomed stays on the same detail. Off in the
+        // side-by-side view, which already shows both at full size.
+        var zoomBtnIn    = root.querySelector('.mba-pro-mmodal-zbtn[data-zoom="in"]');
+        var zoomBtnOut   = root.querySelector('.mba-pro-mmodal-zbtn[data-zoom="out"]');
+        var zoomBtnReset = root.querySelector('.mba-pro-mmodal-zbtn[data-zoom="reset"]');
+        var zoom = window.mbaProZoom ? window.mbaProZoom.create(els.imgwrap, {
+            targets: function () { return [els.before, els.after]; },
+            enabled: function () { return !state.both; },
+            // Where the modal body scrolls (the stacked mobile layout) a plain
+            // wheel keeps scrolling it; Ctrl+wheel and trackpad pinch still zoom.
+            canWheelZoom: function () { return els.body.scrollHeight <= els.body.clientHeight + 1; },
+            onChange: function (scale) {
+                zoomBtnOut.disabled   = scale <= 1;
+                zoomBtnIn.disabled    = scale >= 4;
+            }
+        }) : null;
+        if (!zoom) {
+            root.querySelector('.mba-pro-mmodal-zoom').style.display = 'none';
+        } else {
+            zoomBtnIn.addEventListener('click', function (e) { e.stopPropagation(); zoom.zoomBy(1.5, true); });
+            zoomBtnOut.addEventListener('click', function (e) { e.stopPropagation(); zoom.zoomBy(1 / 1.5, true); });
+            zoomBtnReset.addEventListener('click', function (e) { e.stopPropagation(); zoom.reset(true); });
+        }
+        function resetZoom() { if (zoom) zoom.reset(false); }
+
         function paint() {
             var p = state.pairs[state.idx];
             if (!p) return;
+            if (state.both) resetZoom();
             els.before.src = p.before || '';
             els.before.alt = p.beforeAlt;
             els.after.src = p.after || '';
@@ -529,11 +620,14 @@
         function flip() {
             if (state.both) return;
             if (Date.now() - swipe.lastAt < 400) return;
+            // The click that ends a pan or pinch is not a flip.
+            if (zoom && zoom.consumeClick()) return;
             state.after = !state.after;
             paint();
         }
         function goPair(delta) {
             if (state.pairs.length < 2) return;
+            resetZoom(); // a different photo: the zoomed-in region means nothing there
             state.idx = (state.idx + delta + state.pairs.length) % state.pairs.length;
             state.after = DEFAULT_AFTER;
             state.both  = DEFAULT_BOTH;
@@ -545,7 +639,17 @@
             if (!list) return;
             var i = list.findIndex(function (it) { return it.id === state.itemId; });
             if (i < 0) return;
-            open(list[(i + delta + list.length) % list.length]);
+            var target = list[(i + delta + list.length) % list.length];
+            // Through the public entry point rather than open(): anything that
+            // wraps window.openModal — the ?mbcase= deep-link writer — must see
+            // case changes made from inside the modal too. Calling open() left
+            // the URL naming the first case, so a copied link opened the wrong
+            // one.
+            if (typeof window.openModal === 'function') {
+                window.openModal(target.id);
+            } else {
+                open(target);
+            }
         }
 
         els.caseprev.addEventListener('click', function (e) { e.stopPropagation(); gotoCase(-1); });
@@ -592,6 +696,8 @@
             var dy = e.changedTouches[0].clientY - swipe.y;
             var dt = Date.now() - swipe.t;
             swipe.t = 0;
+            // While zoomed a horizontal drag pans the image; a pinch is not a swipe.
+            if (zoom && (zoom.isZoomed() || zoom.recentlyPinched())) return;
             if (dt < 700 && Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) {
                 swipe.lastAt = Date.now();
                 goPair(dx < 0 ? 1 : -1);
@@ -669,12 +775,18 @@
             }
             if (e.key === 'ArrowLeft') { e.altKey ? gotoCase(-1) : goPair(-1); }
             else if (e.key === 'ArrowRight') { e.altKey ? gotoCase(1) : goPair(1); }
+            else if (zoom && !e.ctrlKey && !e.metaKey && !e.altKey) {
+                if (e.key === '+' || e.key === '=') { e.preventDefault(); zoom.zoomBy(1.5, true); }
+                else if (e.key === '-' || e.key === '_') { e.preventDefault(); zoom.zoomBy(1 / 1.5, true); }
+                else if (e.key === '0') { e.preventDefault(); zoom.reset(true); }
+            }
         });
 
         function open(item) {
             // open() is also how case prev/next re-fills the modal — only do the
             // once-per-session work (lock, history, focus) on a real open.
             var wasOpen = root.classList.contains('mba-pro-mmodal-open');
+            resetZoom();
             state.pairs = buildPairs(item);
             state.idx = 0;
             state.after = DEFAULT_AFTER;
@@ -740,9 +852,16 @@
             // present they become tabs on the stacked mobile layout (no room for
             // both); with a single section there is nothing to tab between, so
             // the tab bar stays hidden and that section just shows on its own.
+            // Doctor who treated the case (free 1.5.0+ REST field), above the tabs.
+            var doctorShown = !!(els.doctor && item.doctor && item.doctor.name);
+            if (els.doctor) {
+                els.doctor.innerHTML = doctorShown ? doctorCardHtml(item.doctor) : '';
+                els.doctor.classList.toggle('mba-pro-hidden', !doctorShown);
+            }
+
             var overviewShown = !els.overview.classList.contains('mba-pro-hidden');
             var aboutShown    = !els.about.classList.contains('mba-pro-hidden');
-            var sideHasContent = overviewShown || aboutShown;
+            var sideHasContent = overviewShown || aboutShown || doctorShown;
             els.side.classList.toggle('mba-pro-hidden', !sideHasContent);
             els.side.classList.toggle('mba-pro-has-tabs', overviewShown && aboutShown);
             if (overviewShown && aboutShown) {
@@ -785,11 +904,34 @@
             // Each case starts at the top (the stacked mobile layout scrolls).
             els.body.scrollTop = 0;
             if (els.side) els.side.scrollTop = 0;
+            syncScrollFade();
+        }
+
+        /* On the stacked mobile layout the scrolling element is the modal body,
+           whose children paint their own backgrounds — so the CSS-only scroll
+           shadow used on the desktop side panel cannot show through there. Toggle
+           a class instead and let a sticky ::after fade the bottom edge, so a case
+           with a long description does not look like it simply stops.
+
+           Desktop is unaffected: the body does not scroll at that width. */
+        var scrollFadeBound = false;
+
+        function syncScrollFade() {
+            if (!els.body) return;
+            var more = (els.body.scrollHeight - els.body.scrollTop - els.body.clientHeight) > 8;
+            els.body.classList.toggle('mba-pro-mmodal-more', more);
+
+            if (!scrollFadeBound) {
+                scrollFadeBound = true;
+                els.body.addEventListener('scroll', syncScrollFade, { passive: true });
+                window.addEventListener('resize', syncScrollFade);
+            }
         }
 
         function close(fromPop) {
             if (!root.classList.contains('mba-pro-mmodal-open')) return;
             root.classList.remove('mba-pro-mmodal-open');
+            resetZoom();
             unlockScroll();
             // Closed in-page (X / Esc / overlay): consume the history entry we
             // pushed so Back doesn't need a second press.
@@ -861,44 +1003,127 @@
         return cards;
     }
 
+    // Height a card adds to its column: its box plus vertical margins (flex
+    // columns do not collapse margins, so they simply add up).
+    function outerHeight(el) {
+        var cs = window.getComputedStyle(el);
+        return el.getBoundingClientRect().height +
+            (parseFloat(cs.marginTop) || 0) + (parseFloat(cs.marginBottom) || 0);
+    }
+
+    // Shortest-column placement, computed from measured heights without moving
+    // anything. The measurements are only valid while every card already sits
+    // in a column of the target width; the columns are equal width, so a card's
+    // height does not depend on WHICH column. Near-ties go to the column with
+    // fewer cards, so equal heights (or none yet, before images load) fill the
+    // columns round-robin.
+    function planColumns(cards, cols) {
+        var heights = [], plan = [], c;
+        for (c = 0; c < cols; c++) { heights.push(0); plan.push([]); }
+        cards.forEach(function (card) {
+            var min = 0;
+            for (var i = 1; i < cols; i++) {
+                var diff = heights[i] - heights[min];
+                if (diff < -0.5 || (Math.abs(diff) <= 0.5 && plan[i].length < plan[min].length)) min = i;
+            }
+            plan[min].push(card);
+            heights[min] += outerHeight(card);
+        });
+        return plan;
+    }
+
+    function planMatches(colEls, plan) {
+        for (var c = 0; c < colEls.length; c++) {
+            var kids = colEls[c].children;
+            if (kids.length !== plan[c].length) return false;
+            for (var i = 0; i < kids.length; i++) {
+                if (kids[i] !== plan[c][i]) return false;
+            }
+        }
+        return true;
+    }
+
+    function applyPlan(colEls, plan) {
+        for (var c = 0; c < colEls.length; c++) {
+            for (var i = 0; i < plan[c].length; i++) {
+                colEls[c].appendChild(plan[c][i]); // appendChild moves, in order
+            }
+        }
+    }
+
+    // The column wrappers already in place, if they can be reused as they are:
+    // the right count, and holding every card (a Load More appends its new
+    // cards straight into the grid, outside them).
+    function reusableColumns(grid, cols, cards) {
+        if (!grid.classList.contains('mba-pro-masonry-js') || grid.children.length !== cols) return null;
+        var colEls = Array.prototype.slice.call(grid.children);
+        for (var i = 0; i < colEls.length; i++) {
+            if (!colEls[i].classList.contains('mba-pro-mcol')) return null;
+        }
+        for (var j = 0; j < cards.length; j++) {
+            if (colEls.indexOf(cards[j].parentNode) === -1) return null;
+        }
+        return colEls;
+    }
+
     function layoutGrid(grid) {
         var cards = orderedCards(grid);
         if (!cards.length) return;
         var cols = colCountFor(grid);
 
-        // Single column: no wrappers — let the cards stack directly (the base
-        // stylesheet's display:block handles a one-column stack).
+        grid.__mbaLastWidth = grid.clientWidth;
+        grid.__mbaLastCols = cols;
+
+        // Moving a node blurs whatever is focused inside it, so a keyboard user
+        // on a card lost their place (focus fell to <body>) every time an image
+        // loaded or the window resized. Remember it and hand it back.
+        var active = document.activeElement;
+        var keep = (active && active !== document.body && grid.contains(active)) ? active : null;
+
         if (cols <= 1) {
-            grid.classList.remove('mba-pro-masonry-js');
-            var frag = document.createDocumentFragment();
-            cards.forEach(function (c) { frag.appendChild(c); });
-            grid.innerHTML = '';
-            grid.appendChild(frag);
-            bindLoad(grid);
-            return;
+            // Single column: no wrappers — the cards stack directly (the base
+            // stylesheet's display:block handles a one-column stack). Skip the
+            // rebuild when they already do, in order: mobile browsers fire
+            // resize as the address bar slides, i.e. constantly while scrolling.
+            var flat = !grid.classList.contains('mba-pro-masonry-js') && grid.children.length === cards.length &&
+                cards.every(function (card, i) { return grid.children[i] === card; });
+            if (!flat) {
+                grid.classList.remove('mba-pro-masonry-js');
+                var frag = document.createDocumentFragment();
+                cards.forEach(function (card) { frag.appendChild(card); });
+                grid.innerHTML = '';
+                grid.appendChild(frag);
+            }
+        } else {
+            var colEls = reusableColumns(grid, cols, cards);
+            if (!colEls) {
+                grid.classList.add('mba-pro-masonry-js');
+                grid.innerHTML = '';
+                colEls = [];
+                for (var c = 0; c < cols; c++) {
+                    var col = document.createElement('div');
+                    col.className = 'mba-pro-mcol';
+                    // Layout only: keep the cards the list's (owned) items.
+                    col.setAttribute('role', 'presentation');
+                    grid.appendChild(col);
+                    colEls.push(col);
+                }
+                // Seat every card in a column first so each takes the column
+                // width — its height at that width is what the plan needs.
+                cards.forEach(function (card, i) { colEls[i % cols].appendChild(card); });
+            }
+            // Before images load, cards are text-height; as they load, a
+            // debounced re-layout packs the real heights into a true masonry.
+            // Only when the packing actually changes is anything moved.
+            var plan = planColumns(cards, cols);
+            if (!planMatches(colEls, plan)) {
+                applyPlan(colEls, plan);
+            }
         }
 
-        grid.classList.add('mba-pro-masonry-js');
-        grid.innerHTML = '';
-        var colEls = [];
-        for (var c = 0; c < cols; c++) {
-            var col = document.createElement('div');
-            col.className = 'mba-pro-mcol';
-            grid.appendChild(col);
-            colEls.push(col);
+        if (keep && document.activeElement !== keep && document.contains(keep)) {
+            try { keep.focus({ preventScroll: true }); } catch (e) { keep.focus(); }
         }
-        // Place each card in the shortest column. Heights are read live: before
-        // images load every column measures ~0, so placement is round-robin
-        // (which already fills all columns); as the images load a debounced
-        // re-layout packs the now-differing heights into a true masonry.
-        cards.forEach(function (card) {
-            var min = 0, minH = colEls[0].offsetHeight;
-            for (var i = 1; i < cols; i++) {
-                var h = colEls[i].offsetHeight;
-                if (h < minH) { minH = h; min = i; }
-            }
-            colEls[min].appendChild(card);
-        });
         bindLoad(grid);
     }
 
@@ -922,11 +1147,22 @@
         for (var i = 0; i < grids.length; i++) { layoutGrid(grids[i]); }
     }
 
-    // Re-pack on resize (the column count can cross a breakpoint).
+    // Re-pack on resize, but only grids whose width actually changed (the
+    // column count can cross a breakpoint, and narrower columns re-flow card
+    // heights). A height-only resize — the mobile address bar showing and
+    // hiding while the visitor scrolls — changes nothing here.
     var resizeTimer = null;
     window.addEventListener('resize', function () {
         if (resizeTimer) clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(layoutAll, 160);
+        resizeTimer = setTimeout(function () {
+            var grids = masonryGrids();
+            for (var i = 0; i < grids.length; i++) {
+                var g = grids[i];
+                if (g.clientWidth !== g.__mbaLastWidth || colCountFor(g) !== g.__mbaLastCols) {
+                    layoutGrid(g);
+                }
+            }
+        }, 160);
     });
 
     // Re-pack after every (re)render. The free plugin's renderGalleryItems clears

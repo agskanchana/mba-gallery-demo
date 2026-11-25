@@ -976,3 +976,63 @@
         height: 50%;
     }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Doctor card — classic (.mba-pro-cmodal-doctor) and masonry
+   (.mba-pro-mmodal-doctor) side panels. Data: the free plugin's `doctor` field.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.mba-pro-doctor {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin: 0 0 18px !important;
+    padding: 0 0 16px !important;
+    border-bottom: 1px solid rgba(127, 127, 127, 0.22) !important;
+    box-sizing: border-box !important;
+}
+.mba-pro-doctor .mba-pro-doctor-photo {
+    width: 52px !important;
+    height: 52px !important;
+    max-width: none !important;
+    margin: 0 !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    flex-shrink: 0 !important;
+}
+.mba-pro-doctor .mba-pro-doctor-initials {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: var(--medbeafgallery-primary-solid, #2563eb) !important;
+    color: #fff !important;
+    font-size: 20px !important;
+    font-weight: 700 !important;
+}
+.mba-pro-doctor-text {
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+    line-height: 1.35 !important;
+}
+.mba-pro-doctor-label {
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    opacity: 0.65;
+}
+.mba-pro-doctor-name {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: inherit !important;
+    text-decoration: none !important;
+}
+a.mba-pro-doctor-name:hover,
+a.mba-pro-doctor-name:focus-visible {
+    text-decoration: underline !important;
+}
+.mba-pro-doctor-cred,
+.mba-pro-doctor-loc {
+    font-size: 13px !important;
+    opacity: 0.8;
+}

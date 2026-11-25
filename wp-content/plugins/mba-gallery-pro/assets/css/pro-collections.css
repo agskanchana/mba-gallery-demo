@@ -1,0 +1,31 @@
+.medbeafgallery-container .mba-pro-collections-header { margin: 0 0 24px !important; min-width: 0 !important; }
+.medbeafgallery-container .mba-pro-collections-header[hidden] { display: none !important; }
+.medbeafgallery-container .mba-pro-collections-title {
+    color: var(--mbg-text, var(--mba-pro-layout-text)) !important;
+    font-family: var(--mbg-heading-font, var(--mba-pro-layout-heading)) !important;
+    font-size: clamp(1.4rem, 3vw, 2rem) !important;
+    font-weight: 600 !important;
+    font-style: normal !important;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    line-height: 1.4 !important;
+    margin: 0 0 12px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+    overflow-wrap: anywhere !important;
+}
+.medbeafgallery-container .mba-pro-row-intro {
+    color: var(--mbg-muted, var(--mba-pro-layout-muted)) !important;
+    font-family: var(--mbg-font, var(--mbr-font, system-ui, sans-serif)) !important;
+    font-size: .9375rem !important;
+    font-style: normal !important;
+    line-height: 1.5 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    margin: 4px 0 12px !important;
+    padding: 0 !important;
+    overflow-wrap: anywhere !important;
+}

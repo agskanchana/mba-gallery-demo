@@ -168,11 +168,13 @@
     flex: 0 0 auto;
 }
 
-/* Reserve a little room at each end so the arrows don't cover the first/last
-   category card. */
+/* Reserve room at each end so the arrows don't cover the first/last category
+   card. This has to clear the arrow completely: 6px container padding (above)
+   + 44px button = 50px. The previous 30px left the first and last cards sitting
+   20px underneath the arrows — measured in the browser, not guessed. */
 .medbeafgallery-category-carousel.medbeafgallery-carousel-mode .medbeafgallery-carousel-wrapper {
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 56px;
+    padding-right: 56px;
 }
 
 /* SVG chevrons injected by pro-frontend-filters.js (replacing the free plugin's

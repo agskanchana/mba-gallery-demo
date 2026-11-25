@@ -32,8 +32,13 @@
     const PRO_FILTER_DEFS = Array.isArray(config.proFilterDefs) ? config.proFilterDefs : [];
     const CUSTOM_FILTER_DEFS = PRO_FILTER_DEFS.filter(function (d) { return d && !d.standard && d.name; });
 
+    // "Doctor" filter group (rendered server-side when 2+ doctors have cases).
+    const HAS_DOCTOR_FILTER = !!document.querySelector('input[name="mba_doctor"]');
+
     // Names used for deep-linking: the built-in six plus any custom filters.
-    const FILTER_NAMES = STANDARD_FILTER_NAMES.concat(CUSTOM_FILTER_DEFS.map(function (d) { return d.name; }));
+    const FILTER_NAMES = STANDARD_FILTER_NAMES
+        .concat(CUSTOM_FILTER_DEFS.map(function (d) { return d.name; }))
+        .concat(HAS_DOCTOR_FILTER ? ['mba_doctor'] : []);
 
     // Live search/sort state (read by the registered transform on every render).
     let searchTerm = '';
@@ -127,14 +132,30 @@
             });
         });
 
-        // Search across title, (stripped) description and category name.
+        // Doctor (item.doctors / item.doctor come from the free plugin's REST data).
+        if (HAS_DOCTOR_FILTER) {
+            const doctors = getCheckedValues('mba_doctor');
+            if (doctors.length) {
+                out = out.filter(function (item) {
+                    const list = Array.isArray(item.doctors) && item.doctors.length
+                        ? item.doctors
+                        : (item.doctor ? [item.doctor] : []);
+                    return list.some(function (d) { return d && doctors.indexOf(d.slug) !== -1; });
+                });
+            }
+        }
+
+        // Search across title, (stripped) description and every category the
+        // case is in. Titles and term names arrive entity-encoded (WordPress
+        // stores "&" as "&#038;"), so decode them — otherwise "Botox & Fillers"
+        // never matched while "038" did.
         if (config.enableSearch && searchTerm) {
             const q = searchTerm.toLowerCase();
             out = out.filter(function (item) {
                 const hay = (
-                    (item.title || '') + ' ' +
+                    dec(item.title || '') + ' ' +
                     stripTags(item.description || item.content || '') + ' ' +
-                    (item.categoryName || item.category || '')
+                    catNames(item).map(dec).join(' ')
                 ).toLowerCase();
                 return hay.indexOf(q) !== -1;
             });
@@ -149,14 +170,14 @@
         } else if (sortOrder === 'newest') {
             out = out.slice().sort(function (a, b) { return (b.timestamp || 0) - (a.timestamp || 0); });
         } else if (sortOrder === 'title') {
-            out = out.slice().sort(function (a, b) { return (a.title || '').localeCompare(b.title || ''); });
+            out = out.slice().sort(function (a, b) { return dec(a.title || '').localeCompare(dec(b.title || '')); });
         }
 
         return out;
     }
 
     function registerTransform() {
-        if (!config.enableSearch && !config.enableSort && !CUSTOM_FILTER_DEFS.length) return;
+        if (!config.enableSearch && !config.enableSort && !CUSTOM_FILTER_DEFS.length && !HAS_DOCTOR_FILTER) return;
         window.medbeafgalleryItemTransforms = window.medbeafgalleryItemTransforms || [];
         window.medbeafgalleryItemTransforms.push(proItemTransform);
     }
@@ -169,7 +190,7 @@
     // pass, apply it to the committed result and fix pagination. The run-counter
     // check keeps this a no-op when the seam IS present (no double filtering).
     function installApplyAllFiltersFallback() {
-        if (!config.enableSearch && !config.enableSort && !CUSTOM_FILTER_DEFS.length) return;
+        if (!config.enableSearch && !config.enableSort && !CUSTOM_FILTER_DEFS.length && !HAS_DOCTOR_FILTER) return;
         if (typeof window.applyAllFilters !== 'function' || window.applyAllFilters.__mbaProWrapped) return;
 
         const orig = window.applyAllFilters;
@@ -248,7 +269,13 @@
         if (!config.enableDeeplink) return;
 
         const params = new URLSearchParams(window.location.search);
-        ['mbq', 'mbsort'].concat(FILTER_NAMES).forEach(function (k) { params.delete(k); });
+        ['mbq', 'mbsort', 'mbcat'].concat(FILTER_NAMES).forEach(function (k) { params.delete(k); });
+
+        // The selected category (or subcategory pill). Shared links used to keep
+        // the search and checkbox filters but drop the category, so a link to
+        // "Teeth, female" opened on "All, female".
+        const cat = currentCategorySlug();
+        if (cat && cat !== String(config.defaultCategory || 'all')) params.set('mbcat', cat);
 
         if (searchTerm) params.set('mbq', searchTerm);
         if (config.enableSort && sortOrder && sortOrder !== (config.defaultSort || 'newest')) {
@@ -264,28 +291,185 @@
         window.history.replaceState(null, '', newUrl);
     }
 
+    function currentCategorySlug() {
+        if (typeof galleryConfig === 'undefined' || !galleryConfig) return '';
+        return galleryConfig.currentCategory ? String(galleryConfig.currentCategory) : '';
+    }
+
+    function cssEscape(value) {
+        return (window.CSS && typeof window.CSS.escape === 'function')
+            ? window.CSS.escape(value)
+            : String(value).replace(/["\\]/g, '\\$&');
+    }
+
+    // Select a category named in ?mbcat=. A top-level category has a tile; a
+    // subcategory is reached through its parent's tile and then its Pro pill.
+    // Clicking (rather than setting state) keeps every listener — subcategory
+    // pills, category tabs, filter tags — in step.
+    function selectCategoryFromUrl(slug) {
+        const tileFor = function (s) {
+            return document.querySelector('.medbeafgallery-carousel-item[data-id="' + cssEscape(s) + '"]');
+        };
+        const tile = tileFor(slug);
+        if (tile) {
+            tile.click();
+            return;
+        }
+        const tree = (typeof galleryConfig !== 'undefined' && galleryConfig && galleryConfig.categoryDescendants) || {};
+        const parent = Object.keys(tree).find(function (p) {
+            return Array.isArray(tree[p]) && tree[p].indexOf(slug) !== -1 && tileFor(p);
+        });
+        if (!parent) return;
+        tileFor(parent).click();
+        let tries = 0;
+        (function clickPill() {
+            const pill = document.querySelector('.mba-pro-subcategory-pill[data-slug="' + cssEscape(slug) + '"]');
+            if (pill) {
+                pill.click();
+            } else if (++tries < 20) {
+                setTimeout(clickPill, 50);
+            }
+        })();
+    }
+
     // The free plugin's "Clear All" button and the individual filter-tag remove
     // buttons uncheck the filter inputs programmatically (no change event fires),
     // so the deep-link URL kept its stale params. Re-sync the URL after the free
-    // plugin's own click handler has run.
+    // plugin's own click handler has run. Category tiles, tabs and subcategory
+    // pills change galleryConfig.currentCategory the same way, by click or key.
     function initDeeplinkClearSync() {
         if (!config.enableDeeplink) return;
         document.addEventListener('click', function (e) {
             if (!e.target || !e.target.closest) return;
             if (e.target.closest('#medbeafgallery-clear-filters') ||
-                e.target.closest('.medbeafgallery-filter-tag-remove')) {
+                e.target.closest('.medbeafgallery-filter-tag-remove') ||
+                e.target.closest('.medbeafgallery-carousel-item') ||
+                e.target.closest('.mba-pro-subcategory-pill')) {
+                setTimeout(updateUrl, 0);
+            }
+        }, true);
+        document.addEventListener('keydown', function (e) {
+            if ((e.key === 'Enter' || e.key === ' ') && e.target && e.target.closest &&
+                e.target.closest('.medbeafgallery-carousel-item, .mba-pro-subcategory-pill')) {
                 setTimeout(updateUrl, 0);
             }
         }, true);
     }
 
+    /* ── Writing the case parameter ──────────────────────────────────────────
+       Reading a ?mbcase= link already worked, but nothing ever produced one:
+       opening a case left the URL untouched, so a visitor had no way to copy a
+       link to the case they were looking at. Both layouts funnel through
+       window.openModal — Pro's masonry replaces the free implementation — so
+       wrapping that single function covers every entry point: gallery cards,
+       the carousel, and the deep-link restore itself.
+
+       Uses replaceState, not pushState: the masonry modal already pushes its
+       own history entry so the back button closes it, and adding a second entry
+       per open would make back-to-exit take two presses. */
+
+    function writeCaseParam(id) {
+        const params = new URLSearchParams(window.location.search);
+
+        if (id === null) {
+            if (!params.has('mbcase')) return;
+            params.delete('mbcase');
+        } else {
+            if (params.get('mbcase') === String(id)) return;
+            params.set('mbcase', id);
+        }
+
+        const qs = params.toString();
+        window.history.replaceState(
+            null, '',
+            window.location.pathname + (qs ? ('?' + qs) : '') + window.location.hash
+        );
+    }
+
+    function isAnyCaseModalOpen() {
+        const free = document.querySelector('.medbeafgallery-modal');
+        if (free && free.classList.contains('active')) return true;
+        const pro = document.querySelector('.mba-pro-mmodal');
+        if (pro && pro.classList.contains('mba-pro-mmodal-open')) return true;
+        // Case Window styles (includes/pro-viewer.php).
+        const viewer = document.querySelector('.mba-pro-viewer');
+        if (viewer && viewer.classList.contains('mba-pro-viewer-open')) return true;
+        return false;
+    }
+
+    // Each modal has its own close paths (button, Escape, backdrop, popstate),
+    // so watch the open-state class rather than trying to hook all of them.
+    function watchModalClose(el) {
+        if (!el || el.getAttribute('data-mba-case-param-watched')) return;
+        el.setAttribute('data-mba-case-param-watched', '1');
+        new MutationObserver(function () {
+            if (!isAnyCaseModalOpen()) writeCaseParam(null);
+        }).observe(el, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    let caseParamWriterInstalled = false;
+
+    function initCaseParamWriter() {
+        if (!config.enableDeeplink || caseParamWriterInstalled) return;
+        if (typeof window.openModal !== 'function') return;
+        caseParamWriterInstalled = true;
+
+        const inner = window.openModal;
+        window.openModal = function (id) {
+            const result = inner.apply(this, arguments);
+            // Let the implementation finish opening before reading its state —
+            // the masonry modal builds its root lazily on first open.
+            setTimeout(function () {
+                if (!isAnyCaseModalOpen()) return;
+                writeCaseParam(id);
+                watchModalClose(document.querySelector('.medbeafgallery-modal'));
+                watchModalClose(document.querySelector('.mba-pro-mmodal'));
+                watchModalClose(document.querySelector('.mba-pro-viewer'));
+            }, 0);
+            return result;
+        };
+
+        // Back/Forward onto an entry that still names a case while no modal is
+        // open (e.g. Forward after closing): clear it rather than leave a URL
+        // that reopens a case the visitor is not looking at. Deferred so the
+        // masonry modal's own popstate handler has closed it first.
+        window.addEventListener('popstate', function () {
+            setTimeout(function () {
+                if (!isAnyCaseModalOpen()) writeCaseParam(null);
+            }, 0);
+        });
+    }
+
     // Once data is loaded, re-apply state and optionally open a deep-linked case.
     function onDataReady() {
         if (!config.enableDeeplink) return;
+        // Installed here rather than at init: Pro's masonry swaps window.openModal
+        // during its own setup, and dataReady is guaranteed to run after that.
+        initCaseParamWriter();
+        const linkedCategory = new URLSearchParams(window.location.search).get('mbcat');
+        if (linkedCategory) selectCategoryFromUrl(linkedCategory);
         rerender(); // ensures restored filters/search/sort are applied
         const caseId = new URLSearchParams(window.location.search).get('mbcase');
         if (caseId && typeof openModal === 'function') {
-            openModal(parseInt(caseId, 10));
+            const openLinkedCase = function () {
+                // Strip it from the landing entry first; the writer puts it back
+                // on the entry the modal opens with. Otherwise closing the
+                // masonry modal (which steps Back to that landing entry) left
+                // ?mbcase= in the address bar, and a reload popped the case open
+                // again. A link to a case that no longer exists is cleaned up the
+                // same way.
+                writeCaseParam(null);
+                openModal(parseInt(caseId, 10));
+            };
+
+            // A shared link usually lands a first-time visitor, so the
+            // Sensitive Content Notice is still up. Opening now put the case's
+            // photo in a modal ABOVE the notice, skipping the gate entirely.
+            if (document.getElementById('medbeafgallery-consent-overlay')) {
+                document.addEventListener('medbeafgallery:consentGiven', openLinkedCase, { once: true });
+            } else {
+                openLinkedCase();
+            }
         }
     }
 
@@ -429,7 +613,7 @@
         if (item.recovery && detailEnabled('recovery')) pills += cardPill(TILE_ICON.pulse, cap(item.recovery));
         if (item.results && detailEnabled('results')) pills += cardPill(TILE_ICON.star, cap(item.results));
         const angles = pairCount(item);
-        if (angles > 1) pills += cardPill(TILE_ICON.layers, angles + ' angles');
+        if (angles > 1) pills += cardPill(TILE_ICON.layers, angles + ' angles').replace('mba-pro-ccard-pill"', 'mba-pro-ccard-pill mba-pro-ccard-pill-angles"');
         CUSTOM_FILTER_DEFS.forEach(function (def) {
             const v = item.proFilters ? item.proFilters[def.name] : '';
             if (v) pills += cardPillLabeled(def.label, cap(v));
@@ -475,7 +659,27 @@
             : '';
 
         side.classList.toggle('mba-pro-has-tabs', bothShown);
-        side.innerHTML = eyebrow + tabBar + overview + aboutSection;
+        side.innerHTML = eyebrow + doctorCardHtml(item.doctor) + tabBar + overview + aboutSection;
+    }
+
+    // Doctor who treated the case (free 1.5.0+ REST field `doctor`), shown above
+    // the tabs. Escaped here: the values are plain text from term meta.
+    function doctorCardHtml(d) {
+        if (!d || !d.name) return '';
+        const initial = String(d.name).replace(/^dr\.?\s+/i, '').charAt(0).toUpperCase();
+        const photo = d.photo
+            ? '<img class="mba-pro-doctor-photo" src="' + escHtml(d.photo).replace(/"/g, '&quot;') + '" alt="" loading="lazy">'
+            : '<span class="mba-pro-doctor-photo mba-pro-doctor-initials" aria-hidden="true">' + escHtml(initial) + '</span>';
+        const url = /^https?:\/\//i.test(String(d.url || '')) ? String(d.url) : '';
+        const name = url
+            ? '<a class="mba-pro-doctor-name" href="' + escHtml(url).replace(/"/g, '&quot;') + '">' + escHtml(d.name) + '</a>'
+            : '<span class="mba-pro-doctor-name">' + escHtml(d.name) + '</span>';
+        return '<div class="mba-pro-doctor mba-pro-cmodal-doctor">' + photo +
+            '<div class="mba-pro-doctor-text">' +
+                '<span class="mba-pro-doctor-label">' + escHtml(config.treatedByText || 'Treated by') + '</span>' + name +
+                (d.credentials ? '<span class="mba-pro-doctor-cred">' + escHtml(d.credentials) + '</span>' : '') +
+                (d.location ? '<span class="mba-pro-doctor-loc">' + escHtml(d.location) + '</span>' : '') +
+            '</div></div>';
     }
 
     // Tab switching for the Classic modal side panel (delegated, since the panel
@@ -756,12 +960,20 @@
        CUSTOM BEFORE / AFTER LABELS
        ═══════════════════════════════════════════════════════════════════════ */
 
+    // wp_localize_script() turns every top-level scalar into a string, so a PHP
+    // false arrives as "" — `config.showLabels === false` was never true and
+    // "Show labels" could not be switched off. Treat only an explicit off as
+    // off, so an absent value keeps the labels.
+    function isOff(v) {
+        return v === false || v === '' || v === '0' || v === 0;
+    }
+
     function initLabels() {
         const before = document.querySelector('.medbeafgallery-before-label');
         const after  = document.querySelector('.medbeafgallery-after-label');
         if (before && config.beforeLabel) before.textContent = config.beforeLabel;
         if (after && config.afterLabel) after.textContent = config.afterLabel;
-        if (config.showLabels === false) {
+        if (isOff(config.showLabels)) {
             injectStyle('.medbeafgallery-before-label, .medbeafgallery-after-label { display: none !important; }');
         }
     }
@@ -919,11 +1131,12 @@
     function initImageProtection() {
         if (!config.imageProtection) return;
 
+        // The masonry modal is its own body-level portal (.mba-pro-mmodal) and
+        // shows the largest images, so it must be covered too — as must the
+        // [mba_case] / carousel embeds when they share a page with the gallery.
+        const SCOPE = '.medbeafgallery-container, .medbeafgallery-modal, .mba-pro-mmodal, .mba-pro-scase, .mba-pro-sstory, .mba-pro-discovery, .mba-carousel-wrapper';
         const inScope = function (target) {
-            return target && target.closest && (
-                target.closest('.medbeafgallery-container') ||
-                target.closest('.medbeafgallery-modal')
-            );
+            return target && target.closest && target.closest(SCOPE);
         };
         const prevent = function (e) {
             if (inScope(e.target)) e.preventDefault();
@@ -933,7 +1146,7 @@
         document.addEventListener('dragstart', prevent);
         // user-select:none is harmless to the Cocoen slider (its drag is mouse-based,
         // not native image dragging, which is already blocked above).
-        injectStyle('.medbeafgallery-container, .medbeafgallery-modal { -webkit-user-select: none; user-select: none; }');
+        injectStyle(SCOPE + ' { -webkit-user-select: none; user-select: none; }');
     }
 
     /* ═══════════════════════════════════════════════════════════════════════
@@ -964,8 +1177,26 @@
         initCategoryDisplay();
         initCategoryCarousel();
         initImageProtection();
+        initLegacyShareButtons();
 
         document.addEventListener('medbeafgallery:dataReady', onDataReady);
+    }
+
+    /**
+     * Free 1.3.2–1.3.9 print onclick="shareOnSocial(...)" on the case window's
+     * share buttons AND bind a click listener to the first button of each kind
+     * (document.querySelector), so every share opened two windows. Free 1.4.0
+     * replaced both with one delegated listener (medbeafgalleryBindShareButtons);
+     * with an older free plugin, drop the inline handler from exactly the buttons
+     * its listener is bound to, so each click shares once.
+     */
+    function initLegacyShareButtons() {
+        if (typeof window.medbeafgalleryBindShareButtons === 'function') return;
+
+        ['facebook', 'twitter', 'email'].forEach(function (network) {
+            const btn = document.querySelector('.medbeafgallery-share-' + network);
+            if (btn && btn.hasAttribute('onclick')) btn.removeAttribute('onclick');
+        });
     }
 
     if (document.readyState === 'loading') {

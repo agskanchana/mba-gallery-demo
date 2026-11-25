@@ -55,29 +55,70 @@
      */
     function initSingleCarousel(el, config) {
         var perPage = config.perPage || 3;
+        var wantArrows = config.arrows !== false;
+        var wantDots = config.pagination !== false;
+        var head = el.querySelector('.mba-carousel-head');
+        var reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+        // No autoplay with reduced motion (below), so no play/pause button either.
+        var toggle = el.querySelector('.splide__toggle');
+        if (reduceMotion && toggle && toggle.parentNode) {
+            toggle.parentNode.removeChild(toggle);
+        }
+        var hasControls = !!(head && head.querySelector('.splide__arrow, .splide__toggle'));
 
         var splideOptions = {
             type        : config.loop ? 'loop' : 'slide',
             perPage     : perPage,
             perMove     : 1,
             gap         : config.gap || '20px',
-            arrows      : config.arrows !== false,
-            pagination  : config.pagination !== false,
-            autoplay    : !!config.autoplay,
+            arrows      : wantArrows,
+            pagination  : wantDots,
+            // No autoplay at all for visitors who asked for less motion
+            // (Splide's own reducedMotion option only pauses it).
+            autoplay    : !!config.autoplay && !reduceMotion,
             interval    : config.autoplaySpeed || 3000,
             pauseOnHover: true,
             pauseOnFocus: true,
             speed       : 500,
             easing      : 'cubic-bezier(0.25, 1, 0.5, 1)',
             drag        : true,
-            lazyLoad    : 'nearby',
+            keyboard    : 'focused',
+            lazyLoad    : false,
+            reducedMotion: { speed: 0, rewindSpeed: 0, autoplay: 'pause' },
             breakpoints : {
-                991 : { perPage: Math.min(perPage, 2), gap: '15px' },
-                600 : { perPage: 1, gap: '10px' },
+                991 : { perPage: Math.min(perPage, 2), gap: '16px', padding: { left: 0, right: '9%' } },
+                // One card and a "peek" of the next, so the row reads as scrollable.
+                600 : { perPage: 1, gap: '12px', padding: { left: 0, right: '17%' } },
             },
         };
+        if (config.i18n && typeof config.i18n === 'object') {
+            splideOptions.i18n = config.i18n;
+        }
 
         var splide = new Splide(el, splideOptions);
+
+        // Arrows, dots, autoplay button, drag and loop clones only when the cards
+        // overflow the row (a category with two cases shows two still cards).
+        // Splide fires this on its first layout and whenever the answer changes.
+        splide.on('overflow', function (isOverflow) {
+            el.classList.toggle('mba-carousel-fits', !isOverflow);
+            if (head) head.hidden = !(isOverflow && hasControls);
+            if (!isOverflow) splide.go(0);
+            splide.options = {
+                arrows    : wantArrows && isOverflow,
+                pagination: wantDots && isOverflow,
+                drag      : isOverflow,
+                clones    : isOverflow ? undefined : 0,
+            };
+        });
+
+        // Past ~15 pages a row of dots says nothing: hide it (arrows, swipe and
+        // the next-card peek remain).
+        splide.on('pagination:mounted', function (data) {
+            var many = !!(data && data.items && data.items.length > 15);
+            el.classList.toggle('mba-carousel-many', many);
+        });
+
         splide.mount();
 
         // ── Wire card click → openModal ────────────────────────────────────
@@ -101,6 +142,7 @@
                 if (typeof openModal === 'function') {
                     openModal(caseId);
                 }
+                restoreScopeOnClose();
             });
         });
     }
@@ -158,7 +200,49 @@
     /**
      * Override galleryConfig.filteredItems so modal prev/next only cycles
      * through cases that belong to this carousel, not the entire gallery.
+     *
+     * That list is the main gallery's too. Left overridden, a [medbeafgallery]
+     * on the same page kept the carousel's cases after the modal closed: its
+     * own modal counted "1 / 4", case navigation went dead for cards outside
+     * the carousel, and Load More stopped adding cases. So the gallery's list is
+     * put back as soon as the carousel-opened modal closes.
      */
+    var scope = { saved: null, scoped: null, observer: null };
+
+    function anyModalOpen() {
+        var free = document.getElementById('medbeafgallery-modal');
+        var pro  = document.querySelector('.mba-pro-mmodal');
+        return !!((free && free.classList.contains('active')) ||
+                  (pro && pro.classList.contains('mba-pro-mmodal-open')));
+    }
+
+    function restoreGalleryScope() {
+        if (scope.observer) { scope.observer.disconnect(); scope.observer = null; }
+        // Only if nothing re-filtered in the meantime; a newer list wins.
+        if (scope.scoped && typeof galleryConfig !== 'undefined' && galleryConfig.filteredItems === scope.scoped) {
+            galleryConfig.filteredItems = scope.saved;
+        }
+        scope.saved = scope.scoped = null;
+    }
+
+    // Called after openModal(): the masonry modal builds its root on first open.
+    function restoreScopeOnClose() {
+        if (!scope.scoped) return;
+        // Both modals open synchronously, so nothing open now means the case
+        // could not be shown — there is no modal session to scope.
+        if (!anyModalOpen()) { restoreGalleryScope(); return; }
+        if (scope.observer || typeof MutationObserver === 'undefined') return;
+        var targets = [document.getElementById('medbeafgallery-modal'), document.querySelector('.mba-pro-mmodal')]
+            .filter(Boolean);
+        if (!targets.length) return;
+        scope.observer = new MutationObserver(function () {
+            if (!anyModalOpen()) restoreGalleryScope();
+        });
+        targets.forEach(function (t) {
+            scope.observer.observe(t, { attributes: true, attributeFilter: ['class'] });
+        });
+    }
+
     function scopeModalToCarousel(carouselId) {
         if (!carouselId || typeof galleryConfig === 'undefined') return;
 
@@ -173,6 +257,10 @@
         });
 
         if (scoped.length) {
+            // Keep the gallery's own list from before the FIRST scoping, even
+            // when a second carousel card is opened before the modal closes.
+            if (!scope.scoped) scope.saved = galleryConfig.filteredItems;
+            scope.scoped = scoped;
             galleryConfig.filteredItems = scoped;
         }
     }

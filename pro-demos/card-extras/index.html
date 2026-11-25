@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name='robots' content='max-image-preview:large' />
+<title>Card extras &#8211; MBA Gallery Demo</title>
+<meta name="description" content="The doctor, and New and Progress badges.">
+<link rel="preload" as="fetch" crossorigin href="/wp-json/medical-before-after-gallery/v1/subcategories">
+<link rel="icon" href="/wp-content/uploads/mba-demo/favicon.svg" type="image/svg+xml">
+<style id="wp-img-auto-sizes-contain-inline-css">
+img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+</style>
+<style id="wp-block-group-inline-css">
+.wp-block-group{box-sizing:border-box}:where(.wp-block-group.wp-block-group-is-layout-constrained){position:relative}
+/*# sourceURL=/wp-includes/blocks/group/style.min.css */
+</style>
+<link rel='stylesheet' id='medbeafgallery-css-css' href='/wp-content/plugins/medical-before-after-gallery/assets/css/gallery.css?ver=1.5.0.1795528808' media='all' />
+<style id="medbeafgallery-css-inline-css">
+
+        /* Medical Before After Gallery Custom Colors - Comprehensive Coverage */
+        :root {
+            --medbeafgallery-primary: #0f6b76;
+            --medbeafgallery-primary-solid: #0f6b76;
+            --medbeafgallery-primary-rgb: rgba(15, 107, 118, 1);
+            --medbeafgallery-primary-10: rgba(15, 107, 118, 0.1);
+            --medbeafgallery-primary-20: rgba(15, 107, 118, 0.2);
+            --medbeafgallery-primary-50: rgba(15, 107, 118, 0.5);
+        }
+
+        /* Navigation Buttons - Increased specificity */
+        body .medbeafgallery-nav-btn:hover,
+        .medbeafgallery-nav-btn:hover {
+            color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* Category Items - Increased specificity */
+        body .medbeafgallery-carousel-item.active::after,
+        .medbeafgallery-carousel-item.active::after {
+            background: var(--medbeafgallery-primary) !important;
+        }
+
+        body .medbeafgallery-carousel-item:hover img,
+        body .medbeafgallery-carousel-item.active img,
+        .medbeafgallery-carousel-item:hover img,
+        .medbeafgallery-carousel-item.active img {
+            border-color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        body .medbeafgallery-carousel-item.active p,
+        body .medbeafgallery-carousel-item.active .medbeafgallery-category-name,
+        .medbeafgallery-carousel-item.active p,
+        .medbeafgallery-carousel-item.active .medbeafgallery-category-name {
+            color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* Gallery Items */
+        .medbeafgallery-gallery-view-btn:hover {
+            background: var(--medbeafgallery-primary) !important;
+        }
+
+        .medbeafgallery-gallery-title {
+            color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* Loading and Action Buttons */
+        .medbeafgallery-load-more {
+            background: var(--medbeafgallery-primary) !important;
+        }
+
+        /* Slider Components */
+        .medbeafgallery-slider-button {
+            background: var(--medbeafgallery-primary) !important;
+        }
+
+        /* Modal Elements */
+        .medbeafgallery-control-btn.active {
+            background: var(--medbeafgallery-primary) !important;
+        }
+
+        .medbeafgallery-modal-prev:hover,
+        .medbeafgallery-modal-next:hover {
+            color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        .medbeafgallery-modal-counter .medbeafgallery-counter-current {
+            color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* Tabs */
+        .medbeafgallery-tab.active,
+        .medbeafgallery-tab:hover {
+            color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        .medbeafgallery-tab.active::after {
+            background: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* CTA Buttons */
+        .medbeafgallery-modal-nav .medbeafgallery-cta-button,
+        .medbeafgallery-accept-warning-btn {
+            background: var(--medbeafgallery-primary) !important;
+        }
+
+        /* Filter Elements */
+        .medbeafgallery-filter-label input[type="checkbox"]:checked {
+            background-color: var(--medbeafgallery-primary-solid) !important;
+            border-color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        .medbeafgallery-apply-filters-btn {
+            background-color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        .medbeafgallery-apply-filters-btn:hover {
+            background-color: var(--medbeafgallery-primary-solid) !important;
+            filter: brightness(0.9);
+        }
+
+        /* Filter Tags */
+        .medbeafgallery-filter-tag {
+            background: var(--medbeafgallery-primary-10) !important;
+            color: var(--medbeafgallery-primary-solid) !important;
+            border-color: var(--medbeafgallery-primary-20) !important;
+        }
+
+        .medbeafgallery-filter-tag:hover {
+            background: var(--medbeafgallery-primary-20) !important;
+        }
+
+        /* Focus States (keyboard only: a mouse click must not leave a box around the tile) */
+        .medbeafgallery-carousel-item:focus-visible,
+        .medbeafgallery-gallery-item:focus-visible,
+        .medbeafgallery-tab:focus-visible,
+        .medbeafgallery-modal-prev:focus-visible,
+        .medbeafgallery-modal-next:focus-visible,
+        .medbeafgallery-control-btn:focus-visible {
+            outline: 2px solid var(--medbeafgallery-primary-solid) !important;
+        }
+
+        .medbeafgallery-carousel-item:focus-visible {
+            border-color: var(--medbeafgallery-primary-solid) !important;
+            box-shadow: 0 0 0 3px var(--medbeafgallery-primary-10) !important;
+        }
+
+        /* Category Count Badge */
+        .medbeafgallery-category-count {
+            background-color: var(--medbeafgallery-primary-10) !important;
+            color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* New Badge */
+        .medbeafgallery-new-badge {
+            background: var(--medbeafgallery-primary-solid) !important;
+            box-shadow: 0 2px 5px var(--medbeafgallery-primary-20) !important;
+        }
+
+        /* Loading Spinner */
+        .medbeafgallery-loading-spinner circle {
+            stroke: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* Gallery Item Hover Effects with Primary Color */
+        .medbeafgallery-gallery-item[data-category="medbeafgallery_category_face"] .medbeafgallery-gallery-category,
+        .medbeafgallery-gallery-item[data-category="medbeafgallery_category_nose"] .medbeafgallery-gallery-category,
+        .medbeafgallery-gallery-item[data-category="medbeafgallery_category_breast"] .medbeafgallery-gallery-category,
+        .medbeafgallery-gallery-item[data-category="medbeafgallery_category_body"] .medbeafgallery-gallery-category {
+            background: var(--medbeafgallery-primary-10) !important;
+            color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* Social Share Buttons */
+        .medbeafgallery-share-btn:hover {
+            background: var(--medbeafgallery-primary-solid) !important;
+            border-color: var(--medbeafgallery-primary-solid) !important;
+            box-shadow: 0 2px 5px var(--medbeafgallery-primary-20) !important;
+        }
+
+        /* Active Filters */
+        .medbeafgallery-active-filters {
+            border-color: var(--medbeafgallery-primary-10) !important;
+        }
+
+        /* Reset Button with Primary Theme */
+        .medbeafgallery-reset-filters-btn {
+            background-color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        .medbeafgallery-reset-filters-btn:hover {
+            background-color: var(--medbeafgallery-primary-solid) !important;
+            filter: brightness(0.9);
+        }
+
+        /* Clear Filters Button */
+        .medbeafgallery-clear-filters {
+            background: var(--medbeafgallery-primary-10) !important;
+            color: var(--medbeafgallery-primary-solid) !important;
+            border-color: var(--medbeafgallery-primary-20) !important;
+        }
+
+        .medbeafgallery-clear-filters:hover {
+            background: var(--medbeafgallery-primary-20) !important;
+            color: var(--medbeafgallery-primary-solid) !important;
+            border-color: var(--medbeafgallery-primary-30) !important;
+        }
+
+        /* Image Pair Navigation */
+        .medbeafgallery-pair-nav:hover {
+            background: var(--medbeafgallery-primary-50) !important;
+        }
+
+        .medbeafgallery-pair-indicator.active {
+            background: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* Toggle Filters Button */
+        .medbeafgallery-toggle-filters-btn.active {
+            background-color: var(--medbeafgallery-primary-10) !important;
+            border-color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        .medbeafgallery-toggle-filters-btn:hover {
+            background-color: var(--medbeafgallery-primary-10) !important;
+        }
+/*# sourceURL=medbeafgallery-css-inline-css */
+</style>
+<link rel='stylesheet' id='medbeafgallery-dynamic-css-css' href='/wp-content/uploads/medical-before-after-gallery/custom-colors.css?ver=1.5.0' media='all' />
+<link rel='stylesheet' id='mba-gallery-pro-subcategories-css-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-subcategories.css?ver=1.6.0.1789149282' media='all' />
+<link rel='stylesheet' id='mba-pro-frontend-filters-css-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-frontend-filters.css?ver=1.6.0.1790748041' media='all' />
+<style id="mba-pro-frontend-filters-css-inline-css">
+.medbeafgallery-gallery-grid{grid-template-columns:repeat(3,1fr)!important;}@media (max-width:600px){.medbeafgallery-gallery-grid{grid-template-columns:1fr!important;}}@media (min-width:601px) and (max-width:900px){.medbeafgallery-gallery-grid{grid-template-columns:repeat(2,1fr)!important;}}.medbeafgallery-gallery-image-container{aspect-ratio:4 / 5!important;}
+/*# sourceURL=mba-pro-frontend-filters-css-inline-css */
+</style>
+<link rel='stylesheet' id='mba-gallery-pro-modal-css-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-modal.css?ver=1.6.0.1794914259' media='all' />
+<link rel='stylesheet' id='mba-pro-filter-drawer-css-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-filter-drawer.css?ver=1.6.0.1781631493' media='all' />
+<link rel='stylesheet' id='mba-pro-annotations-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-annotations.css?ver=1.6.0.1781631493' media='all' />
+<link rel='stylesheet' id='mba-pro-category-styles-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-category-styles.css?ver=1.6.0.1795437812' media='all' />
+<link rel='stylesheet' id='mba-pro-viewer-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-viewer.css?ver=1.6.0.1795530710' media='all' />
+<link rel='stylesheet' id='mba-pro-layouts-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-layouts.css?ver=1.6.0.1795530354' media='all' />
+<style id="wp-block-post-content-inline-css">
+.wp-block-post-content{display:flow-root}
+/*# sourceURL=/wp-includes/blocks/post-content/style.min.css */
+</style>
+<style id="wp-block-library-inline-css">
+:root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}:root .has-text-align-center{text-align:center}:root .has-text-align-left{text-align:left}:root .has-text-align-right{text-align:right}.has-fit-text{white-space:nowrap!important}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{word-wrap:normal!important;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal!important}.screen-reader-text:focus{background-color:#ddd;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style^=border-color],[style*=";border-color"],[style*="; border-color"]){border-style:solid}html :where([style^=border-top-color],[style*=";border-top-color"],[style*="; border-top-color"]){border-top-style:solid}html :where([style^=border-right-color],[style*=";border-right-color"],[style*="; border-right-color"]){border-right-style:solid}html :where([style^=border-bottom-color],[style*=";border-bottom-color"],[style*="; border-bottom-color"]){border-bottom-style:solid}html :where([style^=border-left-color],[style*=";border-left-color"],[style*="; border-left-color"]){border-left-style:solid}html :where([style^=border-width],[style*=";border-width"],[style*="; border-width"]){border-style:solid}html :where([style^=border-top-width],[style*=";border-top-width"],[style*="; border-top-width"]){border-top-style:solid}html :where([style^=border-right-width],[style*=";border-right-width"],[style*="; border-right-width"]){border-right-style:solid}html :where([style^=border-bottom-width],[style*=";border-bottom-width"],[style*="; border-bottom-width"]){border-bottom-style:solid}html :where([style^=border-left-width],[style*=";border-left-width"],[style*="; border-left-width"]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}
+/*# sourceURL=/wp-includes/css/dist/block-library/common.min.css */
+</style>
+<style id="global-styles-inline-css">
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--base: #FFFFFF;--wp--preset--color--contrast: #111111;--wp--preset--color--accent-1: #FFEE58;--wp--preset--color--accent-2: #F6CFF4;--wp--preset--color--accent-3: #503AA8;--wp--preset--color--accent-4: #686868;--wp--preset--color--accent-5: #FBFAF3;--wp--preset--color--accent-6: color-mix(in srgb, currentColor 20%, transparent);--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 0.875rem;--wp--preset--font-size--medium: clamp(1rem, 1rem + ((1vw - 0.2rem) * 0.196), 1.125rem);--wp--preset--font-size--large: clamp(1.125rem, 1.125rem + ((1vw - 0.2rem) * 0.392), 1.375rem);--wp--preset--font-size--x-large: clamp(1.75rem, 1.75rem + ((1vw - 0.2rem) * 0.392), 2rem);--wp--preset--font-size--xx-large: clamp(2.15rem, 2.15rem + ((1vw - 0.2rem) * 1.333), 3rem);--wp--preset--font-family--manrope: Manrope, sans-serif;--wp--preset--font-family--fira-code: "Fira Code", monospace;--wp--preset--spacing--20: 10px;--wp--preset--spacing--30: 20px;--wp--preset--spacing--40: 30px;--wp--preset--spacing--50: clamp(30px, 5vw, 50px);--wp--preset--spacing--60: clamp(30px, 7vw, 70px);--wp--preset--spacing--70: clamp(50px, 7vw, 90px);--wp--preset--spacing--80: clamp(70px, 10vw, 140px);--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);}.wp-block-button{--wp--preset--dimension--25: 25%;--wp--preset--dimension--50: 50%;--wp--preset--dimension--75: 75%;--wp--preset--dimension--100: 100%;}:root { --wp--style--global--content-size: 1340px;--wp--style--global--wide-size: 1340px; }:where(body) { margin: 0; }.wp-site-blocks { padding-top: var(--wp--style--root--padding-top); padding-bottom: var(--wp--style--root--padding-bottom); }.has-global-padding { padding-right: var(--wp--style--root--padding-right); padding-left: var(--wp--style--root--padding-left); }.has-global-padding > .alignfull { margin-right: calc(var(--wp--style--root--padding-right) * -1); margin-left: calc(var(--wp--style--root--padding-left) * -1); }.has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) { padding-right: 0; padding-left: 0; }.has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) > .alignfull { margin-left: 0; margin-right: 0; }.wp-site-blocks > .alignleft { float: left; margin-right: 2em; }.wp-site-blocks > .alignright { float: right; margin-left: 2em; }.wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }:where(.wp-site-blocks) > * { margin-block-start: 1.2rem; margin-block-end: 0; }:where(.wp-site-blocks) > :first-child { margin-block-start: 0; }:where(.wp-site-blocks) > :last-child { margin-block-end: 0; }:root { --wp--style--block-gap: 1.2rem; }:root :where(.is-layout-flow) > :first-child{margin-block-start: 0;}:root :where(.is-layout-flow) > :last-child{margin-block-end: 0;}:root :where(.is-layout-flow) > *{margin-block-start: 1.2rem;margin-block-end: 0;}:root :where(.is-layout-constrained) > :first-child{margin-block-start: 0;}:root :where(.is-layout-constrained) > :last-child{margin-block-end: 0;}:root :where(.is-layout-constrained) > *{margin-block-start: 1.2rem;margin-block-end: 0;}:root :where(.is-layout-flex){gap: 1.2rem;}:root :where(.is-layout-grid){gap: 1.2rem;}.is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}.is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}.is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}.is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}.is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}body{background-color: var(--wp--preset--color--base);color: var(--wp--preset--color--contrast);font-family: var(--wp--preset--font-family--manrope);font-size: var(--wp--preset--font-size--large);font-weight: 300;letter-spacing: -0.1px;line-height: 1.4;--wp--style--root--padding-top: 0px;--wp--style--root--padding-right: var(--wp--preset--spacing--50);--wp--style--root--padding-bottom: 0px;--wp--style--root--padding-left: var(--wp--preset--spacing--50);}a:where(:not(.wp-element-button)){color: currentColor;}:root :where(a:where(:not(.wp-element-button)):hover){text-decoration: none;}h1, h2, h3, h4, h5, h6{font-weight: 400;letter-spacing: -0.1px;line-height: 1.125;}h1{font-size: var(--wp--preset--font-size--xx-large);}h2{font-size: var(--wp--preset--font-size--x-large);}h3{font-size: var(--wp--preset--font-size--large);}h4{font-size: var(--wp--preset--font-size--medium);}h5{font-size: var(--wp--preset--font-size--small);letter-spacing: 0.5px;}h6{font-size: var(--wp--preset--font-size--small);font-weight: 700;letter-spacing: 1.4px;text-transform: uppercase;}:root :where(.wp-element-button, .wp-block-button__link){background-color: var(--wp--preset--color--contrast);border-width: 0;color: var(--wp--preset--color--base);font-family: inherit;font-size: var(--wp--preset--font-size--medium);font-style: inherit;font-weight: inherit;letter-spacing: inherit;line-height: inherit;padding-top: 1rem;padding-right: 2.25rem;padding-bottom: 1rem;padding-left: 2.25rem;text-decoration: none;text-transform: inherit;}:root :where(.wp-element-button:hover, .wp-block-button__link:hover){background-color: color-mix(in srgb, var(--wp--preset--color--contrast) 85%, transparent);border-color: transparent;color: var(--wp--preset--color--base);}:root :where(.wp-element-button:focus, .wp-block-button__link:focus){outline-color: var(--wp--preset--color--accent-4);outline-offset: 2px;}:root :where(.wp-element-caption, .wp-block-audio figcaption, .wp-block-embed figcaption, .wp-block-gallery figcaption, .wp-block-image figcaption, .wp-block-table figcaption, .wp-block-video figcaption){font-size: var(--wp--preset--font-size--small);line-height: 1.4;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-base-color{color: var(--wp--preset--color--base) !important;}.has-contrast-color{color: var(--wp--preset--color--contrast) !important;}.has-accent-1-color{color: var(--wp--preset--color--accent-1) !important;}.has-accent-2-color{color: var(--wp--preset--color--accent-2) !important;}.has-accent-3-color{color: var(--wp--preset--color--accent-3) !important;}.has-accent-4-color{color: var(--wp--preset--color--accent-4) !important;}.has-accent-5-color{color: var(--wp--preset--color--accent-5) !important;}.has-accent-6-color{color: var(--wp--preset--color--accent-6) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-base-background-color{background-color: var(--wp--preset--color--base) !important;}.has-contrast-background-color{background-color: var(--wp--preset--color--contrast) !important;}.has-accent-1-background-color{background-color: var(--wp--preset--color--accent-1) !important;}.has-accent-2-background-color{background-color: var(--wp--preset--color--accent-2) !important;}.has-accent-3-background-color{background-color: var(--wp--preset--color--accent-3) !important;}.has-accent-4-background-color{background-color: var(--wp--preset--color--accent-4) !important;}.has-accent-5-background-color{background-color: var(--wp--preset--color--accent-5) !important;}.has-accent-6-background-color{background-color: var(--wp--preset--color--accent-6) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-base-border-color{border-color: var(--wp--preset--color--base) !important;}.has-contrast-border-color{border-color: var(--wp--preset--color--contrast) !important;}.has-accent-1-border-color{border-color: var(--wp--preset--color--accent-1) !important;}.has-accent-2-border-color{border-color: var(--wp--preset--color--accent-2) !important;}.has-accent-3-border-color{border-color: var(--wp--preset--color--accent-3) !important;}.has-accent-4-border-color{border-color: var(--wp--preset--color--accent-4) !important;}.has-accent-5-border-color{border-color: var(--wp--preset--color--accent-5) !important;}.has-accent-6-border-color{border-color: var(--wp--preset--color--accent-6) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}.has-xx-large-font-size{font-size: var(--wp--preset--font-size--xx-large) !important;}.has-manrope-font-family{font-family: var(--wp--preset--font-family--manrope) !important;}.has-fira-code-font-family{font-family: var(--wp--preset--font-family--fira-code) !important;}
+/*# sourceURL=global-styles-inline-css */
+</style>
+<style id="wp-block-template-skip-link-inline-css">
+/*! This file is auto-generated */
+.skip-link.screen-reader-text{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute!important;width:1px;word-wrap:normal!important;word-break:normal!important}.skip-link.screen-reader-text:focus{background-color:#eee;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}
+/*# sourceURL=/wp-includes/css/wp-block-template-skip-link.min.css */
+</style>
+<link rel='stylesheet' id='mba-demo-css' href='/wp-content/uploads/mba-demo/demo.css?ver=1795579543' media='all' />
+<style id="twentytwentyfive-style-inline-css">
+a{text-decoration-thickness:1px!important;text-underline-offset:.1em}:where(.wp-site-blocks :focus){outline-width:2px;outline-style:solid}.wp-block-navigation .wp-block-navigation-submenu .wp-block-navigation-item:not(:last-child){margin-bottom:3px}.wp-block-navigation .wp-block-navigation-item .wp-block-navigation-item__content{outline-offset:4px}.wp-block-navigation .wp-block-navigation-item ul.wp-block-navigation__submenu-container .wp-block-navigation-item__content{outline-offset:0}blockquote,caption,figcaption,h1,h2,h3,h4,h5,h6,p{text-wrap:pretty}.more-link{display:block}:where(pre){overflow-x:auto}
+/*# sourceURL=/wp-content/themes/twentytwentyfive/style.min.css */
+</style>
+<script id="jquery-core-js" src="/wp-includes/js/jquery/jquery.min.js?ver=3.7.1"></script>
+<script id="jquery-migrate-js" src="/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1"></script>
+<link rel="canonical" href="https://demo.medicalbeforeaftergallery.com/pro-demos/card-extras/" />
+<style class="wp-fonts-local">
+@font-face{font-family:Manrope;font-style:normal;font-weight:200 800;font-display:fallback;src:url('/wp-content/themes/twentytwentyfive/assets/fonts/manrope/Manrope-VariableFont_wght.woff2') format('woff2');}
+@font-face{font-family:"Fira Code";font-style:normal;font-weight:300 700;font-display:fallback;src:url('/wp-content/themes/twentytwentyfive/assets/fonts/fira-code/FiraCode-VariableFont_wght.woff2') format('woff2');}
+</style>
+</head>
+
+<body class="wp-singular page-template-default page page-id-157 page-child parent-pageid-151 wp-embed-responsive wp-theme-twentytwentyfive mba-demo-pro mba-demo-page-card-extras">
+
+<a class="skip-link screen-reader-text" id="wp-skip-link" href="#wp--skip-link--target">Skip to content</a><div class="wp-site-blocks"><header class="wp-block-template-part">
+<div class="mba-demo-bar"><div class="mba-demo-in"><a class="mba-demo-brand" href="https://medicalbeforeaftergallery.com/" aria-label="MBA Gallery home page"><span class="mba-demo-mark" aria-hidden="true"><svg viewBox="0 0 512 512"><path d="M288 448H64V224h64V160H64c-35.300 0-64 28.700-64 64V448c0 35.300 28.700 64 64 64H288c35.300 0 64-28.700 64-64V384H288v64zm-64-96H448c35.300 0 64-28.700 64-64V64c0-35.300-28.700-64-64-64H224c-35.300 0-64 28.700-64 64V288c0 35.300 28.700 64 64 64z"/></svg></span><span class="mba-demo-name">MBA<span>Gallery</span></span></a><nav aria-label="Website"><a href="https://medicalbeforeaftergallery.com/features/">Features</a><a href="https://medicalbeforeaftergallery.com/pricing/">Pricing</a><a href="https://medicalbeforeaftergallery.com/docs/">Docs</a><a href="https://medicalbeforeaftergallery.com/blog/">Blog</a><a href="https://medicalbeforeaftergallery.com/faq/">FAQ</a><a href="https://medicalbeforeaftergallery.com/demo/" aria-current="true">Demo</a></nav><div class="mba-demo-actions"><a class="mba-demo-btn mba-demo-btn-ghost" href="https://wordpress.org/plugins/medical-before-after-gallery/">Free download</a><a class="mba-demo-btn" href="https://medicalbeforeaftergallery.com/pricing/">Get Pro</a></div></div></div>
+
+
+</header>
+
+<main id="wp--skip-link--target" class="wp-block-group mba-demo-main has-global-padding is-layout-constrained wp-block-group-is-layout-constrained">
+<div class="entry-content alignfull wp-block-post-content has-global-padding is-layout-constrained wp-block-post-content-is-layout-constrained">
+<div class="mba-demo-top"><div class="mba-demo-in"><div class="mba-demo-crumbs"><a class="mba-demo-all" href="https://medicalbeforeaftergallery.com/demo/">All demos</a><i aria-hidden="true">/</i><span>Layouts and cards</span></div><nav class="mba-demo-variants" aria-label="Card styles"><ul><li><a href="/pro-demos/card-after-first/">After first</a></li><li><a href="/pro-demos/card-slider/">Slider</a></li><li><a href="/pro-demos/card-switch/">Switch</a></li><li><a href="/pro-demos/card-hover-reveal/">Before first</a></li><li><a href="/pro-demos/card-stacked/">Stacked</a></li><li><a href="/pro-demos/card-side-by-side/">Side by side</a></li><li><a href="/pro-demos/card-frame-framed/">Framed</a></li><li><a href="/pro-demos/card-frame-open/">Open</a></li><li><a href="/pro-demos/card-extras/" aria-current="page">Extras</a></li></ul></nav><div class="mba-demo-steps"><a href="/pro-demos/card-frame-open/" rel="prev" aria-label="Previous demo: Open cards"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></a></div></div></div>
+
+
+
+<div class="mba-demo-hero"><div class="mba-demo-in"><div><p class="mba-demo-kind">Pro</p><h1 class="mba-demo-title">Card extras</h1><p class="mba-demo-copy">Cards can also carry the doctor, a New badge on recent cases, and a Progress badge on cases with progress stages.</p></div><div class="mba-demo-how"><div><h2>How to turn it on</h2><p>Dashboard → Design → Gallery → Card extras.</p></div></div></div></div>
+
+
+
+<div class="wp-block-group alignwide mba-demo-stage is-layout-flow wp-block-group-is-layout-flow">
+
+<p class="mba-demo-strip"><b>Live demo</b><span>This is the plugin itself. Click anything.</span></p>
+
+
+
+<div class="wp-block-group alignwide mba-demo-canvas is-layout-flow wp-block-group-is-layout-flow">
+    <div class="medbeafgallery-container" id="medbeafgallery-gallery-container">
+                <div class="medbeafgallery-gallery-content" id="medbeafgallery-gallery-content">
+                <div class="medbeafgallery-category-carousel medbeafgallery-buttons-mode medbeafgallery-cat-mode-icons mba-pro-catnav-bar mba-pro-cat-icons" data-display-mode="icons">
+                <div class="medbeafgallery-nav-buttons">
+            <button type="button" class="medbeafgallery-nav-btn medbeafgallery-prev-btn" aria-label="Scroll categories left">
+                <span class="medbeafgallery-arrow-left" aria-hidden="true">&#8592;</span>
+            </button>
+            <button type="button" class="medbeafgallery-nav-btn medbeafgallery-next-btn" aria-label="Scroll categories right">
+                <span class="medbeafgallery-arrow-right" aria-hidden="true">&#8594;</span>
+            </button>
+        </div>
+
+        <div class="medbeafgallery-carousel-wrapper" id="medbeafgallery-carousel-wrapper">
+            <div class="medbeafgallery-carousel-items" id="medbeafgallery-carousel-items">
+                                        <div class="medbeafgallery-carousel-item active" data-id="all" role="button" tabindex="0" aria-pressed="true" aria-label="Show All">
+                            <div class="medbeafgallery-category-image" aria-hidden="true">
+                                
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 600 600" class="medbeafgallery-category-svg-placeholder medbeafgallery-all-category-icon">
+                                        <rect width="600" height="600" fill="#1E88E5" />
+                                        <g transform="translate(150, 150)">
+                                            <rect x="0" y="0" width="90" height="90" rx="8" fill="white" opacity="0.9" />
+                                            <rect x="110" y="0" width="90" height="90" rx="8" fill="white" opacity="0.6" />
+                                            <rect x="220" y="0" width="90" height="90" rx="8" fill="white" opacity="0.9" />
+                                            <rect x="0" y="110" width="90" height="90" rx="8" fill="white" opacity="0.6" />
+                                            <rect x="110" y="110" width="90" height="90" rx="8" fill="white" opacity="0.9" />
+                                            <rect x="220" y="110" width="90" height="90" rx="8" fill="white" opacity="0.6" />
+                                            <rect x="0" y="220" width="90" height="90" rx="8" fill="white" opacity="0.9" />
+                                            <rect x="110" y="220" width="90" height="90" rx="8" fill="white" opacity="0.6" />
+                                            <rect x="220" y="220" width="90" height="90" rx="8" fill="white" opacity="0.9" />
+
+                                            <text x="150" y="150" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="white" text-anchor="middle" dominant-baseline="middle">ALL</text>
+                                        </g>
+                                    </svg>
+                                                            </div>
+                            <span class="medbeafgallery-category-name">All</span>
+                                                            <span class="medbeafgallery-category-meta">36 cases</span>
+                                                    </div>
+                                                <div class="medbeafgallery-carousel-item " data-id="teeth" role="button" tabindex="0" aria-pressed="false" aria-label="Show Teeth">
+                            <div class="medbeafgallery-category-image" aria-hidden="true">
+                                <img decoding="async" src="/wp-content/uploads/2026/11/teeth-whitening-after-150x150.jpg" alt="Teeth">                            </div>
+                            <span class="medbeafgallery-category-name">Teeth</span>
+                                                            <span class="medbeafgallery-category-meta">4 cases</span>
+                                                    </div>
+                                                <div class="medbeafgallery-carousel-item " data-id="skin-care" role="button" tabindex="0" aria-pressed="false" aria-label="Show Skin care">
+                            <div class="medbeafgallery-category-image" aria-hidden="true">
+                                <img decoding="async" src="/wp-content/uploads/2026/11/skin-rejuvenation-after-150x150.jpg" alt="Skin care">                            </div>
+                            <span class="medbeafgallery-category-name">Skin care</span>
+                                                            <span class="medbeafgallery-category-meta">6 cases</span>
+                                                    </div>
+                                                <div class="medbeafgallery-carousel-item " data-id="hair-loss" role="button" tabindex="0" aria-pressed="false" aria-label="Show Hair loss">
+                            <div class="medbeafgallery-category-image" aria-hidden="true">
+                                <img decoding="async" src="/wp-content/uploads/2026/11/prp-parting-after-150x150.jpg" alt="Hair loss">                            </div>
+                            <span class="medbeafgallery-category-name">Hair loss</span>
+                                                            <span class="medbeafgallery-category-meta">4 cases</span>
+                                                    </div>
+                                                <div class="medbeafgallery-carousel-item " data-id="tattoo-removal" role="button" tabindex="0" aria-pressed="false" aria-label="Show Laser tattoo removal">
+                            <div class="medbeafgallery-category-image" aria-hidden="true">
+                                <img decoding="async" src="/wp-content/uploads/2026/11/forearm-rose-before-150x150.jpg" alt="Laser tattoo removal">                            </div>
+                            <span class="medbeafgallery-category-name">Laser tattoo removal</span>
+                                                            <span class="medbeafgallery-category-meta">3 cases</span>
+                                                    </div>
+                                                <div class="medbeafgallery-carousel-item " data-id="botox-fillers" role="button" tabindex="0" aria-pressed="false" aria-label="Show Botox &amp; fillers">
+                            <div class="medbeafgallery-category-image" aria-hidden="true">
+                                <img decoding="async" src="/wp-content/uploads/2026/11/frown-lines-after-150x150.jpg" alt="Botox &amp; fillers">                            </div>
+                            <span class="medbeafgallery-category-name">Botox &amp; fillers</span>
+                                                            <span class="medbeafgallery-category-meta">7 cases</span>
+                                                    </div>
+                                                <div class="medbeafgallery-carousel-item " data-id="face" role="button" tabindex="0" aria-pressed="false" aria-label="Show Face">
+                            <div class="medbeafgallery-category-image" aria-hidden="true">
+                                <img decoding="async" src="/wp-content/uploads/2026/11/nose-reshaping-after-150x150.jpg" alt="Face">                            </div>
+                            <span class="medbeafgallery-category-name">Face</span>
+                                                            <span class="medbeafgallery-category-meta">6 cases</span>
+                                                    </div>
+                                                <div class="medbeafgallery-carousel-item " data-id="body" role="button" tabindex="0" aria-pressed="false" aria-label="Show Body">
+                            <div class="medbeafgallery-category-image" aria-hidden="true">
+                                <img decoding="async" src="/wp-content/uploads/2026/11/coolsculpting-after-150x150.jpg" alt="Body">                            </div>
+                            <span class="medbeafgallery-category-name">Body</span>
+                                                            <span class="medbeafgallery-category-meta">6 cases</span>
+                                                    </div>
+                                    </div>
+        </div>
+    </div>
+    
+            <div class="medbeafgallery-gallery-layout">
+                    <script>
+    (function(){
+        var els = document.querySelectorAll('.medbeafgallery-container');
+        for (var i = 0; i < els.length; i++) {
+            els[i].classList.add('mba-pro-filters-drawer');
+        }
+    })();
+    </script>
+    <div class="mba-pro-catnav-mount" hidden data-mode="icons" data-place="none"><script type="application/json" class="mba-pro-catnav-data">{"mode":"icons","total":36,"tops":[{"slug":"teeth","name":"Teeth","count":4,"icon":"tooth","subs":[]},{"slug":"skin-care","name":"Skin care","count":6,"icon":"drop","subs":[]},{"slug":"hair-loss","name":"Hair loss","count":4,"icon":"scalp","subs":[]},{"slug":"tattoo-removal","name":"Laser tattoo removal","count":3,"icon":"laser","icon_image":{"url":"\/wp-content\/uploads\/2026\/11\/category-icon-rose.png","tint":true},"subs":[]},{"slug":"botox-fillers","name":"Botox \u0026 fillers","count":7,"icon":"syringe","subs":[{"slug":"anti-wrinkle","name":"Anti-wrinkle injections","count":3,"icon":"syringe"},{"slug":"dermal-fillers","name":"Dermal fillers","count":2,"icon":"syringe"},{"slug":"lip-fillers","name":"Lip fillers","count":2,"icon":"lips"}]},{"slug":"face","name":"Face","count":6,"icon":"profile","subs":[{"slug":"eyelid-surgery","name":"Eyelid surgery","count":2,"icon":"lashes"},{"slug":"rhinoplasty","name":"Rhinoplasty","count":4,"icon":"nose"}]},{"slug":"body","name":"Body","count":6,"icon":"waist","subs":[{"slug":"body-contouring","name":"Body contouring","count":3,"icon":"waist"},{"slug":"body-surgery","name":"Body surgery","count":1,"icon":"body"},{"slug":"buttock-lift","name":"Buttock lift","count":1,"icon":"buttocks"},{"slug":"weight-loss","name":"Weight loss","count":1,"icon":"scale"}]}],"map":{"anti-wrinkle":["botox-fillers","anti-wrinkle"],"dermal-fillers":["botox-fillers","dermal-fillers"],"lip-fillers":["botox-fillers","lip-fillers"],"eyelid-surgery":["face","eyelid-surgery"],"rhinoplasty":["face","rhinoplasty"],"body-contouring":["body","body-contouring"],"body-surgery":["body","body-surgery"],"buttock-lift":["body","buttock-lift"],"weight-loss":["body","weight-loss"]},"strings":{"allOf":"All %s","lowerNames":true,"allTreat":"All treatments","caseOne":"%s case","caseMany":"%s cases","resultOne":"%s result","resultMany":"%s results","foundOne":"%s treatment found. Use the up and down arrows to choose.","foundMany":"%s treatments found. Use the up and down arrows to choose.","noMatch":"No treatment matches yet. Try another word, or pick one below.","showing":"Showing %s","several":"Several chosen","show":"Show %s"}}</script><span class="mba-pro-catnav-deco" data-for="all" data-target="image" data-label="Show all treatments, 36 cases"><svg class="mba-pro-catnav-svg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9l-5.2 2.8 1-5.9-4.3-4.1 5.9-.8z"/></svg></span><span class="mba-pro-catnav-deco" data-for="teeth" data-target="image" data-label="Show Teeth, 4 cases"><svg class="mba-pro-catnav-svg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 3.5c-2.3 0-3.7 1.8-3.7 4.3 0 2.2.8 3.6 1.3 5.3.6 2.2.8 5.2 2.1 7.2.6.9 1.7.8 2-.3l.9-3.4c.3-1.1 1.5-1.1 1.8 0l.9 3.4c.3 1.1 1.4 1.2 2 .3 1.3-2 1.5-5 2.1-7.2.5-1.7 1.3-3.1 1.3-5.3 0-2.5-1.4-4.3-3.7-4.3-1.7 0-2.7.9-4.5.9s-2.8-.9-4.5-.9z"/></svg></span><span class="mba-pro-catnav-deco" data-for="skin-care" data-target="image" data-label="Show Skin care, 6 cases"><svg class="mba-pro-catnav-svg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5s5.5 6 5.5 10.2a5.5 5.5 0 0 1-11 0C6.5 9.5 12 3.5 12 3.5z"/><path d="M10 14.5a2.2 2.2 0 0 0 2 2"/></svg></span><span class="mba-pro-catnav-deco" data-for="hair-loss" data-target="image" data-label="Show Hair loss, 4 cases"><svg class="mba-pro-catnav-svg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5c0-6.8 3.6-11.5 8-11.5s8 4.7 8 11.5"/><path d="M12 8V4.5M8 9.8L6.8 6.8M16 9.8l1.2-3M5.6 13.4L3.4 11.8M18.4 13.4l2.2-1.6"/></svg></span><span class="mba-pro-catnav-deco" data-for="tattoo-removal" data-target="image" data-label="Show Laser tattoo removal, 3 cases"><span class="mba-pro-catnav-img mba-pro-catnav-img-tint" aria-hidden="true" style="--mba-pro-icon-img:url(&quot;/wp-content/uploads/2026/11/category-icon-rose.png&quot;)"></span></span><span class="mba-pro-catnav-deco" data-for="botox-fillers" data-target="image" data-label="Show Botox &amp; fillers, 7 cases"><svg class="mba-pro-catnav-svg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 2.5l4 4"/><path d="M19.5 4.5l-3 3"/><path d="M15 6l3 3-8.5 8.5H6.5v-3z"/><path d="M6.5 17.5l-3 3"/><path d="M11.5 9.5l1.5 1.5M9 12l1.5 1.5"/></svg></span><span class="mba-pro-catnav-deco" data-for="face" data-target="image" data-label="Show Face, 6 cases"><svg class="mba-pro-catnav-svg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 20.5v-3.4a7 7 0 0 0-2.8-13.6c-3.4 0-6 2.4-6.4 5.6L4.8 12.4a.6.6 0 0 0 .5.9h1.4v2.4c0 1.1.9 2 2 2h1.6v2.8"/></svg></span><span class="mba-pro-catnav-deco" data-for="body" data-target="image" data-label="Show Body, 6 cases"><svg class="mba-pro-catnav-svg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3.5c1.6 2.8 2.3 5.6 2.3 8.5s-.7 5.7-2.3 8.5M17 3.5c-1.6 2.8-2.3 5.6-2.3 8.5s.7 5.7 2.3 8.5"/><path d="M2.5 12h3.3M4.2 10.4L5.8 12l-1.6 1.6M21.5 12h-3.3M19.8 10.4L18.2 12l1.6 1.6"/></svg></span></div>    <script>(function(m){if(!m||m.getAttribute('data-mounted'))return;var c=m.closest('.medbeafgallery-gallery-content'),b=c&&c.querySelector('.medbeafgallery-category-carousel');if(!b)return;var u=m.querySelector('.mba-pro-catnav'),p=m.getAttribute('data-place');if(u){if(p==='before'){b.parentNode.insertBefore(u,b);}else if(p==='after'){b.parentNode.insertBefore(u,b.nextSibling);}else{m.parentNode.insertBefore(u,m);m.parentNode.classList.add('mba-pro-catmenu-layout');}}Array.prototype.forEach.call(m.querySelectorAll('.mba-pro-catnav-deco'),function(d){var t=b.querySelector('.medbeafgallery-carousel-item[data-id="'+d.getAttribute('data-for')+'"]');if(!t)return;var l=d.getAttribute('data-label');if(l)t.setAttribute('aria-label',l);var w=d.getAttribute('data-target');if(w==='image'){var i=t.querySelector('.medbeafgallery-category-image');if(i){i.innerHTML='';while(d.firstChild)i.appendChild(d.firstChild);i.classList.add('mba-pro-catnav-icon');}}else if(w==='append'){while(d.firstChild)t.appendChild(d.firstChild);}d.parentNode.removeChild(d);});m.setAttribute('data-mounted','1');})(document.currentScript&&document.currentScript.previousElementSibling);</script>
+        <script>
+    (function() {
+        'use strict';
+        var script = document.currentScript;
+        var root = script && script.closest( '.medbeafgallery-container' );
+        if ( !root ) { return; }
+        var options = {"layout":"classic","card_style":"slider","card_frame":"boxed","preset":"default","motion":"subtle","columns":"3","structure":"gallery","compare":"off","concerns":[{"name":"Wrinkles and lines","hint":"Forehead, frown lines, crow\u2019s feet","categories":["anti-wrinkle","skin-care"]},{"name":"Volume and shape","hint":"Lips, under-eyes, jawline","categories":["dermal-fillers","lip-fillers"]},{"name":"My nose","hint":"Profile, bridge, tip","categories":["rhinoplasty"]},{"name":"Skin tone and redness","hint":"Pigmentation, rosacea, texture","categories":["skin-care"]},{"name":"Thinning hair","hint":"Crown, parting, hairline","categories":["hair-loss"]},{"name":"An unwanted tattoo","hint":"Black or colour ink","categories":["tattoo-removal"]},{"name":"My smile","hint":"Colour, gaps, shape","categories":["teeth"]},{"name":"Body shape","hint":"Weight, waist, tummy","categories":["body"]}],"show_doctor":true,"show_new_badge":true,"new_days":365,"show_progress_badge":true,"show_result_chips":false,"columns_override":true,"dark_mode":"off","aspect_ratio":"4-5","categories":[],"i18n":{"featured":"Featured","newBadge":"New","progress":"Progress","seeAll":"See all","seeCategory":"See all cases in %s","categoryHidden":"Show the category bar to use See all.","previous":"Previous cases","next":"Next cases","before":"Before","after":"After","duration":"Duration","recovery":"Recovery","results":"Results","procedure":"Procedure","patient":"Patient","views":"Views","treatedBy":"Treated by %s","otherCases":"Other cases","caseSingular":"%s case","casePlural":"%s cases","resultsStatus":"%1$s of %2$s matching cases shown.","rowPending":"More cases in this row appear as the gallery loads.","mainView":"Main view","showView":"Show %1$s of %2$s","viewsOf":"Views of %s","viewNumber":"View %s","openView":"Open %1$s for %2$s","pairUnavailable":"Case opened. Choose the image pair in the case window.","compare":"Compare before and after for %s","compareValue":"%1$s%% before, %2$s%% after","compareHelp":"Drag the divider, or use the arrow keys, to compare the before and after photos.","wholePhotos":"Whole photos, nothing cropped.","photoFit":"Photos use matching centre crops for display.","hoverFit":"Photos enlarge equally on hover; original files are unchanged.","missingPhoto":"Photo unavailable","viewCase":"View case","close":"Close","wallSwitch":"Show every photo before or after treatment","switchLabel":"Show the before or after photo of %s"}};
+        root.setAttribute( 'data-mba-pro-layouts', JSON.stringify( options ) );
+        root.classList.add( 'mba-pro-layouts', 'mba-pro-gallery-' + options.layout, 'mba-pro-preset-' + options.preset, 'mba-pro-motion-' + options.motion );
+        root.classList.toggle( 'mba-pro-preset-active', options.preset !== 'default' );
+        root.classList.toggle( 'mba-pro-layout-masonry', options.layout === 'masonry' );
+        // Same rule as pro-layouts.js: the pre-1.6.0 look keeps its own cards.
+        var legacy = ( options.layout === 'classic' || options.layout === 'masonry' ) && options.card_style === 'split' && options.preset === 'default';
+        root.classList.toggle( 'mba-pro-refined', !legacy );
+        root.classList.add( 'mba-pro-frame-' + ( options.layout === 'refined' ? 'open' : ( options.card_frame || 'boxed' ) ) );
+        root.setAttribute( 'data-mba-pro-columns', options.columns );
+        root.setAttribute( 'data-mba-pro-columns-override', options.columns_override ? 'true' : 'false' );
+        if ( options.card_style === 'reveal' || options.card_style === 'reveal-after' ) { root.classList.add( 'medbeafgallery-cards-reveal' ); }
+        if ( /^[1-4]$/.test( options.columns ) ) { root.style.setProperty( '--mba-pro-layout-columns', options.columns ); }
+        var dark = options.dark_mode === 'on' || ( options.dark_mode === 'auto' && window.matchMedia && window.matchMedia( '(prefers-color-scheme: dark)' ).matches );
+        root.setAttribute( 'data-mba-pro-layout-dark', dark ? 'true' : 'false' );
+    })();
+    </script>
+        <aside class="medbeafgallery-filter-sidebar" id="medbeafgallery-filter-sidebar">
+
+        
+                <div class="medbeafgallery-filter-sidebar-header">
+            <h3>Filters</h3>
+            <button type="button" class="medbeafgallery-filter-sidebar-toggle" id="medbeafgallery-filter-toggle" aria-label="Toggle filters">
+                <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+            </button>
+        </div>
+
+        <div class="medbeafgallery-filter-groups medbeafgallery-filter-options" id="medbeafgallery-filter-groups">
+                        <div class="medbeafgallery-filter-group">
+                <h4 class="medbeafgallery-filter-group-title">Gender</h4>
+                <div class="medbeafgallery-filter-group-options">
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="gender" value="Female">
+                        <span class="medbeafgallery-filter-checkbox-label">Female</span>
+                    </label>
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="gender" value="Male">
+                        <span class="medbeafgallery-filter-checkbox-label">Male</span>
+                    </label>
+                                    </div>
+            </div>
+                        <div class="medbeafgallery-filter-group">
+                <h4 class="medbeafgallery-filter-group-title">Age Range</h4>
+                <div class="medbeafgallery-filter-group-options">
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="age" value="18-30">
+                        <span class="medbeafgallery-filter-checkbox-label">18-30</span>
+                    </label>
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="age" value="31-45">
+                        <span class="medbeafgallery-filter-checkbox-label">31-45</span>
+                    </label>
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="age" value="46-60">
+                        <span class="medbeafgallery-filter-checkbox-label">46-60</span>
+                    </label>
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="age" value="60+">
+                        <span class="medbeafgallery-filter-checkbox-label">60+</span>
+                    </label>
+                                    </div>
+            </div>
+                        <div class="medbeafgallery-filter-group">
+                <h4 class="medbeafgallery-filter-group-title">Recovery Time</h4>
+                <div class="medbeafgallery-filter-group-options">
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="recovery" value="Minimal (1-3 days)">
+                        <span class="medbeafgallery-filter-checkbox-label">Minimal (1-3 days)</span>
+                    </label>
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="recovery" value="Short (4-7 days)">
+                        <span class="medbeafgallery-filter-checkbox-label">Short (4-7 days)</span>
+                    </label>
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="recovery" value="Moderate (1-2 weeks)">
+                        <span class="medbeafgallery-filter-checkbox-label">Moderate (1-2 weeks)</span>
+                    </label>
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="recovery" value="Extended (2+ weeks)">
+                        <span class="medbeafgallery-filter-checkbox-label">Extended (2+ weeks)</span>
+                    </label>
+                                    </div>
+            </div>
+                        <div class="medbeafgallery-filter-group">
+                <h4 class="medbeafgallery-filter-group-title">Treatment Duration</h4>
+                <div class="medbeafgallery-filter-group-options">
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="duration" value="Single Session">
+                        <span class="medbeafgallery-filter-checkbox-label">Single Session</span>
+                    </label>
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="duration" value="Multiple Sessions">
+                        <span class="medbeafgallery-filter-checkbox-label">Multiple Sessions</span>
+                    </label>
+                                    </div>
+            </div>
+                        <div class="medbeafgallery-filter-group">
+                <h4 class="medbeafgallery-filter-group-title">Results Visibility</h4>
+                <div class="medbeafgallery-filter-group-options">
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="results" value="Immediate">
+                        <span class="medbeafgallery-filter-checkbox-label">Immediate</span>
+                    </label>
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="results" value="Gradual">
+                        <span class="medbeafgallery-filter-checkbox-label">Gradual</span>
+                    </label>
+                                    </div>
+            </div>
+                        <div class="medbeafgallery-filter-group">
+                <h4 class="medbeafgallery-filter-group-title">Procedure Type</h4>
+                <div class="medbeafgallery-filter-group-options">
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="procedure" value="Surgical">
+                        <span class="medbeafgallery-filter-checkbox-label">Surgical</span>
+                    </label>
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="procedure" value="Minimally Invasive">
+                        <span class="medbeafgallery-filter-checkbox-label">Minimally Invasive</span>
+                    </label>
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="procedure" value="Non-Surgical">
+                        <span class="medbeafgallery-filter-checkbox-label">Non-Surgical</span>
+                    </label>
+                                    </div>
+            </div>
+            
+                        <div class="medbeafgallery-filter-group medbeafgallery-filter-group-doctor">
+                <h4 class="medbeafgallery-filter-group-title">Doctor</h4>
+                <div class="medbeafgallery-filter-group-options">
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="mba_doctor" value="amelia-hart">
+                        <span class="medbeafgallery-filter-checkbox-label">Dr. Amelia Hart</span>
+                    </label>
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="mba_doctor" value="daniel-okafor">
+                        <span class="medbeafgallery-filter-checkbox-label">Dr. Daniel Okafor</span>
+                    </label>
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="mba_doctor" value="priya-nair">
+                        <span class="medbeafgallery-filter-checkbox-label">Dr. Priya Nair</span>
+                    </label>
+                                        <label class="medbeafgallery-filter-checkbox">
+                        <input type="checkbox" name="mba_doctor" value="rafael-ortiz">
+                        <span class="medbeafgallery-filter-checkbox-label">Dr. Rafael Ortiz</span>
+                    </label>
+                                    </div>
+            </div>
+                    </div>
+            </aside>
+                                    <main class="medbeafgallery-main-content">
+                                        <div class="medbeafgallery-active-filters" style="display:none;">
+                        <div id="medbeafgallery-filter-tags" class="medbeafgallery-filter-tags"></div>
+                        <button type="button" id="medbeafgallery-clear-filters" class="medbeafgallery-clear-filters" style="display:none;">Clear All</button>
+                    </div>
+                    
+
+
+
+
+
+
+
+
+
+
+                                        <div class="medbeafgallery-gallery-container"
+                         data-category="all"
+                         data-per-page="6">
+                                                <div class="medbeafgallery-loading-indicator">
+                            <div class="medbeafgallery-skeleton-grid" aria-hidden="true">
+                                                                    <div class="medbeafgallery-skeleton-card">
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-image"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-title"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-short"></div>
+                                    </div>
+                                                                    <div class="medbeafgallery-skeleton-card">
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-image"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-title"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-short"></div>
+                                    </div>
+                                                                    <div class="medbeafgallery-skeleton-card">
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-image"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-title"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-short"></div>
+                                    </div>
+                                                                    <div class="medbeafgallery-skeleton-card">
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-image"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-title"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-short"></div>
+                                    </div>
+                                                                    <div class="medbeafgallery-skeleton-card">
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-image"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-title"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-short"></div>
+                                    </div>
+                                                                    <div class="medbeafgallery-skeleton-card">
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-image"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-title"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-short"></div>
+                                    </div>
+                                                            </div>
+                            <p class="screen-reader-text" role="status">Loading gallery…</p>
+                        </div>
+                        <div class="medbeafgallery-gallery-grid" id="medbeafgallery-gallery-grid" style="display: none;">
+                                                    </div>
+                        <div id="medbeafgallery-no-results" class="medbeafgallery-no-results" style="display: none;">
+                            <p>No results found. Please try different filter criteria.</p>
+                        </div>
+                    </div>
+
+                                        <div class="medbeafgallery-pagination">
+                        <button type="button" id="medbeafgallery-load-more" class="medbeafgallery-load-more" style="display: none;">Load More</button>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+        <div id="medbeafgallery-modal" class="medbeafgallery-modal medbeafgallery-backdrop-blur" role="dialog" aria-modal="true" aria-labelledby="medbeafgallery-case-title" aria-hidden="true" tabindex="-1">
+        <div class="medbeafgallery-modal-content">
+            <div class="medbeafgallery-modal-header">
+                <h2 id="medbeafgallery-case-title">Case Study Title</h2>
+
+                                <div class="medbeafgallery-image-controls" role="group" aria-label="Image comparison view">
+                    <button type="button" class="medbeafgallery-control-btn medbeafgallery-split-view active" aria-pressed="true" title="Slider view" aria-label="Slider view">
+                        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="3" x2="12" y2="21"></line><path d="M8 8l-4 4 4 4"></path><path d="M16 16l4-4-4-4"></path></svg><span class="medbeafgallery-control-label" aria-hidden="true">Slider</span>
+                    </button>
+                    <button type="button" class="medbeafgallery-control-btn medbeafgallery-before-view" aria-pressed="false" title="Before view" aria-label="Before view">
+                        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"></rect><rect x="8" y="9" width="8" height="8"></rect></svg><span class="medbeafgallery-control-label" aria-hidden="true">Before</span>
+                    </button>
+                    <button type="button" class="medbeafgallery-control-btn medbeafgallery-after-view" aria-pressed="false" title="After view" aria-label="After view">
+                        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"></rect><rect x="8" y="9" width="8" height="8"></rect><circle cx="12" cy="13" r="2"></circle></svg><span class="medbeafgallery-control-label" aria-hidden="true">After</span>
+                    </button>
+                </div>
+
+                <span class="medbeafgallery-pair-info medbeafgallery-pair-description" aria-live="polite">Main View</span>
+
+                <button type="button" class="medbeafgallery-modal-close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="medbeafgallery-modal-body">
+                <div class="medbeafgallery-comparison-container">
+                                        <div class="medbeafgallery-image-pairs-nav" role="group" aria-label="Image pairs">
+                        <button type="button" class="medbeafgallery-pair-nav medbeafgallery-pair-prev" title="Previous image pair" aria-label="Previous image pair">
+                            <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </button>
+                        <div class="medbeafgallery-pair-indicators">
+                                                    </div>
+                        <button type="button" class="medbeafgallery-pair-nav medbeafgallery-pair-next" title="Next image pair" aria-label="Next image pair">
+                            <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+
+                                        <div class="medbeafgallery-image-sets-container">
+                        <div class="medbeafgallery-before-after-wrapper active" data-pair-id="1">
+                                                    </div>
+                    </div>
+
+                                        <div class="medbeafgallery-labels">
+                        <div class="medbeafgallery-before-label">Before</div>
+                        <div class="medbeafgallery-after-label">After</div>
+                    </div>
+                </div>
+
+                                                <div class="medbeafgallery-case-details">
+                    <div class="medbeafgallery-case-tabs" role="tablist" aria-label="Case information">
+                        <button type="button" class="medbeafgallery-tab active" data-tab="description" role="tab" id="medbeafgallery-tab-description" aria-controls="medbeafgallery-panel-description" aria-selected="true">Description</button>
+                        <button type="button" class="medbeafgallery-tab" data-tab="details" role="tab" id="medbeafgallery-tab-details" aria-controls="medbeafgallery-panel-details" aria-selected="false" tabindex="-1">Details</button>
+                    </div>
+                    <div class="medbeafgallery-tab-content active" data-tab="description" role="tabpanel" id="medbeafgallery-panel-description" aria-labelledby="medbeafgallery-tab-description" tabindex="0">
+                        <div id="medbeafgallery-case-description"></div>
+                    </div>
+                    <div class="medbeafgallery-tab-content" data-tab="details" role="tabpanel" id="medbeafgallery-panel-details" aria-labelledby="medbeafgallery-tab-details" tabindex="0">
+                        <div class="medbeafgallery-detail-grid">
+                            <div class="medbeafgallery-detail-item" id="medbeafgallery-detail-category" style="display:none;">
+                                <span class="medbeafgallery-detail-label">Category</span>
+                                <span class="medbeafgallery-detail-value" id="medbeafgallery-case-category"></span>
+                            </div>
+                            <div class="medbeafgallery-detail-item" id="medbeafgallery-detail-gender" style="display:none;">
+                                <span class="medbeafgallery-detail-label">Gender</span>
+                                <span class="medbeafgallery-detail-value" id="medbeafgallery-case-gender"></span>
+                            </div>
+                            <div class="medbeafgallery-detail-item" id="medbeafgallery-detail-age" style="display:none;">
+                                <span class="medbeafgallery-detail-label">Age</span>
+                                <span class="medbeafgallery-detail-value" id="medbeafgallery-case-age"></span>
+                            </div>
+                            <div class="medbeafgallery-detail-item" id="medbeafgallery-detail-recovery" style="display:none;">
+                                <span class="medbeafgallery-detail-label">Recovery</span>
+                                <span class="medbeafgallery-detail-value" id="medbeafgallery-case-recovery"></span>
+                            </div>
+                            <div class="medbeafgallery-detail-item" id="medbeafgallery-detail-duration" style="display:none;">
+                                <span class="medbeafgallery-detail-label">Duration</span>
+                                <span class="medbeafgallery-detail-value" id="medbeafgallery-case-duration"></span>
+                            </div>
+                            <div class="medbeafgallery-detail-item" id="medbeafgallery-detail-results" style="display:none;">
+                                <span class="medbeafgallery-detail-label">Results</span>
+                                <span class="medbeafgallery-detail-value" id="medbeafgallery-case-results"></span>
+                            </div>
+                            <div class="medbeafgallery-detail-item" id="medbeafgallery-detail-procedure" style="display:none;">
+                                <span class="medbeafgallery-detail-label">Procedure</span>
+                                <span class="medbeafgallery-detail-value" id="medbeafgallery-case-procedure"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="medbeafgallery-cta-container">
+                        <div class="medbeafgallery-social-share">
+                            <span>Share:</span>
+                            <button type="button" class="medbeafgallery-share-btn medbeafgallery-share-facebook" aria-label="Share on Facebook">
+                                <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+                            </button>
+                            <button type="button" class="medbeafgallery-share-btn medbeafgallery-share-twitter" aria-label="Share on Twitter">
+                                <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+                            </button>
+                            <button type="button" class="medbeafgallery-share-btn medbeafgallery-share-email" aria-label="Share via Email">
+                                <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                            </div>
+
+                        <div class="medbeafgallery-modal-nav">
+                <div class="medbeafgallery-modal-nav-container">
+                                        <button type="button" class="medbeafgallery-modal-prev" aria-label="Previous case">
+                        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 18 10 12 16 6"></polyline>
+                            <line x1="6" y1="6" x2="6" y2="18"></line>
+                        </svg>
+                    </button>
+
+                    <div class="medbeafgallery-modal-counter-wrapper">
+                        <div class="medbeafgallery-modal-counter" aria-live="polite" aria-atomic="true">
+                            <span class="screen-reader-text">Case </span>
+                            <span id="medbeafgallery-current-item" class="medbeafgallery-counter-current">1</span>
+                            <span class="medbeafgallery-counter-separator" aria-hidden="true">/</span>
+                            <span class="screen-reader-text">of </span>
+                            <span id="medbeafgallery-total-items" class="medbeafgallery-counter-total">1</span>
+                        </div>
+                    </div>
+
+                    <button type="button" class="medbeafgallery-modal-next" aria-label="Next case">
+                        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="8 18 14 12 8 6"></polyline>
+                            <line x1="18" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+</div>
+
+
+</div>
+
+
+
+<nav class="mba-demo-pager" aria-label="Demo pages"><div class="mba-demo-in"><a class="mba-demo-prev" href="/pro-demos/card-frame-open/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span><span>Previous demo</span> Open cards</span></a><a class="mba-demo-all" href="https://medicalbeforeaftergallery.com/demo/">All demos</a></div></nav>
+
+
+
+<div class="mba-demo-cta"><div class="mba-demo-in"><div><h2>Put this on your own website</h2><p>Start free on WordPress.org. Add Pro when you want more.</p></div><div class="mba-demo-actions"><a class="mba-demo-btn mba-demo-btn-ghost" href="https://wordpress.org/plugins/medical-before-after-gallery/">Free download</a><a class="mba-demo-btn" href="https://medicalbeforeaftergallery.com/pricing/">Get Pro</a></div></div></div>
+
+
+</div>
+</main>
+
+<footer class="wp-block-template-part">
+<div class="mba-demo-foot"><div class="mba-demo-in"><div><span class="mba-demo-brand" aria-hidden="true"><span class="mba-demo-mark" aria-hidden="true"><svg viewBox="0 0 512 512"><path d="M288 448H64V224h64V160H64c-35.300 0-64 28.700-64 64V448c0 35.300 28.700 64 64 64H288c35.300 0 64-28.700 64-64V384H288v64zm-64-96H448c35.300 0 64-28.700 64-64V64c0-35.300-28.700-64-64-64H224c-35.300 0-64 28.700-64 64V288c0 35.300 28.700 64 64 64z"/></svg></span><span class="mba-demo-name">MBA<span>Gallery</span></span></span><p>Sample content for showing the plugin. The doctors are fictional. Some photos were created with an image model and three cases use photos from Wikimedia Commons; each of those cases says so. Doctor portraits: <a href="https://www.dicebear.com/styles/notionists/">DiceBear Notionists</a> (CC0).</p></div><ul><li><a href="https://medicalbeforeaftergallery.com/demo/">All demos</a></li><li><a href="https://medicalbeforeaftergallery.com/">medicalbeforeaftergallery.com</a></li><li><a href="https://medicalbeforeaftergallery.com/docs/">Documentation</a></li><li><a href="https://wordpress.org/plugins/medical-before-after-gallery/">Free plugin on WordPress.org</a></li></ul></div></div>
+
+
+</footer></div>
+<script id="cocoen-js-js" src="/wp-content/plugins/medical-before-after-gallery/assets/vendor/cocoen/cocoen.min.js?ver=1.5.0.1780209663"></script>
+<script id="medbeafgallery-js-js-extra">
+var medbeafgalleryGalleryConfig = {"restUrl":"/wp-json/medical-before-after-gallery/v1/","nonce":"","itemsPerPage":"6","defaultCategory":"all","showFilters":"true","cardStyle":"split","photoBackdrop":"blur","beforeText":"Before","afterText":"After","treatedByText":"Treated by","categoryDisplayMode":"icons","galleryEndpoint":"gallery-data","categoriesEndpoint":"categories","restBase":"/wp-json/medical-before-after-gallery/v1","pluginUrl":"/wp-content/plugins/medical-before-after-gallery/","categoryDescendants":{"botox-fillers":["lip-fillers","dermal-fillers","anti-wrinkle"],"body":["weight-loss","buttock-lift","body-surgery","body-contouring"],"face":["rhinoplasty","eyelid-surgery"]},"hideCaseDetails":"","showCtaButton":"","ctaButtonText":"Book Consultation","ctaButtonLink":"","modalMaxHeight":"0","hideCaseTitle":"","hideCaseCategory":"","darkMode":"off","categoryDisplayStyle":"carousel","galleryLayout":"classic","beforeLabel":"Before","afterLabel":"After","showLabels":"1","defaultViewMode":"split","enableSearch":"","searchPlaceholder":"Search cases\u2026","enableSort":"","defaultSort":"newest","enableDeeplink":"","imageProtection":"","enabledDetails":["category","gender","age","recovery","duration","results","procedure"],"proFilterDefs":[{"name":"gender","label":"Gender","standard":true},{"name":"age","label":"Age Range","standard":true},{"name":"recovery","label":"Recovery Time","standard":true},{"name":"duration","label":"Treatment Duration","standard":true},{"name":"results","label":"Results Visibility","standard":true},{"name":"procedure","label":"Procedure Type","standard":true}],"standardFilterNames":["gender","age","recovery","duration","results","procedure"],"proLayouts":{"layout":"classic","card_style":"slider","card_frame":"boxed","preset":"default","motion":"subtle","columns":"3","structure":"gallery","compare":"off","concerns":[{"name":"Wrinkles and lines","hint":"Forehead, frown lines, crow\u2019s feet","categories":["anti-wrinkle","skin-care"]},{"name":"Volume and shape","hint":"Lips, under-eyes, jawline","categories":["dermal-fillers","lip-fillers"]},{"name":"My nose","hint":"Profile, bridge, tip","categories":["rhinoplasty"]},{"name":"Skin tone and redness","hint":"Pigmentation, rosacea, texture","categories":["skin-care"]},{"name":"Thinning hair","hint":"Crown, parting, hairline","categories":["hair-loss"]},{"name":"An unwanted tattoo","hint":"Black or colour ink","categories":["tattoo-removal"]},{"name":"My smile","hint":"Colour, gaps, shape","categories":["teeth"]},{"name":"Body shape","hint":"Weight, waist, tummy","categories":["body"]}],"show_doctor":true,"show_new_badge":true,"new_days":365,"show_progress_badge":true,"show_result_chips":false,"columns_override":true,"dark_mode":"off","aspect_ratio":"4-5","categories":[],"i18n":{"featured":"Featured","newBadge":"New","progress":"Progress","seeAll":"See all","seeCategory":"See all cases in %s","categoryHidden":"Show the category bar to use See all.","previous":"Previous cases","next":"Next cases","before":"Before","after":"After","duration":"Duration","recovery":"Recovery","results":"Results","procedure":"Procedure","patient":"Patient","views":"Views","treatedBy":"Treated by %s","otherCases":"Other cases","caseSingular":"%s case","casePlural":"%s cases","resultsStatus":"%1$s of %2$s matching cases shown.","rowPending":"More cases in this row appear as the gallery loads.","mainView":"Main view","showView":"Show %1$s of %2$s","viewsOf":"Views of %s","viewNumber":"View %s","openView":"Open %1$s for %2$s","pairUnavailable":"Case opened. Choose the image pair in the case window.","compare":"Compare before and after for %s","compareValue":"%1$s%% before, %2$s%% after","compareHelp":"Drag the divider, or use the arrow keys, to compare the before and after photos.","wholePhotos":"Whole photos, nothing cropped.","photoFit":"Photos use matching centre crops for display.","hoverFit":"Photos enlarge equally on hover; original files are unchanged.","missingPhoto":"Photo unavailable","viewCase":"View case","close":"Close","wallSwitch":"Show every photo before or after treatment","switchLabel":"Show the before or after photo of %s"}}};
+var medbeafgalleryData = {"nonce":"","rest_url":"/wp-json/medical-before-after-gallery/v1/","rest_nonce":"","plugin_url":"/wp-content/plugins/medical-before-after-gallery/","is_admin":"","strings":{"loading":"Loading...","error":"An error occurred. Please try again.","no_results":"No results found."}};
+//# sourceURL=medbeafgallery-js-js-extra
+</script>
+<script id="medbeafgallery-js-js" src="/wp-content/plugins/medical-before-after-gallery/assets/js/gallery.js?ver=1.5.0.1795489606"></script>
+<script id="mba-gallery-pro-subcategories-js-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-subcategories.js?ver=1.6.0.1790922901"></script>
+<script id="mba-pro-frontend-filters-js-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-frontend-filters.js?ver=1.6.0.1795570596"></script>
+<script id="mba-pro-filter-drawer-js-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-filter-drawer.js?ver=1.6.0.1781631493"></script>
+<script id="mba-pro-annotations-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-annotations.js?ver=1.6.0.1781229262"></script>
+<script id="mba-gallery-pro-infinite-scroll-js-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-infinite-scroll.js?ver=1.6.0.1790759958"></script>
+<script id="mba-pro-zoom-js-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-zoom.js?ver=1.6.0.1790748781"></script>
+<script id="mba-pro-viewer-js-extra">
+var mbaProViewerConfig = {"style":"story","phone_story_mode":"","show_share":"1","show_timeline":"1","show_tour":"1","show_doctor":"1","show_thumbnails":"1","i18n":{"caseDetails":"Case details","untitled":"Case study","close":"Close case window","details":"Details","closeDetails":"Close details","expand":"Expand drawer","collapse":"Collapse drawer","previousCase":"Previous case","nextCase":"Next case","nextTeaser":"Next case: %s \u2192","caseCounter":"Case %1$s of %2$s","viewCounter":"View %1$s of %2$s","view":"View %s","mainView":"Main view","previousView":"Previous view","nextView":"Next view","imageViews":"Image pairs and progress stages","comparison":"Comparison view","split":"Slider","before":"Before","after":"After","both":"Side by side","divider":"Reveal the before photo","dividerValue":"%s% before","dividerHelp":"Drag the divider, or use arrow keys to compare. Home reveals the after photo; End reveals the before photo.","keyboardHelp":"Escape closes the window. Alt plus Left or Right Arrow changes case. Left or Right Arrow on the image stage changes view.","imageStage":"Case photos","unavailable":"Image unavailable","zoomIn":"Zoom in","zoomOut":"Zoom out","resetZoom":"Reset zoom","zoom":"Image zoom","displayNote":"Zoom and magnification change the display only; photos are not edited.","magnifier":"Linked magnifier","magnifierToggle":"Magnifier","aboutControls":"About these controls","caseNavigation":"Case navigation","imagePairs":"Image pairs","compare":"Compare","showMagnifier":"Show magnifier","hideMagnifier":"Hide magnifier","magnifierIn":"Increase magnification","magnifierOut":"Decrease magnification","magnifierHelp":"Move over a photo or drag to position both lenses. Focus a photo and use arrow keys to move the lenses; plus and minus change magnification.","alignmentNote":"Both photos are magnified at the same spot. If the photos were taken from slightly different positions, details may not line up exactly.","timeline":"Progress timeline","stage":"Stage %s","timelineHelp":"Use Left and Right Arrow to move between stages; Home and End select the first and last stages.","overview":"Treatment overview","about":"About this case","category":"Category","gender":"Gender","age":"Age","recovery":"Recovery","duration":"Duration","results":"Results","procedure":"Procedure","doctor":"About the doctor","doctorLink":"View doctor profile","cta":"Book a consultation","newTab":" (opens in a new tab)","tour":"What to notice","allNotes":"All image notes","marker":"Marker %1$s: %2$s \u2014 %3$s","tourCounter":"%1$s of %2$s","previous":"Previous","next":"Next","done":"Done","share":"Share","closeShare":"Close sharing controls","copyLink":"Copy link","copied":"Link copied","copyHelp":"Copy this link:","email":"Email","facebook":"Facebook","x":"X","nativeShare":"More sharing options","shareFailed":"Sharing is unavailable. You can copy the link instead.","hold":"Hold to see before","showBefore":"Show before","showAfter":"Show after","showingBefore":"Showing the before photo","phoneHelp":"Press and hold the photo to see before, or use the Show before button. Use the edge buttons to change view. Swipe up for the next case or down for the previous case."}};
+//# sourceURL=mba-pro-viewer-js-extra
+</script>
+<script id="mba-pro-viewer-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-viewer.js?ver=1.6.0.1795522543"></script>
+<script id="mba-pro-layouts-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-layouts.js?ver=1.6.0.1795530495"></script>
+<script id="mba-pro-category-styles-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-category-styles.js?ver=1.6.0.1795350333"></script>
+<style id="medbeafgallery-fallback-css">
+        /* Medical Before After Gallery - Enhanced Fallback Styles */
+        body .medbeafgallery-nav-btn:hover,
+        html body .medbeafgallery-nav-btn:hover { color: #0f6b76 !important; }
+
+        body .medbeafgallery-carousel-item.active::after,
+        html body .medbeafgallery-carousel-item.active::after { background: #0f6b76 !important; }
+
+        body .medbeafgallery-load-more,
+        html body .medbeafgallery-load-more { background: #0f6b76 !important; }
+
+        body .medbeafgallery-slider-button,
+        html body .medbeafgallery-slider-button { background: #0f6b76 !important; }
+
+        body .medbeafgallery-control-btn.active,
+        html body .medbeafgallery-control-btn.active { background: #0f6b76 !important; }
+
+        body .medbeafgallery-carousel-item.active p,
+        body .medbeafgallery-carousel-item.active .medbeafgallery-category-name,
+        html body .medbeafgallery-carousel-item.active p,
+        html body .medbeafgallery-carousel-item.active .medbeafgallery-category-name { color: #0f6b76 !important; }
+
+        body .medbeafgallery-carousel-item:hover img,
+        body .medbeafgallery-carousel-item.active img,
+        html body .medbeafgallery-carousel-item:hover img,
+        html body .medbeafgallery-carousel-item.active img { border-color: #0f6b76 !important; }
+    </style></body>
+</html>

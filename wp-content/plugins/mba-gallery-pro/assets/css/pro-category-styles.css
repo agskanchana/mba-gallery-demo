@@ -1,0 +1,1720 @@
+/*
+ * Category navigation styles (Pro). The free plugin renders the category bar on
+ * one of four structures; pro-category-styles.php picks one for each Pro style,
+ * adds the style's class (mba-pro-cat-<style>) and prints any extra markup
+ * (chips, menu, search box, filter bar) right after the bar.
+ *
+ * - Photo pills (photos) and Icon chips (icons): rounded buttons on the
+ *   "buttons" markup with a photo or a line icon, the name and the case count.
+ * - Tabs (tabs): text tabs on the carousel markup with a count badge; Pro's
+ *   subcategory pills form the second row.
+ * - Treatment cards (cards): the "grid" markup as cards.
+ * - Area, then treatment (areas): the tiles as an icon segmented control, then
+ *   chips for the chosen area's treatments.
+ * - Side menu (menu), Search first (search), Filter bar (bar): their own
+ *   controls; the bar is hidden and driven by pro-category-styles.js.
+ *
+ * Armoured like the rest of the gallery CSS — themes style buttons, inputs,
+ * lists, images and text aggressively. Colours and fonts read the --mbg-*
+ * properties a site may set (see Pro's readme FAQ) through the preset's
+ * --mba-pro-layout-* tokens (which keep Dark Mode readable), falling back to the
+ * free accent. The free script hides categories with no cases through an inline
+ * display:none !important, which still beats every !important display below.
+ */
+
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-item,
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-item * {
+    box-sizing: border-box !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-photos {
+    --mba-pill-accent: var(--mbg-accent, var(--mba-pro-layout-accent, var(--medbeafgallery-primary-solid, #2563eb)));
+    --mba-pill-text: var(--mbg-text, var(--mba-pro-layout-text, #1f2937));
+    --mba-pill-muted: var(--mbg-muted, var(--mba-pro-layout-muted, #5b6675));
+    --mba-pill-bg: var(--mbg-card-bg, var(--mba-pro-layout-card, #ffffff));
+    --mba-pill-line: var(--mbg-card-border, var(--mba-pro-layout-line, #dbe2ea));
+    --mba-pill-soft: var(--mba-pro-layout-soft, #f1f5f9);
+    margin: 20px 0 26px !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-items {
+    gap: 10px !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-item {
+    display: grid !important;
+    position: relative !important;
+    height: auto !important;
+    grid-template-columns: 40px auto !important;
+    grid-template-rows: auto auto !important;
+    align-content: center !important;
+    align-items: center !important;
+    column-gap: 10px !important;
+    row-gap: 1px !important;
+    min-height: 52px !important;
+    padding: 5px 18px 5px 5px !important;
+    border: 1px solid var(--mba-pill-line) !important;
+    border-radius: 999px !important;
+    background: var(--mba-pill-bg) !important;
+    box-shadow: 0 1px 2px rgb(16 24 40 / 5%) !important;
+    color: var(--mba-pill-text) !important;
+    font-family: var(--mbg-font, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif) !important;
+    text-align: left !important;
+    cursor: pointer !important;
+    transition: border-color .2s ease, background-color .2s ease, box-shadow .2s ease !important;
+}
+
+/* The photo: a small circle beside the text. */
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-category-image {
+    display: block !important;
+    grid-row: 1 / span 2 !important;
+    grid-column: 1 !important;
+    width: 40px !important;
+    height: 40px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    background: var(--mba-pill-soft) !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-category-image :is(img, svg) {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: 100% !important;
+    max-height: none !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    position: static !important;
+    opacity: 1 !important;
+    filter: none !important;
+    object-position: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* Name above the case count. */
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-item .medbeafgallery-category-name {
+    display: block !important;
+    grid-column: 2 !important;
+    align-self: end !important;
+    justify-content: flex-start !important;
+    min-height: 0 !important;
+    background: none !important;
+    text-shadow: none !important;
+    text-decoration: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: var(--mba-pill-text) !important;
+    font-family: inherit !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 1.25 !important;
+    letter-spacing: normal !important;
+    text-align: left !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-category-meta {
+    display: block !important;
+    grid-column: 2 !important;
+    align-self: start !important;
+    margin: 0 !important;
+    background: none !important;
+    text-shadow: none !important;
+    text-decoration: none !important;
+    padding: 0 !important;
+    color: var(--mba-pill-muted) !important;
+    font-family: inherit !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 1.3 !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
+}
+
+/* A pill without a count centres its name beside the photo. */
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-item:not(:has(.medbeafgallery-category-meta)) .medbeafgallery-category-name {
+    grid-row: 1 / span 2 !important;
+    align-self: center !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-item:hover {
+    border-color: color-mix(in srgb, var(--mba-pill-accent) 55%, var(--mba-pill-line)) !important;
+    background: color-mix(in srgb, var(--mba-pill-accent) 6%, var(--mba-pill-bg)) !important;
+    transform: none !important;
+}
+
+/* The chosen category: filled with the accent colour. */
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-item.active {
+    border-color: var(--mba-pill-accent) !important;
+    background: var(--mba-pill-accent) !important;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--mba-pill-accent) 28%, transparent) !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-item.active .medbeafgallery-category-name {
+    color: #ffffff !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-item.active .medbeafgallery-category-meta {
+    color: rgb(255 255 255 / 86%) !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-item.active .medbeafgallery-category-image {
+    box-shadow: 0 0 0 2px rgb(255 255 255 / 90%) !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-item::after,
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-item::before {
+    display: none !important;
+    content: none !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-item:focus-visible {
+    outline: 3px solid var(--mba-pill-accent) !important;
+    outline-offset: 2px !important;
+}
+
+/* Phones: one swipeable row (the free buttons style), slightly smaller pills. */
+@media (max-width: 600px) {
+    .medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-wrapper {
+        margin: 0 !important;
+        padding: 2px 2px 8px !important;
+        scroll-snap-type: x proximity;
+    }
+
+    .medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-item {
+        grid-template-columns: 36px auto !important;
+        min-height: 48px !important;
+        padding: 5px 14px 5px 5px !important;
+        scroll-snap-align: start;
+    }
+
+    .medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-category-image {
+        width: 36px !important;
+        height: 36px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .medbeafgallery-category-carousel.mba-pro-cat-photos .medbeafgallery-carousel-item {
+        transition: none !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SHARED — tokens, armour, helpers (every style below)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-container {
+    --mbn-accent: var(--mba-pro-layout-accent, var(--mbg-accent, var(--medbeafgallery-primary-solid, #2563eb)));
+    --mbn-accent-text: color-mix(in srgb, var(--mbn-accent) 78%, var(--mbn-text));
+    --mbn-on-accent: var(--mba-pro-layout-on-accent, #ffffff);
+    --mbn-text: var(--mba-pro-layout-text, var(--mbg-text, #172735));
+    --mbn-muted: var(--mba-pro-layout-muted, var(--mbg-muted, #5b6675));
+    --mbn-bg: var(--mba-pro-layout-card, var(--mbg-card-bg, #ffffff));
+    --mbn-line: var(--mba-pro-layout-line, var(--mbg-card-border, #dbe2ea));
+    --mbn-soft: var(--mba-pro-layout-soft, #f1f5f9);
+    --mbn-font: var(--mbr-font, var(--mbg-font, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif));
+    --mbn-radius: var(--mbg-card-radius, var(--mba-pro-layout-radius, 12px));
+    --mbn-shadow: 0 1px 2px rgb(16 24 40 / 6%);
+    --mbn-target: 40px;
+    --mbn-chip: 36px;
+    --mbn-fold: 30px;
+}
+
+@media (pointer: coarse), (max-width: 600px) {
+    .medbeafgallery-container {
+        --mbn-target: 44px;
+        --mbn-chip: 44px;
+        --mbn-fold: 44px;
+    }
+}
+
+/* Theme type, list and box rules stop at the new controls and restyled tiles. */
+.medbeafgallery-container .mba-pro-catnav,
+.medbeafgallery-container .mba-pro-catnav :where(*),
+.medbeafgallery-container .mba-pro-catnav-bar .medbeafgallery-carousel-item,
+.medbeafgallery-container .mba-pro-catnav-bar .medbeafgallery-carousel-item :where(*),
+.medbeafgallery-container .mba-pro-catnav-bar ~ .medbeafgallery-child-categories,
+.medbeafgallery-container .mba-pro-catnav-bar ~ .medbeafgallery-child-categories :where(*) {
+    box-sizing: border-box !important;
+    font-family: var(--mbn-font) !important;
+    font-style: normal !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    text-shadow: none !important;
+    line-height: 1.3 !important;
+}
+
+.medbeafgallery-container .mba-pro-catnav :is(ul, li) {
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.medbeafgallery-container .mba-pro-catnav :is(ul, li)::marker {
+    content: none !important;
+}
+
+.medbeafgallery-container .mba-pro-catnav :is(button, input, select) {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    text-decoration: none !important;
+    text-indent: 0 !important;
+    filter: none !important;
+    transform: none !important;
+}
+
+.medbeafgallery-container :is(.mba-pro-catnav, .mba-pro-catnav-bar) svg.mba-pro-catnav-svg {
+    display: block !important;
+    flex: none !important;
+    fill: none !important;
+    stroke: currentColor !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: none !important;
+    box-shadow: none !important;
+}
+
+.medbeafgallery-container .mba-pro-catnav [hidden],
+.medbeafgallery-container .mba-pro-catnav[hidden],
+.mba-pro-catnav-mount {
+    display: none !important;
+}
+
+.medbeafgallery-container .mba-pro-catnav-sr {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/* Side menu, Search first and Filter bar: the free bar stays in the page,
+   hidden, and pro-category-styles.js drives its tiles. */
+.medbeafgallery-category-carousel.mba-pro-catnav-hidden {
+    display: none !important;
+}
+
+/* Their subcategories are part of the style's own control. */
+.medbeafgallery-category-carousel:is(.mba-pro-cat-areas, .mba-pro-cat-menu, .mba-pro-cat-bar) ~ .medbeafgallery-child-categories {
+    display: none !important;
+}
+
+/* A chip: name and count (area treatments, popular picks). */
+.medbeafgallery-container .mba-pro-catnav .mba-pro-catnav-chip {
+    display: inline-flex !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    gap: 6px !important;
+    min-height: var(--mbn-chip) !important;
+    min-width: 0 !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 14px !important;
+    border: 1px solid var(--mbn-line) !important;
+    border-radius: 999px !important;
+    background: var(--mbn-bg) !important;
+    box-shadow: none !important;
+    color: var(--mbn-text) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+    transition: border-color .15s ease, background-color .15s ease, color .15s ease !important;
+}
+
+.medbeafgallery-container .mba-pro-catnav .mba-pro-catnav-chip .mba-pro-catnav-count {
+    color: var(--mbn-muted) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+}
+
+.medbeafgallery-container .mba-pro-catnav .mba-pro-catnav-chip:hover {
+    border-color: color-mix(in srgb, var(--mbn-accent) 55%, var(--mbn-line)) !important;
+    background: color-mix(in srgb, var(--mbn-accent) 6%, var(--mbn-bg)) !important;
+}
+
+.medbeafgallery-container .mba-pro-catnav .mba-pro-catnav-chip[aria-pressed="true"] {
+    border-color: var(--mbn-accent) !important;
+    background: var(--mbn-accent) !important;
+    color: var(--mbn-on-accent) !important;
+}
+
+.medbeafgallery-container .mba-pro-catnav .mba-pro-catnav-chip[aria-pressed="true"] .mba-pro-catnav-count {
+    color: var(--mbn-on-accent) !important;
+    opacity: .85 !important;
+}
+
+.medbeafgallery-container .mba-pro-catnav :is(button, input, select, [role="option"]):focus-visible,
+.medbeafgallery-container .mba-pro-catnav-bar .medbeafgallery-carousel-item:focus-visible,
+.medbeafgallery-container .mba-pro-catnav-bar ~ .medbeafgallery-child-categories .mba-pro-subcategory-pill:focus-visible {
+    outline: 3px solid var(--mbn-accent) !important;
+    outline-offset: 2px !important;
+}
+
+.medbeafgallery-container .mba-pro-catnav .mba-pro-catchips-intro {
+    flex: none !important;
+    margin: 0 4px 0 0 !important;
+    color: var(--mbn-muted) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    white-space: nowrap !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SUBCATEGORY ROW — Pro's pills, restyled as a calm second row
+   (Tabs, Treatment cards, Icon chips, Search first)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-category-carousel:is(.mba-pro-cat-tabs, .mba-pro-cat-cards, .mba-pro-cat-icons, .mba-pro-cat-search) ~ .medbeafgallery-child-categories {
+    gap: 8px !important;
+    margin: -6px 0 20px !important;
+    padding: 0 0 4px !important;
+    border: 0 !important;
+    background: none !important;
+    justify-content: center !important;
+}
+
+.medbeafgallery-category-carousel:is(.mba-pro-cat-tabs, .mba-pro-cat-cards, .mba-pro-cat-icons, .mba-pro-cat-search) ~ .medbeafgallery-child-categories .mba-pro-subcategory-pill {
+    display: inline-flex !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    gap: 6px !important;
+    min-height: var(--mbn-chip) !important;
+    margin: 0 !important;
+    padding: 0 14px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: var(--mbn-soft) !important;
+    box-shadow: none !important;
+    color: var(--mbn-text) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    filter: none !important;
+    cursor: pointer !important;
+}
+
+.medbeafgallery-category-carousel:is(.mba-pro-cat-tabs, .mba-pro-cat-cards, .mba-pro-cat-icons, .mba-pro-cat-search) ~ .medbeafgallery-child-categories .mba-pro-pill-count {
+    color: var(--mbn-muted) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    opacity: 1 !important;
+}
+
+.medbeafgallery-category-carousel:is(.mba-pro-cat-tabs, .mba-pro-cat-cards, .mba-pro-cat-icons, .mba-pro-cat-search) ~ .medbeafgallery-child-categories .mba-pro-subcategory-pill:hover {
+    background: color-mix(in srgb, var(--mbn-accent) 10%, var(--mbn-soft)) !important;
+    color: var(--mbn-text) !important;
+}
+
+.medbeafgallery-category-carousel:is(.mba-pro-cat-tabs, .mba-pro-cat-cards, .mba-pro-cat-icons, .mba-pro-cat-search) ~ .medbeafgallery-child-categories .mba-pro-subcategory-pill.active {
+    background: color-mix(in srgb, var(--mbn-accent) 14%, var(--mbn-bg)) !important;
+    box-shadow: inset 0 0 0 1.5px var(--mbn-accent) !important;
+    color: var(--mbn-text) !important;
+}
+
+.medbeafgallery-category-carousel:is(.mba-pro-cat-tabs, .mba-pro-cat-cards, .mba-pro-cat-icons, .mba-pro-cat-search) ~ .medbeafgallery-child-categories .mba-pro-subcategory-pill.active .mba-pro-pill-count {
+    color: var(--mbn-text) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TABS — count badge after each name (layout from pro-subcategories.css)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-wrapper {
+    border-bottom-color: var(--mbn-line) !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-items {
+    gap: 6px !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-item {
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 8px !important;
+    min-height: 48px !important;
+    padding: 0 16px !important;
+    margin: 0 0 -1px !important;
+    border: 0 !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-item:hover {
+    background: color-mix(in srgb, var(--mbn-accent) 6%, transparent) !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-item.active {
+    border-bottom-color: var(--mbn-accent) !important;
+    background: transparent !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-item .medbeafgallery-category-name {
+    margin: 0 !important;
+    padding: 0 !important;
+    color: var(--mbn-muted) !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    white-space: nowrap !important;
+    background: none !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-item.active .medbeafgallery-category-name {
+    color: var(--mbn-text) !important;
+    font-weight: 600 !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-category-meta {
+    display: inline-block !important;
+    min-width: 22px !important;
+    margin: 0 !important;
+    padding: 1px 7px !important;
+    border-radius: 999px !important;
+    background: var(--mbn-soft) !important;
+    color: var(--mbn-muted) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-tabs .medbeafgallery-carousel-item.active .medbeafgallery-category-meta {
+    background: var(--mbn-accent) !important;
+    color: var(--mbn-on-accent) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TREATMENT CARDS — cover photo, name, count and what each one includes
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-category-carousel.mba-pro-cat-cards {
+    margin: 20px 0 26px !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-wrapper {
+    padding: 2px !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    background: none !important;
+    border-radius: 0 !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-items {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)) !important;
+    gap: 14px !important;
+    width: auto !important;
+    transform: none !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    grid-template-rows: auto auto 1fr !important;
+    grid-template-areas: "cover cover" "name count" "inc inc" !important;
+    align-items: baseline !important;
+    position: relative !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 1px solid var(--mbn-line) !important;
+    border-radius: var(--mbn-radius) !important;
+    background: var(--mbn-bg) !important;
+    box-shadow: var(--mbn-shadow) !important;
+    overflow: hidden !important;
+    text-align: left !important;
+    transform: none !important;
+    cursor: pointer !important;
+    transition: border-color .15s ease, box-shadow .15s ease !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item::before,
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item::after {
+    display: none !important;
+    content: none !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item .medbeafgallery-category-image {
+    grid-area: cover !important;
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 10 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: var(--mbn-soft) !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item .medbeafgallery-category-image :is(img, svg) {
+    display: block !important;
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    opacity: 1 !important;
+    filter: none !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/* "All", and a category without a result photo: a neutral cover, not a placeholder. */
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item[data-id="all"] .medbeafgallery-category-image,
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item .medbeafgallery-category-image:has(> svg) {
+    background:
+        linear-gradient(90deg, color-mix(in srgb, var(--mbn-line) 70%, var(--mbn-soft)) 0 25%, var(--mbn-soft) 0 50%, color-mix(in srgb, var(--mbn-line) 45%, var(--mbn-soft)) 0 75%, color-mix(in srgb, var(--mbn-line) 85%, var(--mbn-soft)) 0) !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item[data-id="all"] .medbeafgallery-category-image > *,
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item .medbeafgallery-category-image > svg {
+    display: none !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item .medbeafgallery-category-name {
+    grid-area: name !important;
+    display: block !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 10px 6px 0 12px !important;
+    background: none !important;
+    color: var(--mbn-text) !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    text-align: left !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item .medbeafgallery-category-meta {
+    grid-area: count !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 10px 12px 0 0 !important;
+    background: none !important;
+    color: var(--mbn-muted) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item .mba-pro-catnav-includes {
+    grid-area: inc !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 3px 12px 12px !important;
+    color: var(--mbn-muted) !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    line-height: 1.4 !important;
+    align-self: start !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item:not(:has(.mba-pro-catnav-includes)) .medbeafgallery-category-name,
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item:not(:has(.mba-pro-catnav-includes)) .medbeafgallery-category-meta {
+    padding-bottom: 12px !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item:hover {
+    border-color: color-mix(in srgb, var(--mbn-accent) 50%, var(--mbn-line)) !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item.active {
+    border-color: var(--mbn-accent) !important;
+    box-shadow: 0 0 0 2px var(--mbn-accent) !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item.active .medbeafgallery-category-meta {
+    color: var(--mbn-accent-text) !important;
+}
+
+/* Phones: one row of cards to swipe, inside the gallery's width. */
+@media (max-width: 600px) {
+    .medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-wrapper {
+        overflow: hidden !important;
+    }
+
+    .medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-items {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        gap: 10px !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        overscroll-behavior-x: contain;
+        padding: 2px 2px 8px !important;
+        scroll-snap-type: x proximity;
+        scrollbar-width: none !important;
+    }
+
+    .medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-items::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item {
+        flex: 0 0 150px !important;
+        width: 150px !important;
+        scroll-snap-align: start;
+    }
+
+    .medbeafgallery-category-carousel.mba-pro-cat-cards .medbeafgallery-carousel-item .medbeafgallery-category-name {
+        font-size: 14px !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ICON CHIPS — a line icon, the name and the case count in each button
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-category-carousel.mba-pro-cat-icons {
+    margin: 20px 0 26px !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-icons .medbeafgallery-carousel-items {
+    gap: 10px !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-icons .medbeafgallery-carousel-item {
+    display: grid !important;
+    position: relative !important;
+    grid-template-columns: 40px auto !important;
+    grid-template-rows: auto auto !important;
+    align-content: center !important;
+    align-items: center !important;
+    column-gap: 10px !important;
+    row-gap: 1px !important;
+    height: auto !important;
+    min-height: 52px !important;
+    margin: 0 !important;
+    padding: 5px 18px 5px 5px !important;
+    border: 1px solid var(--mbn-line) !important;
+    border-radius: 999px !important;
+    background: var(--mbn-bg) !important;
+    box-shadow: var(--mbn-shadow) !important;
+    color: var(--mbn-text) !important;
+    text-align: left !important;
+    transform: none !important;
+    cursor: pointer !important;
+    transition: border-color .15s ease, background-color .15s ease, box-shadow .15s ease !important;
+}
+
+.medbeafgallery-category-carousel:is(.mba-pro-cat-icons, .mba-pro-cat-areas) .medbeafgallery-carousel-item::after,
+.medbeafgallery-category-carousel:is(.mba-pro-cat-icons, .mba-pro-cat-areas) .medbeafgallery-carousel-item::before {
+    display: none !important;
+    content: none !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-icons .medbeafgallery-carousel-item .medbeafgallery-category-image {
+    display: flex !important;
+    grid-row: 1 / span 2 !important;
+    grid-column: 1 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 40px !important;
+    height: 40px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 50% !important;
+    background: color-mix(in srgb, var(--mbn-accent) 10%, var(--mbn-bg)) !important;
+    box-shadow: none !important;
+    color: var(--mbn-accent) !important;
+    overflow: hidden !important;
+}
+
+/* Until the icon is in (one inline script after the bar), show only the circle. */
+.medbeafgallery-category-carousel:is(.mba-pro-cat-icons, .mba-pro-cat-areas) .medbeafgallery-category-image:not(.mba-pro-catnav-icon) > * {
+    visibility: hidden !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-icons .medbeafgallery-carousel-item .medbeafgallery-category-image svg {
+    width: 22px !important;
+    height: 22px !important;
+}
+
+.medbeafgallery-category-carousel:is(.mba-pro-cat-icons, .mba-pro-cat-areas) .medbeafgallery-carousel-item .medbeafgallery-category-name {
+    display: block !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    color: inherit !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 1.25 !important;
+    white-space: nowrap !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-icons .medbeafgallery-carousel-item .medbeafgallery-category-name {
+    grid-column: 2 !important;
+    align-self: end !important;
+    text-align: left !important;
+}
+
+.medbeafgallery-category-carousel:is(.mba-pro-cat-icons, .mba-pro-cat-areas) .medbeafgallery-carousel-item .medbeafgallery-category-meta {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    color: var(--mbn-muted) !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    white-space: nowrap !important;
+}
+
+/* Free's buttons style paints the chosen name white with one more class. */
+.medbeafgallery-category-carousel:is(.mba-pro-cat-icons, .mba-pro-cat-areas) .medbeafgallery-carousel-item.active .medbeafgallery-category-name {
+    color: inherit !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-icons .medbeafgallery-carousel-item .medbeafgallery-category-meta {
+    grid-column: 2 !important;
+    align-self: start !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-icons .medbeafgallery-carousel-item:hover {
+    border-color: color-mix(in srgb, var(--mbn-accent) 55%, var(--mbn-line)) !important;
+    background: color-mix(in srgb, var(--mbn-accent) 6%, var(--mbn-bg)) !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-icons .medbeafgallery-carousel-item.active {
+    border-color: var(--mbn-accent) !important;
+    background: var(--mbn-accent) !important;
+    color: var(--mbn-on-accent) !important;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--mbn-accent) 28%, transparent) !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-icons .medbeafgallery-carousel-item.active .medbeafgallery-category-image {
+    background: color-mix(in srgb, var(--mbn-on-accent) 18%, transparent) !important;
+    color: var(--mbn-on-accent) !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-icons .medbeafgallery-carousel-item.active .medbeafgallery-category-meta {
+    color: var(--mbn-on-accent) !important;
+    opacity: .86 !important;
+}
+
+@media (max-width: 600px) {
+    .medbeafgallery-category-carousel.mba-pro-cat-icons .medbeafgallery-carousel-wrapper {
+        margin: 0 !important;
+        padding: 2px 2px 8px !important;
+        scroll-snap-type: x proximity;
+    }
+
+    .medbeafgallery-category-carousel.mba-pro-cat-icons .medbeafgallery-carousel-item {
+        grid-template-columns: 36px auto !important;
+        min-height: 48px !important;
+        padding: 5px 14px 5px 5px !important;
+        scroll-snap-align: start;
+    }
+
+    .medbeafgallery-category-carousel.mba-pro-cat-icons .medbeafgallery-carousel-item .medbeafgallery-category-image {
+        width: 36px !important;
+        height: 36px !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   AREA, THEN TREATMENT — icon segmented control + treatment chips
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-category-carousel.mba-pro-cat-areas {
+    margin: 20px 0 14px !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-areas .medbeafgallery-carousel-wrapper {
+    display: flex !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: none !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-areas .medbeafgallery-carousel-items {
+    display: inline-flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    gap: 6px !important;
+    width: auto !important;
+    max-width: 100% !important;
+    padding: 6px !important;
+    border-radius: calc(var(--mbn-radius) + 4px) !important;
+    background: var(--mbn-soft) !important;
+    overflow-x: auto !important;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-areas .medbeafgallery-carousel-items::-webkit-scrollbar {
+    display: none !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-areas .medbeafgallery-carousel-item {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 5px !important;
+    width: 112px !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 12px 8px 10px !important;
+    border: 0 !important;
+    border-radius: var(--mbn-radius) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: color-mix(in srgb, var(--mbn-text) 82%, var(--mbn-muted)) !important;
+    text-align: center !important;
+    transform: none !important;
+    cursor: pointer !important;
+    transition: background-color .15s ease, box-shadow .15s ease, color .15s ease !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-areas .medbeafgallery-carousel-item .medbeafgallery-category-image {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 28px !important;
+    height: 28px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: none !important;
+    box-shadow: none !important;
+    color: inherit !important;
+    overflow: visible !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-areas .medbeafgallery-carousel-item .medbeafgallery-category-image svg {
+    width: 26px !important;
+    height: 26px !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-areas .medbeafgallery-carousel-item .medbeafgallery-category-name {
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    text-align: center !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-areas .medbeafgallery-carousel-item:hover {
+    background: color-mix(in srgb, var(--mbn-bg) 60%, transparent) !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-areas .medbeafgallery-carousel-item.active {
+    background: var(--mbn-bg) !important;
+    box-shadow: 0 1px 3px rgb(16 24 40 / 12%), 0 0 0 1.5px var(--mbn-accent) !important;
+    color: var(--mbn-accent-text) !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-areas .medbeafgallery-carousel-item.active .medbeafgallery-category-meta {
+    color: color-mix(in srgb, var(--mbn-text) 82%, var(--mbn-muted)) !important;
+}
+
+.medbeafgallery-container .mba-pro-catnav.mba-pro-catchips {
+    display: block !important;
+    margin: 0 0 22px !important;
+    padding: 0 !important;
+}
+
+.medbeafgallery-container .mba-pro-catnav.mba-pro-catchips:not(.mba-pro-catchips-none) {
+    min-height: var(--mbn-chip) !important;
+}
+
+.medbeafgallery-container .mba-pro-catnav.mba-pro-catchips .mba-pro-catchips-set {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+@media (max-width: 600px) {
+    .medbeafgallery-category-carousel.mba-pro-cat-areas .medbeafgallery-carousel-wrapper {
+        display: block !important;
+    }
+
+    .medbeafgallery-category-carousel.mba-pro-cat-areas .medbeafgallery-carousel-items {
+        display: flex !important;
+        width: 100% !important;
+        gap: 4px !important;
+        padding: 4px !important;
+    }
+
+    .medbeafgallery-category-carousel.mba-pro-cat-areas .medbeafgallery-carousel-item {
+        flex: 1 0 72px !important;
+        width: 72px !important;
+        gap: 3px !important;
+        padding: 9px 4px 8px !important;
+    }
+
+    .medbeafgallery-category-carousel.mba-pro-cat-areas .medbeafgallery-carousel-item .medbeafgallery-category-name {
+        font-size: 12px !important;
+    }
+
+    .medbeafgallery-category-carousel.mba-pro-cat-areas .medbeafgallery-carousel-item .medbeafgallery-category-meta {
+        font-size: 11px !important;
+    }
+
+    .medbeafgallery-container .mba-pro-catnav.mba-pro-catchips .mba-pro-catchips-set {
+        flex-wrap: nowrap !important;
+        justify-content: flex-start !important;
+        overflow-x: auto !important;
+        overscroll-behavior-x: contain;
+        padding: 2px 2px 6px !important;
+        scrollbar-width: none !important;
+    }
+
+    .medbeafgallery-container .mba-pro-catnav.mba-pro-catchips .mba-pro-catchips-set::-webkit-scrollbar {
+        display: none !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SIDE MENU — a folding treatment list beside the gallery
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 768px) {
+    .medbeafgallery-container .medbeafgallery-gallery-layout.mba-pro-catmenu-layout,
+    .medbeafgallery-container .medbeafgallery-gallery-layout:has(> .mba-pro-catmenu) {
+        display: grid !important;
+        grid-template-columns: minmax(200px, 256px) minmax(0, 1fr) !important;
+        grid-auto-rows: auto !important;
+        column-gap: 32px !important;
+        row-gap: 20px !important;
+        align-items: start !important;
+    }
+
+    .medbeafgallery-container .medbeafgallery-gallery-layout > .mba-pro-catmenu {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+    }
+
+    .medbeafgallery-container .medbeafgallery-gallery-layout:is(.mba-pro-catmenu-layout, :has(> .mba-pro-catmenu)) > .medbeafgallery-filter-sidebar {
+        grid-column: 1 !important;
+        grid-row: 2 !important;
+        width: auto !important;
+        min-width: 0 !important;
+    }
+
+    .medbeafgallery-container .medbeafgallery-gallery-layout:is(.mba-pro-catmenu-layout, :has(> .mba-pro-catmenu)) > .medbeafgallery-main-content {
+        grid-column: 2 !important;
+        grid-row: 1 / span 40 !important;
+        width: auto !important;
+        min-width: 0 !important;
+    }
+
+    /* Without a filter sidebar beside it, the list stays in view while visitors scroll. */
+    .medbeafgallery-container .medbeafgallery-gallery-layout:not(:has(> .medbeafgallery-filter-sidebar)) > .mba-pro-catmenu,
+    .medbeafgallery-container.mba-pro-filters-drawer .medbeafgallery-gallery-layout > .mba-pro-catmenu {
+        position: sticky !important;
+        top: 32px !important;
+        max-height: calc(100vh - 48px) !important;
+        overflow-y: auto !important;
+        overscroll-behavior: contain;
+    }
+
+}
+
+.medbeafgallery-container .mba-pro-catnav.mba-pro-catmenu {
+    display: block !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: var(--mbn-text) !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-title {
+    margin: 0 !important;
+    padding: 0 12px 10px calc(var(--mbn-fold) + 14px) !important;
+    color: var(--mbn-muted) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-list,
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-sublist {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-sublist {
+    padding: 2px 0 6px calc(var(--mbn-fold) + 2px) !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 2px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu :is(.mba-pro-catmenu-fold, .mba-pro-catmenu-spacer) {
+    flex: 0 0 var(--mbn-fold) !important;
+    width: var(--mbn-fold) !important;
+    height: var(--mbn-target) !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-fold {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: var(--mbn-muted) !important;
+    cursor: pointer !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-fold:hover {
+    background: var(--mbn-soft) !important;
+    color: var(--mbn-text) !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-fold svg {
+    transition: transform .15s ease !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-fold[aria-expanded="true"] svg {
+    transform: rotate(90deg) !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-item {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: var(--mbn-target) !important;
+    margin: 0 !important;
+    padding: 6px 12px !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: var(--mbn-text) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    text-align: left !important;
+    cursor: pointer !important;
+    transition: background-color .15s ease, color .15s ease !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-item.mba-pro-catmenu-sub {
+    min-height: max(34px, var(--mbn-target) - 6px) !important;
+    color: color-mix(in srgb, var(--mbn-text) 82%, var(--mbn-muted)) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-item .mba-pro-catnav-name {
+    min-width: 0 !important;
+    overflow-wrap: anywhere !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-item .mba-pro-catnav-count {
+    flex: none !important;
+    color: var(--mbn-muted) !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-item:hover {
+    background: var(--mbn-soft) !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-item[aria-pressed="true"] {
+    background: color-mix(in srgb, var(--mbn-accent) 11%, var(--mbn-bg)) !important;
+    color: var(--mbn-accent-text) !important;
+    font-weight: 600 !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-item[aria-pressed="true"] .mba-pro-catnav-count {
+    color: var(--mbn-accent-text) !important;
+}
+
+/* Phones: a "Treatments" button above the gallery opens the same list. */
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-toggle {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    width: 100% !important;
+    min-height: 52px !important;
+    margin: 0 !important;
+    padding: 6px 16px !important;
+    border: 1px solid var(--mbn-line) !important;
+    border-radius: var(--mbn-radius) !important;
+    background: var(--mbn-bg) !important;
+    box-shadow: var(--mbn-shadow) !important;
+    color: var(--mbn-text) !important;
+    text-align: left !important;
+    cursor: pointer !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-toggle-text {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1px !important;
+    min-width: 0 !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-toggle-label {
+    color: var(--mbn-muted) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-current {
+    overflow: hidden !important;
+    color: var(--mbn-text) !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-toggle svg {
+    transform: rotate(90deg) !important;
+    transition: transform .15s ease !important;
+}
+
+.medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-toggle[aria-expanded="true"] svg {
+    transform: rotate(-90deg) !important;
+}
+
+@media (max-width: 767px) {
+    .medbeafgallery-container .mba-pro-catnav.mba-pro-catmenu {
+        width: 100% !important;
+        margin: 0 0 16px !important;
+    }
+
+    .medbeafgallery-container .mba-pro-catmenu:not(.is-open) .mba-pro-catmenu-panel {
+        display: none !important;
+    }
+
+    .medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-panel {
+        margin: 8px 0 0 !important;
+        padding: 6px !important;
+        border: 1px solid var(--mbn-line) !important;
+        border-radius: var(--mbn-radius) !important;
+        background: var(--mbn-bg) !important;
+    }
+
+    .medbeafgallery-container .mba-pro-catmenu .mba-pro-catmenu-title {
+        display: none !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SEARCH FIRST — "Find a treatment" with suggestions and popular picks
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-container .mba-pro-catnav.mba-pro-catsearch {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin: 20px 0 24px !important;
+    padding: 0 !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-field {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    width: 640px !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-label {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: color-mix(in srgb, var(--mbn-text) 85%, var(--mbn-muted)) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-box {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    height: 52px !important;
+    margin: 0 !important;
+    padding: 0 8px 0 16px !important;
+    border: 1.5px solid color-mix(in srgb, var(--mbn-line) 70%, var(--mbn-muted)) !important;
+    border-radius: var(--mbn-radius) !important;
+    background: var(--mbn-bg) !important;
+    box-shadow: 0 1px 3px rgb(16 24 40 / 8%) !important;
+    color: var(--mbn-muted) !important;
+    transition: border-color .15s ease, box-shadow .15s ease !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-box:focus-within {
+    border-color: var(--mbn-accent) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--mbn-accent) 20%, transparent) !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch input.mba-pro-catsearch-input {
+    flex: 1 1 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: var(--mbn-text) !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch input.mba-pro-catsearch-input::placeholder {
+    color: var(--mbn-muted) !important;
+    opacity: 1 !important;
+}
+
+/* The box itself shows the focus ring. */
+.medbeafgallery-container .mba-pro-catsearch input.mba-pro-catsearch-input:focus-visible {
+    outline: none !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-clear {
+    display: inline-flex !important;
+    flex: 0 1 auto !important;
+    align-items: center !important;
+    gap: 6px !important;
+    max-width: 55% !important;
+    min-height: 36px !important;
+    margin: 0 !important;
+    padding: 0 12px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: var(--mbn-soft) !important;
+    box-shadow: none !important;
+    color: var(--mbn-text) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-pick {
+    min-width: 0 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-x {
+    font-size: 16px !important;
+    line-height: 1 !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-clear:hover {
+    background: color-mix(in srgb, var(--mbn-accent) 12%, var(--mbn-soft)) !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-list {
+    position: absolute !important;
+    z-index: 30 !important;
+    top: calc(100% + 6px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+    max-height: min(340px, 60vh) !important;
+    margin: 0 !important;
+    padding: 6px !important;
+    overflow-y: auto !important;
+    border: 1px solid var(--mbn-line) !important;
+    border-radius: var(--mbn-radius) !important;
+    background: var(--mbn-bg) !important;
+    box-shadow: 0 12px 32px rgb(16 24 40 / 14%) !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-option {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    min-height: 48px !important;
+    margin: 0 !important;
+    padding: 6px 12px !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    color: var(--mbn-text) !important;
+    cursor: pointer !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-option:hover,
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-option.is-active {
+    background: var(--mbn-soft) !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-option.is-active {
+    box-shadow: inset 3px 0 0 var(--mbn-accent) !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-text {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+    min-width: 0 !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-name {
+    color: var(--mbn-text) !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch :is(.mba-pro-catsearch-area, .mba-pro-catsearch-count) {
+    color: var(--mbn-muted) !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-count {
+    flex: none !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-empty {
+    padding: 12px !important;
+    color: var(--mbn-muted) !important;
+    font-size: 14px !important;
+}
+
+.medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-popular {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+@media (max-width: 600px) {
+    .medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-popular {
+        flex-wrap: nowrap !important;
+        justify-content: flex-start !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        overscroll-behavior-x: contain;
+        padding: 2px 2px 6px !important;
+        scrollbar-width: none !important;
+    }
+
+    .medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-popular::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .medbeafgallery-container .mba-pro-catsearch .mba-pro-catsearch-clear {
+        min-height: 40px !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FILTER BAR — treatment, doctor and recovery drop-downs in one bar
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-container .mba-pro-catnav.mba-pro-catbar {
+    display: flex !important;
+    align-items: stretch !important;
+    margin: 20px 0 24px !important;
+    padding: 0 !important;
+    border: 1px solid var(--mbn-line) !important;
+    border-radius: calc(var(--mbn-radius) + 2px) !important;
+    background: var(--mbn-bg) !important;
+    box-shadow: 0 1px 3px rgb(16 24 40 / 6%) !important;
+    color: var(--mbn-text) !important;
+}
+
+.medbeafgallery-container .mba-pro-catbar .mba-pro-catbar-field {
+    display: flex !important;
+    flex: 1 1 0 !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 10px 18px !important;
+    border: 0 !important;
+    border-right: 1px solid color-mix(in srgb, var(--mbn-line) 70%, transparent) !important;
+}
+
+.medbeafgallery-container .mba-pro-catbar .mba-pro-catbar-treat {
+    flex-grow: 1.3 !important;
+}
+
+.medbeafgallery-container .mba-pro-catbar .mba-pro-catbar-label {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: var(--mbn-muted) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+}
+
+.medbeafgallery-container .mba-pro-catbar .mba-pro-catbar-shell {
+    position: relative !important;
+    display: block !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+}
+
+.medbeafgallery-container .mba-pro-catbar select.mba-pro-catbar-select {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 32px !important;
+    min-height: 32px !important;
+    margin: 0 !important;
+    padding: 0 24px 0 0 !important;
+    border: 0 !important;
+    border-radius: 4px !important;
+    outline: none !important;
+    background: transparent none !important;
+    box-shadow: none !important;
+    color: var(--mbn-text) !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    line-height: 32px !important;
+    text-overflow: ellipsis !important;
+    cursor: pointer !important;
+}
+
+.medbeafgallery-container .mba-pro-catbar select.mba-pro-catbar-select option,
+.medbeafgallery-container .mba-pro-catbar select.mba-pro-catbar-select optgroup {
+    background: var(--mbn-bg) !important;
+    color: var(--mbn-text) !important;
+    font-weight: 400 !important;
+}
+
+.medbeafgallery-container .mba-pro-catbar select.mba-pro-catbar-select optgroup {
+    font-weight: 600 !important;
+}
+
+.medbeafgallery-container .mba-pro-catbar select.mba-pro-catbar-select:focus-visible {
+    outline: 3px solid var(--mbn-accent) !important;
+    outline-offset: 3px !important;
+}
+
+.medbeafgallery-container .mba-pro-catbar .mba-pro-catbar-chevron {
+    position: absolute !important;
+    top: 50% !important;
+    right: 0 !important;
+    margin-top: -8px !important;
+    color: var(--mbn-muted) !important;
+    pointer-events: none !important;
+}
+
+.medbeafgallery-container .mba-pro-catbar .mba-pro-catbar-end {
+    display: flex !important;
+    flex: none !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 12px !important;
+    margin: 0 !important;
+    padding: 8px 10px 8px 18px !important;
+}
+
+.medbeafgallery-container .mba-pro-catbar .mba-pro-catbar-count {
+    color: color-mix(in srgb, var(--mbn-text) 82%, var(--mbn-muted)) !important;
+    font-size: 14px !important;
+    white-space: nowrap !important;
+}
+
+.medbeafgallery-container .mba-pro-catbar .mba-pro-catbar-count strong {
+    color: var(--mbn-text) !important;
+    font-weight: 700 !important;
+}
+
+.medbeafgallery-container .mba-pro-catbar .mba-pro-catbar-clear {
+    line-height: 1.2 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: var(--mbn-target) !important;
+    margin: 0 !important;
+    padding: 0 16px !important;
+    border: 0 !important;
+    border-radius: 10px !important;
+    background: var(--mbn-soft) !important;
+    box-shadow: none !important;
+    color: var(--mbn-muted) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+    transition: background-color .15s ease, color .15s ease !important;
+}
+
+.medbeafgallery-container .mba-pro-catbar.mba-pro-catbar-active .mba-pro-catbar-clear {
+    background: var(--mbn-accent) !important;
+    color: var(--mbn-on-accent) !important;
+}
+
+/* Phones: the bar wraps onto two lines. */
+@media (max-width: 700px) {
+    .medbeafgallery-container .mba-pro-catnav.mba-pro-catbar {
+        flex-wrap: wrap !important;
+    }
+
+    .medbeafgallery-container .mba-pro-catbar .mba-pro-catbar-field {
+        flex: 1 1 50% !important;
+        padding: 9px 14px !important;
+        border-right: 0 !important;
+        border-bottom: 1px solid color-mix(in srgb, var(--mbn-line) 70%, transparent) !important;
+    }
+
+    /* The last drop-down shares the second line with the count and Clear. */
+    .medbeafgallery-container .mba-pro-catbar .mba-pro-catbar-field:nth-last-child(2) {
+        flex: 1 1 0 !important;
+        border-bottom: 0 !important;
+    }
+
+    .medbeafgallery-container .mba-pro-catbar.mba-pro-catbar-fields-2 .mba-pro-catbar-treat {
+        flex-basis: 100% !important;
+    }
+
+    .medbeafgallery-container .mba-pro-catbar .mba-pro-catbar-end {
+        flex: 0 0 auto !important;
+        padding: 6px 8px 6px 14px !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   CUSTOM ICON IMAGES (icon chips, area then treatment) — the same slot and size
+   as the line icons. Tinted: the image is a mask over the current text colour,
+   so it follows the chip's normal, hover and chosen colours.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-category-carousel:is(.mba-pro-cat-icons, .mba-pro-cat-areas) .medbeafgallery-category-image .mba-pro-catnav-img {
+    display: block !important;
+    flex: none !important;
+    width: 22px !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 22px !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: none !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    object-fit: contain !important;
+    filter: none !important;
+    transform: none !important;
+}
+
+.medbeafgallery-category-carousel.mba-pro-cat-areas .medbeafgallery-category-image .mba-pro-catnav-img {
+    width: 26px !important;
+    height: 26px !important;
+}
+
+.medbeafgallery-category-carousel:is(.mba-pro-cat-icons, .mba-pro-cat-areas) .medbeafgallery-category-image .mba-pro-catnav-img-tint {
+    background: currentColor !important;
+    -webkit-mask: var(--mba-pro-icon-img) center / contain no-repeat !important;
+    mask: var(--mba-pro-icon-img) center / contain no-repeat !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LAST WORD — rules that must beat the display rules above
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.medbeafgallery-container .mba-pro-catnav.mba-pro-catnav [hidden][hidden],
+.medbeafgallery-container .mba-pro-catnav.mba-pro-catnav[hidden][hidden] {
+    display: none !important;
+}
+
+@media (min-width: 768px) {
+    .medbeafgallery-container .mba-pro-catnav.mba-pro-catmenu .mba-pro-catmenu-toggle.mba-pro-catmenu-toggle {
+        display: none !important;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+    .medbeafgallery-container :is(.mba-pro-catnav, .mba-pro-catnav-bar) :where(*),
+    .medbeafgallery-container .mba-pro-catnav-bar ~ .medbeafgallery-child-categories,
+    .medbeafgallery-container .mba-pro-catnav-bar ~ .medbeafgallery-child-categories :where(*) {
+        transition: none !important;
+        animation: none !important;
+        scroll-behavior: auto !important;
+    }
+}

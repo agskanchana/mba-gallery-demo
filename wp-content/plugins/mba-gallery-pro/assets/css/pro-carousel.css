@@ -1,12 +1,18 @@
 /**
- * Pro Category Carousel Styles
+ * Pro Category Carousel Styles — [mba_category_carousel]
+ *
+ * Follows the gallery's card language: the photos are the content; the text
+ * sits under them on the page background (no card box), one quiet control row
+ * on the right that appears only when the cards overflow, small round dots.
+ *
+ * Armoured on purpose (!important, doubled class selectors): this block is
+ * injected into arbitrary themes, and tests/theme-resilience/hostile.css
+ * restyles buttons, headings, lists, images, line-heights and SVG fills.
  *
  * @package MBA_Gallery_Pro
  */
 
-/* Theme defense: this block is injected into arbitrary themes. Own the
-   box-sizing reset (it had none) and re-assert icon colours so a host theme's
-   broad `*`/`svg` rules can't disfigure it. See tests/theme-resilience/. */
+/* ─── Theme defence ───────────────────────────────────────────────── */
 .mba-carousel-wrapper,
 .mba-carousel-wrapper *,
 .mba-carousel-wrapper *::before,
@@ -22,15 +28,30 @@
     stroke: none !important;
 }
 
+/* Tokens. Inherit the theme's text colour and font; accent = the gallery's
+   brand colour. --mba-pro-layout-* win when a page sets them. */
+.mba-carousel-wrapper {
+    --mba-car-text: var(--mba-pro-layout-text, currentColor);
+    --mba-car-muted: var(--mba-pro-layout-muted, color-mix(in srgb, currentColor 70%, transparent));
+    --mba-car-line: var(--mba-pro-layout-line, color-mix(in srgb, currentColor 24%, transparent));
+    --mba-car-accent: var(--mba-pro-layout-accent, var(--medbeafgallery-primary-solid, #2563eb));
+    --mba-car-radius: var(--mba-pro-layout-radius, 12px);
+    --mba-car-photo-bg: var(--mba-pro-layout-photo-bg, #e9edf0);
+}
+
 /* ─── Wrapper ─────────────────────────────────────────────────────── */
 .mba-carousel-wrapper {
-    margin: 30px 0;
-    position: relative;
+    position: relative !important;
+    margin: 32px 0 !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    color: inherit;
+    font-family: inherit;
 }
 
 .mba-carousel-empty {
     text-align: center;
-    color: #6b7280;
+    color: #4b5563;
     padding: 40px 20px;
     font-size: 15px;
     background: #f9fafb;
@@ -38,291 +59,501 @@
     border: 1px dashed #d1d5db;
 }
 
-/* ─── Splide overrides ────────────────────────────────────────────── */
-.mba-pro-carousel .splide__track {
-    padding: 10px 0 20px;
+/* ─── Header row: controls on the right ───────────────────────────── */
+.mba-carousel-wrapper .mba-carousel-head {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 12px !important;
+    margin: 0 0 10px !important;
+    padding: 0 6px !important;
 }
 
-.mba-pro-carousel .splide__slide {
-    padding: 0 0 10px;
+.mba-carousel-wrapper .mba-carousel-head[hidden] {
+    display: none !important;
 }
 
-/* Arrows */
-.mba-pro-carousel .splide__arrow {
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid #e5e7eb;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    opacity: 1;
-    transition: all 0.25s ease;
-    top: 40%;
-}
-
-/* Flip the prev arrow (splide-core.min.css does not include this) */
-.mba-pro-carousel .splide__arrow--prev svg {
-    transform: scaleX(-1);
-}
-
-.mba-pro-carousel .splide__arrow:hover {
-    background: var(--medbeafgallery-primary-solid, #2563eb);
-    border-color: var(--medbeafgallery-primary-solid, #2563eb);
-}
-
-.mba-pro-carousel .splide__arrow svg {
-    fill: #374151;
-    width: 18px;
-    height: 18px;
-    transition: fill 0.25s ease;
-}
-
-.mba-pro-carousel .splide__arrow:hover svg {
-    fill: #fff;
-}
-
-.mba-pro-carousel .splide__arrow--prev {
-    left: -16px;
-}
-
-.mba-pro-carousel .splide__arrow--next {
-    right: -16px;
-}
-
-.mba-pro-carousel .splide__arrow:disabled {
-    opacity: 0.35;
-    cursor: default;
-    pointer-events: none;
-}
-
-/* Pagination dots */
-.mba-pro-carousel .splide__pagination {
-    bottom: -8px;
-    gap: 6px;
-}
-
-.mba-pro-carousel .splide__pagination__page {
-    width: 8px;
-    height: 8px;
-    background: #d1d5db;
-    border: none;
-    opacity: 1;
-    transition: all 0.25s ease;
-}
-
-.mba-pro-carousel .splide__pagination__page.is-active {
-    background: var(--medbeafgallery-primary-solid, #2563eb);
-    transform: scale(1.3);
-}
-
-/* ─── Card ────────────────────────────────────────────────────────── */
-.mba-carousel-card {
-    position: relative;
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    cursor: pointer;
-    height: 100%;
+/* No !important on display: Splide hides its arrow box with an inline style. */
+.mba-carousel-wrapper .mba-carousel-controls,
+.mba-carousel-wrapper .mba-carousel-arrows {
     display: flex;
-    flex-direction: column;
+    align-items: center !important;
+    gap: 8px !important;
+    position: static !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-.mba-carousel-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+/* Round icon buttons: line border, page-coloured (transparent) background. */
+.mba-carousel-wrapper .mba-carousel-head .mba-carousel-ctrl,
+.mba-carousel-wrapper .mba-pro-carousel .splide__arrow {
+    all: unset;
+    position: static !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 auto !important;
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 1px solid var(--mba-car-line) !important;
+    border-radius: 50% !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: var(--mba-car-text) !important;
+    opacity: 1 !important;
+    transform: none !important;
+    cursor: pointer !important;
+    line-height: 1 !important;
+    transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease !important;
 }
 
-/* ─── Image container ─────────────────────────────────────────────── */
-.mba-carousel-image-container {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 1 / 1;
-    background-color: #f4f4f5;
+.mba-carousel-wrapper .mba-carousel-head .mba-carousel-ctrl svg {
+    display: block !important;
+    width: 18px !important;
+    height: 18px !important;
+    margin: 0 !important;
+    transform: none !important;
 }
 
-.mba-carousel-preview {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
+.mba-carousel-wrapper .mba-carousel-head .mba-carousel-toggle svg {
+    width: 14px !important;
+    height: 14px !important;
 }
 
-.mba-carousel-before,
-.mba-carousel-after {
-    /* Lock against the near-universal theme rule
-       `img { max-width:100% !important; height:auto !important }`, which would
-       collapse these split preview halves (mirrors the Cocoen fix in
-       pro-modal.css). */
+/* splide-core: the toggle shows the icon for what a press would do. */
+.mba-carousel-wrapper .mba-carousel-head .mba-carousel-toggle .splide__toggle__pause {
+    display: none !important;
+}
+.mba-carousel-wrapper .mba-carousel-head .mba-carousel-toggle.is-active .splide__toggle__play {
+    display: none !important;
+}
+.mba-carousel-wrapper .mba-carousel-head .mba-carousel-toggle.is-active .splide__toggle__pause {
+    display: block !important;
+}
+
+.mba-carousel-wrapper .mba-carousel-head .mba-carousel-ctrl:hover:not(:disabled) {
+    border-color: var(--mba-car-accent) !important;
+    color: var(--mba-car-accent) !important;
+}
+
+.mba-carousel-wrapper .mba-carousel-head .mba-carousel-ctrl:focus-visible {
+    outline: 2px solid var(--mba-car-accent) !important;
+    outline-offset: 3px !important;
+}
+
+.mba-carousel-wrapper .mba-carousel-head .mba-carousel-ctrl:disabled {
+    opacity: 0.35 !important;
+    cursor: default !important;
+}
+
+/* ─── Track ───────────────────────────────────────────────────────── */
+/* The 6px padding keeps the cards' focus ring inside the clipped track. It is
+   also where the phone "peek" comes from (right padding, see the media query):
+   Splide sizes slides from the track's content box. */
+.mba-carousel-wrapper .mba-pro-carousel .splide__track {
+    padding: 6px 6px 8px !important;
+}
+
+.mba-carousel-wrapper .mba-pro-carousel .splide__list {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+}
+
+.mba-carousel-wrapper .mba-pro-carousel .splide__slide {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+    background: none !important;
+    border: 0 !important;
+}
+
+.mba-carousel-wrapper .mba-pro-carousel .splide__slide::before,
+.mba-carousel-wrapper .mba-pro-carousel .splide__slide::marker {
+    content: none !important;
+}
+
+/* ─── Card: photo frame + caption, no box ─────────────────────────── */
+.mba-carousel-wrapper .mba-carousel-card {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    overflow: visible !important;
+    cursor: pointer !important;
+    color: var(--mba-car-text) !important;
+}
+
+.mba-carousel-wrapper .mba-carousel-image-container {
+    position: relative !important;
+    width: 100% !important;
+    aspect-ratio: 4 / 3 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    border: 0 !important;
+    border-radius: var(--mba-car-radius) !important;
+    background: var(--mba-car-photo-bg) !important;
+    isolation: isolate !important;
+}
+
+.mba-carousel-wrapper .mba-carousel-preview {
+    position: absolute !important;
+    inset: 0 !important;
+    display: flex !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transition: filter 0.25s ease !important;
+}
+
+/* Split halves: each half is narrow by design, so these two may crop. Locked
+   against the near-universal theme rule `img { max-width:100%; height:auto }`. */
+.mba-carousel-wrapper .mba-carousel-before,
+.mba-carousel-wrapper .mba-carousel-after {
+    display: block !important;
+    flex: 0 0 50% !important;
     width: 50% !important;
     height: 100% !important;
     max-width: none !important;
-    object-fit: cover;
-    object-position: center;
-    transition: transform 0.4s ease;
+    max-height: none !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    transform: none !important;
 }
 
-.mba-carousel-card:hover .mba-carousel-before,
-.mba-carousel-card:hover .mba-carousel-after {
-    transform: scale(1.05);
+.mba-carousel-wrapper .mba-carousel-divider {
+    position: absolute !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    z-index: 1 !important;
+    width: 2px !important;
+    height: auto !important;
+    margin: 0 0 0 -1px !important;
+    background: rgb(255 255 255 / 85%) !important;
+    box-shadow: none !important;
+    transform: none !important;
 }
 
-/* Divider */
-.mba-carousel-divider {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 3px;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.9);
-    transform: translateX(-50%);
-    z-index: 2;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.mba-carousel-card:hover .mba-carousel-divider {
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-}
-
-/* ─── View button ─────────────────────────────────────────────────── */
-.mba-carousel-view-btn {
-    all: unset;
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translate(-50%, 10px);
-    background: rgba(255, 255, 255, 0.95);
-    color: #1f2937;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    z-index: 5;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    opacity: 0;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.mba-carousel-view-btn svg {
-    width: 16px;
-    height: 16px;
-}
-
-.mba-carousel-card:hover .mba-carousel-view-btn {
-    transform: translate(-50%, 0);
-    opacity: 1;
-}
-
-.mba-carousel-view-btn:hover {
-    background: var(--medbeafgallery-primary-solid, #2563eb);
-    color: #fff;
-}
-
-/* ─── Multi-view badge ────────────────────────────────────────────── */
-.mba-carousel-multi-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 4;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    background: rgba(0, 0, 0, 0.6);
-    color: #fff;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1;
+/* Before / After pills in the photo's top corners. */
+.mba-carousel-wrapper .mba-carousel-label {
+    position: absolute !important;
+    top: 10px !important;
+    z-index: 2 !important;
+    display: inline-block !important;
+    max-width: calc(50% - 20px) !important;
+    margin: 0 !important;
+    padding: 3px 9px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: rgb(15 23 42 / 62%) !important;
+    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
+    color: #ffffff !important;
+    font-family: inherit !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    font-style: normal !important;
+    line-height: 1.35 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    pointer-events: none !important;
 }
 
-.mba-carousel-multi-badge svg {
-    width: 14px;
-    height: 14px;
+.mba-carousel-wrapper .mba-carousel-label--before {
+    left: 10px !important;
 }
 
-/* ─── Card info ───────────────────────────────────────────────────── */
-.mba-carousel-card-info {
-    padding: 16px;
+.mba-carousel-wrapper .mba-carousel-label--after {
+    right: 10px !important;
+}
+
+/* Caption under the photo, aligned with its left edge. */
+.mba-carousel-wrapper .mba-carousel-card-info {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 12px 2px 0 !important;
+    background: none !important;
+    border: 0 !important;
+    text-align: left !important;
+}
+
+.mba-carousel-wrapper .mba-carousel-category {
+    display: block !important;
+    max-width: 100% !important;
+    margin: 0 0 3px !important;
+    padding: 0 !important;
+    background: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    color: var(--mba-car-muted) !important;
+    font-family: inherit !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.mba-carousel-wrapper .mba-carousel-title {
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-line-clamp: 2 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    color: var(--mba-car-text) !important;
+    font-family: inherit !important;
+    font-size: 16.5px !important;
+    font-weight: 600 !important;
+    font-style: normal !important;
+    line-height: 1.3 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    text-decoration: none !important;
+    text-decoration-thickness: 1px !important;
+    text-underline-offset: 3px !important;
+}
+
+.mba-carousel-wrapper .mba-carousel-details {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 2px 14px !important;
+    margin: 6px 0 0 !important;
+    padding: 0 !important;
+    color: var(--mba-car-muted) !important;
+    font-family: inherit !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+}
+
+.mba-carousel-wrapper .mba-carousel-detail {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    position: static !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    border: 0 !important;
+    color: inherit !important;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-weight: 400 !important;
+    line-height: inherit !important;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+.mba-carousel-wrapper .mba-carousel-detail svg {
+    display: block !important;
+    flex: 0 0 auto !important;
+    width: 14px !important;
+    height: 14px !important;
+    opacity: 0.85 !important;
+}
+
+/* ─── The one action: a button stretched over the whole card ──────── */
+.mba-carousel-wrapper .mba-carousel-card .mba-carousel-view-btn {
+    all: unset;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 3 !important;
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: var(--mba-car-radius) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: transparent !important;
+    opacity: 1 !important;
+    transform: none !important;
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.mba-carousel-wrapper .mba-carousel-card .mba-carousel-view-btn:focus {
+    outline: none !important;
+}
+
+.mba-carousel-wrapper .mba-carousel-card .mba-carousel-view-btn:focus-visible {
+    outline: 2px solid var(--mba-car-accent) !important;
+    outline-offset: 3px !important;
+}
+
+/* Visually hidden, read as the button's name ("View <title>"). */
+.mba-carousel-wrapper .mba-carousel-sr {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    border: 0 !important;
+    white-space: nowrap !important;
+}
+
+/* Hover / focus: the photo brightens a little, the title is underlined. */
+.mba-carousel-wrapper .mba-carousel-card:hover .mba-carousel-preview,
+.mba-carousel-wrapper .mba-carousel-card:focus-within .mba-carousel-preview {
+    filter: brightness(1.04) !important;
+}
+
+.mba-carousel-wrapper .mba-carousel-card:hover .mba-carousel-title,
+.mba-carousel-wrapper .mba-carousel-card:focus-within .mba-carousel-title {
+    text-decoration: underline !important;
+}
+
+/* ─── Dots: only when there is more than one page ─────────────────── */
+.mba-carousel-wrapper .mba-pro-carousel .splide__pagination {
+    position: static !important;
     display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    border-top: 1px solid rgba(230, 232, 236, 0.6);
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 4px !important;
+    width: auto !important;
+    margin: 14px 0 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+    transform: none !important;
 }
 
-.mba-carousel-category {
-    background: var(--medbeafgallery-primary-10, #eff6ff);
-    color: var(--medbeafgallery-primary-solid, #2563eb);
-    font-size: 12px;
-    padding: 3px 8px;
-    border-radius: 4px;
-    display: inline-block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    align-self: flex-start;
+.mba-carousel-wrapper .mba-pro-carousel:not(.is-overflow) .splide__pagination {
+    display: none !important;
 }
 
-.mba-carousel-title {
-    font-size: 15px;
-    margin: 0;
-    color: #111827;
-    line-height: 1.4;
-    font-weight: 600;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+.mba-carousel-wrapper .mba-pro-carousel .splide__pagination li {
+    display: inline-flex !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+    line-height: 0 !important;
+}
+
+.mba-carousel-wrapper .mba-pro-carousel .splide__pagination li::before,
+.mba-carousel-wrapper .mba-pro-carousel .splide__pagination li::marker {
+    content: none !important;
+}
+
+/* An 8px dot inside a 20px hit area (a background clipped to the content box). */
+.mba-carousel-wrapper .mba-pro-carousel .splide__pagination .splide__pagination__page {
+    all: unset;
+    display: block !important;
+    width: 8px !important;
+    height: 8px !important;
+    margin: 0 !important;
+    padding: 6px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    /* The line token is mixed from currentColor: keep the text colour here
+       (a theme's button rule would otherwise make it white on white). */
+    color: inherit !important;
+    background: var(--mba-car-line) !important;
+    background-clip: content-box !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    cursor: pointer !important;
+    box-sizing: content-box !important;
+    transition: width 0.25s ease, background-color 0.25s ease !important;
+}
+
+.mba-carousel-wrapper .mba-pro-carousel .splide__pagination .splide__pagination__page.is-active {
+    width: 20px !important;
+    background-color: var(--mba-car-accent) !important;
+    transform: none !important;
+}
+
+.mba-carousel-wrapper .mba-pro-carousel .splide__pagination .splide__pagination__page:focus-visible {
+    outline: 2px solid var(--mba-car-accent) !important;
+    outline-offset: 0 !important;
 }
 
 /* ─── Responsive ──────────────────────────────────────────────────── */
-
-/* Constrain arrow overflow on small containers */
+/* Tablets: two cards and a peek of the third. */
 @media (max-width: 991px) {
-    .mba-pro-carousel .splide__arrow--prev {
-        left: 4px;
-    }
-    .mba-pro-carousel .splide__arrow--next {
-        right: 4px;
-    }
-    .mba-pro-carousel .splide__arrow {
-        width: 36px;
-        height: 36px;
-    }
-    .mba-pro-carousel .splide__arrow svg {
-        width: 14px;
-        height: 14px;
+    .mba-carousel-wrapper .mba-pro-carousel.is-overflow .splide__track {
+        padding-right: 9% !important;
     }
 }
 
+/* Phones: one card and a peek of the next; 44px controls. */
 @media (max-width: 600px) {
     .mba-carousel-wrapper {
-        margin: 20px 0;
+        margin: 24px 0 !important;
     }
 
-    .mba-pro-carousel .splide__arrow {
-        width: 32px;
-        height: 32px;
+    .mba-carousel-wrapper .mba-pro-carousel.is-overflow .splide__track {
+        padding-right: 17% !important;
     }
 
-    .mba-carousel-view-btn {
-        padding: 8px 14px;
-        font-size: 13px;
+    .mba-carousel-wrapper .mba-carousel-head .mba-carousel-ctrl,
+    .mba-carousel-wrapper .mba-pro-carousel .splide__arrow {
+        width: 44px !important;
+        height: 44px !important;
     }
 
-    .mba-carousel-card-info {
-        padding: 12px;
+    .mba-carousel-wrapper .mba-carousel-title {
+        font-size: 16px !important;
     }
 
-    .mba-carousel-title {
-        font-size: 14px;
+    /* Tighter dots so a dozen or so pages stay on one line (the arrows and
+       swipe are the main controls; the dots show where you are). */
+    .mba-carousel-wrapper .mba-pro-carousel .splide__pagination {
+        gap: 2px !important;
+    }
+
+    .mba-carousel-wrapper .mba-pro-carousel .splide__pagination .splide__pagination__page {
+        padding: 4px 3px !important;
+    }
+}
+
+/* Too many pages for dots to mean anything: pro-carousel.js adds this class. */
+.mba-carousel-wrapper .mba-pro-carousel.mba-carousel-many .splide__pagination {
+    display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mba-carousel-wrapper .mba-carousel-preview,
+    .mba-carousel-wrapper .mba-carousel-head .mba-carousel-ctrl,
+    .mba-carousel-wrapper .mba-pro-carousel .splide__pagination .splide__pagination__page {
+        transition: none !important;
     }
 }

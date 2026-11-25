@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name='robots' content='max-image-preview:large' />
+<title>Body map on any page &#8211; MBA Gallery Demo</title>
+<meta name="description" content="The map on its own page; an area’s cases open under it.">
+<link rel="icon" href="/wp-content/uploads/mba-demo/favicon.svg" type="image/svg+xml">
+<style id="wp-img-auto-sizes-contain-inline-css">
+img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+</style>
+<style id="wp-block-group-inline-css">
+.wp-block-group{box-sizing:border-box}:where(.wp-block-group.wp-block-group-is-layout-constrained){position:relative}
+/*# sourceURL=/wp-includes/blocks/group/style.min.css */
+</style>
+<link rel='stylesheet' id='mba-pro-discovery-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-discovery.css?ver=1.6.0.1795539566' media='all' />
+<link rel='stylesheet' id='medbeafgallery-css-css' href='/wp-content/plugins/medical-before-after-gallery/assets/css/gallery.css?ver=1.5.0.1795528808' media='all' />
+<style id="medbeafgallery-css-inline-css">
+
+        /* Medical Before After Gallery Custom Colors - Comprehensive Coverage */
+        :root {
+            --medbeafgallery-primary: #0f6b76;
+            --medbeafgallery-primary-solid: #0f6b76;
+            --medbeafgallery-primary-rgb: rgba(15, 107, 118, 1);
+            --medbeafgallery-primary-10: rgba(15, 107, 118, 0.1);
+            --medbeafgallery-primary-20: rgba(15, 107, 118, 0.2);
+            --medbeafgallery-primary-50: rgba(15, 107, 118, 0.5);
+        }
+
+        /* Navigation Buttons - Increased specificity */
+        body .medbeafgallery-nav-btn:hover,
+        .medbeafgallery-nav-btn:hover {
+            color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* Category Items - Increased specificity */
+        body .medbeafgallery-carousel-item.active::after,
+        .medbeafgallery-carousel-item.active::after {
+            background: var(--medbeafgallery-primary) !important;
+        }
+
+        body .medbeafgallery-carousel-item:hover img,
+        body .medbeafgallery-carousel-item.active img,
+        .medbeafgallery-carousel-item:hover img,
+        .medbeafgallery-carousel-item.active img {
+            border-color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        body .medbeafgallery-carousel-item.active p,
+        body .medbeafgallery-carousel-item.active .medbeafgallery-category-name,
+        .medbeafgallery-carousel-item.active p,
+        .medbeafgallery-carousel-item.active .medbeafgallery-category-name {
+            color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* Gallery Items */
+        .medbeafgallery-gallery-view-btn:hover {
+            background: var(--medbeafgallery-primary) !important;
+        }
+
+        .medbeafgallery-gallery-title {
+            color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* Loading and Action Buttons */
+        .medbeafgallery-load-more {
+            background: var(--medbeafgallery-primary) !important;
+        }
+
+        /* Slider Components */
+        .medbeafgallery-slider-button {
+            background: var(--medbeafgallery-primary) !important;
+        }
+
+        /* Modal Elements */
+        .medbeafgallery-control-btn.active {
+            background: var(--medbeafgallery-primary) !important;
+        }
+
+        .medbeafgallery-modal-prev:hover,
+        .medbeafgallery-modal-next:hover {
+            color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        .medbeafgallery-modal-counter .medbeafgallery-counter-current {
+            color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* Tabs */
+        .medbeafgallery-tab.active,
+        .medbeafgallery-tab:hover {
+            color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        .medbeafgallery-tab.active::after {
+            background: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* CTA Buttons */
+        .medbeafgallery-modal-nav .medbeafgallery-cta-button,
+        .medbeafgallery-accept-warning-btn {
+            background: var(--medbeafgallery-primary) !important;
+        }
+
+        /* Filter Elements */
+        .medbeafgallery-filter-label input[type="checkbox"]:checked {
+            background-color: var(--medbeafgallery-primary-solid) !important;
+            border-color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        .medbeafgallery-apply-filters-btn {
+            background-color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        .medbeafgallery-apply-filters-btn:hover {
+            background-color: var(--medbeafgallery-primary-solid) !important;
+            filter: brightness(0.9);
+        }
+
+        /* Filter Tags */
+        .medbeafgallery-filter-tag {
+            background: var(--medbeafgallery-primary-10) !important;
+            color: var(--medbeafgallery-primary-solid) !important;
+            border-color: var(--medbeafgallery-primary-20) !important;
+        }
+
+        .medbeafgallery-filter-tag:hover {
+            background: var(--medbeafgallery-primary-20) !important;
+        }
+
+        /* Focus States (keyboard only: a mouse click must not leave a box around the tile) */
+        .medbeafgallery-carousel-item:focus-visible,
+        .medbeafgallery-gallery-item:focus-visible,
+        .medbeafgallery-tab:focus-visible,
+        .medbeafgallery-modal-prev:focus-visible,
+        .medbeafgallery-modal-next:focus-visible,
+        .medbeafgallery-control-btn:focus-visible {
+            outline: 2px solid var(--medbeafgallery-primary-solid) !important;
+        }
+
+        .medbeafgallery-carousel-item:focus-visible {
+            border-color: var(--medbeafgallery-primary-solid) !important;
+            box-shadow: 0 0 0 3px var(--medbeafgallery-primary-10) !important;
+        }
+
+        /* Category Count Badge */
+        .medbeafgallery-category-count {
+            background-color: var(--medbeafgallery-primary-10) !important;
+            color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* New Badge */
+        .medbeafgallery-new-badge {
+            background: var(--medbeafgallery-primary-solid) !important;
+            box-shadow: 0 2px 5px var(--medbeafgallery-primary-20) !important;
+        }
+
+        /* Loading Spinner */
+        .medbeafgallery-loading-spinner circle {
+            stroke: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* Gallery Item Hover Effects with Primary Color */
+        .medbeafgallery-gallery-item[data-category="medbeafgallery_category_face"] .medbeafgallery-gallery-category,
+        .medbeafgallery-gallery-item[data-category="medbeafgallery_category_nose"] .medbeafgallery-gallery-category,
+        .medbeafgallery-gallery-item[data-category="medbeafgallery_category_breast"] .medbeafgallery-gallery-category,
+        .medbeafgallery-gallery-item[data-category="medbeafgallery_category_body"] .medbeafgallery-gallery-category {
+            background: var(--medbeafgallery-primary-10) !important;
+            color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* Social Share Buttons */
+        .medbeafgallery-share-btn:hover {
+            background: var(--medbeafgallery-primary-solid) !important;
+            border-color: var(--medbeafgallery-primary-solid) !important;
+            box-shadow: 0 2px 5px var(--medbeafgallery-primary-20) !important;
+        }
+
+        /* Active Filters */
+        .medbeafgallery-active-filters {
+            border-color: var(--medbeafgallery-primary-10) !important;
+        }
+
+        /* Reset Button with Primary Theme */
+        .medbeafgallery-reset-filters-btn {
+            background-color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        .medbeafgallery-reset-filters-btn:hover {
+            background-color: var(--medbeafgallery-primary-solid) !important;
+            filter: brightness(0.9);
+        }
+
+        /* Clear Filters Button */
+        .medbeafgallery-clear-filters {
+            background: var(--medbeafgallery-primary-10) !important;
+            color: var(--medbeafgallery-primary-solid) !important;
+            border-color: var(--medbeafgallery-primary-20) !important;
+        }
+
+        .medbeafgallery-clear-filters:hover {
+            background: var(--medbeafgallery-primary-20) !important;
+            color: var(--medbeafgallery-primary-solid) !important;
+            border-color: var(--medbeafgallery-primary-30) !important;
+        }
+
+        /* Image Pair Navigation */
+        .medbeafgallery-pair-nav:hover {
+            background: var(--medbeafgallery-primary-50) !important;
+        }
+
+        .medbeafgallery-pair-indicator.active {
+            background: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        /* Toggle Filters Button */
+        .medbeafgallery-toggle-filters-btn.active {
+            background-color: var(--medbeafgallery-primary-10) !important;
+            border-color: var(--medbeafgallery-primary-solid) !important;
+        }
+
+        .medbeafgallery-toggle-filters-btn:hover {
+            background-color: var(--medbeafgallery-primary-10) !important;
+        }
+/*# sourceURL=medbeafgallery-css-inline-css */
+</style>
+<link rel='stylesheet' id='medbeafgallery-dynamic-css-css' href='/wp-content/uploads/medical-before-after-gallery/custom-colors.css?ver=1.5.0' media='all' />
+<link rel='stylesheet' id='mba-gallery-pro-subcategories-css-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-subcategories.css?ver=1.6.0.1789149282' media='all' />
+<link rel='stylesheet' id='mba-pro-frontend-filters-css-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-frontend-filters.css?ver=1.6.0.1790748041' media='all' />
+<style id="mba-pro-frontend-filters-css-inline-css">
+.medbeafgallery-gallery-grid{grid-template-columns:repeat(3,1fr)!important;}@media (max-width:600px){.medbeafgallery-gallery-grid{grid-template-columns:1fr!important;}}@media (min-width:601px) and (max-width:900px){.medbeafgallery-gallery-grid{grid-template-columns:repeat(2,1fr)!important;}}.medbeafgallery-gallery-image-container{aspect-ratio:4 / 5!important;}
+/*# sourceURL=mba-pro-frontend-filters-css-inline-css */
+</style>
+<link rel='stylesheet' id='mba-gallery-pro-modal-css-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-modal.css?ver=1.6.0.1794914259' media='all' />
+<link rel='stylesheet' id='mba-pro-filter-drawer-css-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-filter-drawer.css?ver=1.6.0.1781631493' media='all' />
+<link rel='stylesheet' id='mba-pro-annotations-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-annotations.css?ver=1.6.0.1781631493' media='all' />
+<link rel='stylesheet' id='mba-pro-category-styles-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-category-styles.css?ver=1.6.0.1795437812' media='all' />
+<link rel='stylesheet' id='mba-pro-layouts-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-layouts.css?ver=1.6.0.1795530354' media='all' />
+<link rel='stylesheet' id='mba-pro-designs-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-designs.css?ver=1.6.0.1795570596' media='all' />
+<link rel='stylesheet' id='mba-pro-stages-css' href='/wp-content/plugins/mba-gallery-pro/assets/css/pro-stages.css?ver=1.6.0.1795440168' media='all' />
+<style id="wp-block-post-content-inline-css">
+.wp-block-post-content{display:flow-root}
+/*# sourceURL=/wp-includes/blocks/post-content/style.min.css */
+</style>
+<style id="wp-block-library-inline-css">
+:root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}:root .has-text-align-center{text-align:center}:root .has-text-align-left{text-align:left}:root .has-text-align-right{text-align:right}.has-fit-text{white-space:nowrap!important}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{word-wrap:normal!important;border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-break:normal!important}.screen-reader-text:focus{background-color:#ddd;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style^=border-color],[style*=";border-color"],[style*="; border-color"]){border-style:solid}html :where([style^=border-top-color],[style*=";border-top-color"],[style*="; border-top-color"]){border-top-style:solid}html :where([style^=border-right-color],[style*=";border-right-color"],[style*="; border-right-color"]){border-right-style:solid}html :where([style^=border-bottom-color],[style*=";border-bottom-color"],[style*="; border-bottom-color"]){border-bottom-style:solid}html :where([style^=border-left-color],[style*=";border-left-color"],[style*="; border-left-color"]){border-left-style:solid}html :where([style^=border-width],[style*=";border-width"],[style*="; border-width"]){border-style:solid}html :where([style^=border-top-width],[style*=";border-top-width"],[style*="; border-top-width"]){border-top-style:solid}html :where([style^=border-right-width],[style*=";border-right-width"],[style*="; border-right-width"]){border-right-style:solid}html :where([style^=border-bottom-width],[style*=";border-bottom-width"],[style*="; border-bottom-width"]){border-bottom-style:solid}html :where([style^=border-left-width],[style*=";border-left-width"],[style*="; border-left-width"]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}
+/*# sourceURL=/wp-includes/css/dist/block-library/common.min.css */
+</style>
+<style id="global-styles-inline-css">
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--base: #FFFFFF;--wp--preset--color--contrast: #111111;--wp--preset--color--accent-1: #FFEE58;--wp--preset--color--accent-2: #F6CFF4;--wp--preset--color--accent-3: #503AA8;--wp--preset--color--accent-4: #686868;--wp--preset--color--accent-5: #FBFAF3;--wp--preset--color--accent-6: color-mix(in srgb, currentColor 20%, transparent);--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 0.875rem;--wp--preset--font-size--medium: clamp(1rem, 1rem + ((1vw - 0.2rem) * 0.196), 1.125rem);--wp--preset--font-size--large: clamp(1.125rem, 1.125rem + ((1vw - 0.2rem) * 0.392), 1.375rem);--wp--preset--font-size--x-large: clamp(1.75rem, 1.75rem + ((1vw - 0.2rem) * 0.392), 2rem);--wp--preset--font-size--xx-large: clamp(2.15rem, 2.15rem + ((1vw - 0.2rem) * 1.333), 3rem);--wp--preset--font-family--manrope: Manrope, sans-serif;--wp--preset--font-family--fira-code: "Fira Code", monospace;--wp--preset--spacing--20: 10px;--wp--preset--spacing--30: 20px;--wp--preset--spacing--40: 30px;--wp--preset--spacing--50: clamp(30px, 5vw, 50px);--wp--preset--spacing--60: clamp(30px, 7vw, 70px);--wp--preset--spacing--70: clamp(50px, 7vw, 90px);--wp--preset--spacing--80: clamp(70px, 10vw, 140px);--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);}.wp-block-button{--wp--preset--dimension--25: 25%;--wp--preset--dimension--50: 50%;--wp--preset--dimension--75: 75%;--wp--preset--dimension--100: 100%;}:root { --wp--style--global--content-size: 1340px;--wp--style--global--wide-size: 1340px; }:where(body) { margin: 0; }.wp-site-blocks { padding-top: var(--wp--style--root--padding-top); padding-bottom: var(--wp--style--root--padding-bottom); }.has-global-padding { padding-right: var(--wp--style--root--padding-right); padding-left: var(--wp--style--root--padding-left); }.has-global-padding > .alignfull { margin-right: calc(var(--wp--style--root--padding-right) * -1); margin-left: calc(var(--wp--style--root--padding-left) * -1); }.has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) { padding-right: 0; padding-left: 0; }.has-global-padding :where(:not(.alignfull.is-layout-flow) > .has-global-padding:not(.wp-block-block, .alignfull)) > .alignfull { margin-left: 0; margin-right: 0; }.wp-site-blocks > .alignleft { float: left; margin-right: 2em; }.wp-site-blocks > .alignright { float: right; margin-left: 2em; }.wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }:where(.wp-site-blocks) > * { margin-block-start: 1.2rem; margin-block-end: 0; }:where(.wp-site-blocks) > :first-child { margin-block-start: 0; }:where(.wp-site-blocks) > :last-child { margin-block-end: 0; }:root { --wp--style--block-gap: 1.2rem; }:root :where(.is-layout-flow) > :first-child{margin-block-start: 0;}:root :where(.is-layout-flow) > :last-child{margin-block-end: 0;}:root :where(.is-layout-flow) > *{margin-block-start: 1.2rem;margin-block-end: 0;}:root :where(.is-layout-constrained) > :first-child{margin-block-start: 0;}:root :where(.is-layout-constrained) > :last-child{margin-block-end: 0;}:root :where(.is-layout-constrained) > *{margin-block-start: 1.2rem;margin-block-end: 0;}:root :where(.is-layout-flex){gap: 1.2rem;}:root :where(.is-layout-grid){gap: 1.2rem;}.is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}.is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}.is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}.is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}.is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}.is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}body{background-color: var(--wp--preset--color--base);color: var(--wp--preset--color--contrast);font-family: var(--wp--preset--font-family--manrope);font-size: var(--wp--preset--font-size--large);font-weight: 300;letter-spacing: -0.1px;line-height: 1.4;--wp--style--root--padding-top: 0px;--wp--style--root--padding-right: var(--wp--preset--spacing--50);--wp--style--root--padding-bottom: 0px;--wp--style--root--padding-left: var(--wp--preset--spacing--50);}a:where(:not(.wp-element-button)){color: currentColor;}:root :where(a:where(:not(.wp-element-button)):hover){text-decoration: none;}h1, h2, h3, h4, h5, h6{font-weight: 400;letter-spacing: -0.1px;line-height: 1.125;}h1{font-size: var(--wp--preset--font-size--xx-large);}h2{font-size: var(--wp--preset--font-size--x-large);}h3{font-size: var(--wp--preset--font-size--large);}h4{font-size: var(--wp--preset--font-size--medium);}h5{font-size: var(--wp--preset--font-size--small);letter-spacing: 0.5px;}h6{font-size: var(--wp--preset--font-size--small);font-weight: 700;letter-spacing: 1.4px;text-transform: uppercase;}:root :where(.wp-element-button, .wp-block-button__link){background-color: var(--wp--preset--color--contrast);border-width: 0;color: var(--wp--preset--color--base);font-family: inherit;font-size: var(--wp--preset--font-size--medium);font-style: inherit;font-weight: inherit;letter-spacing: inherit;line-height: inherit;padding-top: 1rem;padding-right: 2.25rem;padding-bottom: 1rem;padding-left: 2.25rem;text-decoration: none;text-transform: inherit;}:root :where(.wp-element-button:hover, .wp-block-button__link:hover){background-color: color-mix(in srgb, var(--wp--preset--color--contrast) 85%, transparent);border-color: transparent;color: var(--wp--preset--color--base);}:root :where(.wp-element-button:focus, .wp-block-button__link:focus){outline-color: var(--wp--preset--color--accent-4);outline-offset: 2px;}:root :where(.wp-element-caption, .wp-block-audio figcaption, .wp-block-embed figcaption, .wp-block-gallery figcaption, .wp-block-image figcaption, .wp-block-table figcaption, .wp-block-video figcaption){font-size: var(--wp--preset--font-size--small);line-height: 1.4;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-base-color{color: var(--wp--preset--color--base) !important;}.has-contrast-color{color: var(--wp--preset--color--contrast) !important;}.has-accent-1-color{color: var(--wp--preset--color--accent-1) !important;}.has-accent-2-color{color: var(--wp--preset--color--accent-2) !important;}.has-accent-3-color{color: var(--wp--preset--color--accent-3) !important;}.has-accent-4-color{color: var(--wp--preset--color--accent-4) !important;}.has-accent-5-color{color: var(--wp--preset--color--accent-5) !important;}.has-accent-6-color{color: var(--wp--preset--color--accent-6) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-base-background-color{background-color: var(--wp--preset--color--base) !important;}.has-contrast-background-color{background-color: var(--wp--preset--color--contrast) !important;}.has-accent-1-background-color{background-color: var(--wp--preset--color--accent-1) !important;}.has-accent-2-background-color{background-color: var(--wp--preset--color--accent-2) !important;}.has-accent-3-background-color{background-color: var(--wp--preset--color--accent-3) !important;}.has-accent-4-background-color{background-color: var(--wp--preset--color--accent-4) !important;}.has-accent-5-background-color{background-color: var(--wp--preset--color--accent-5) !important;}.has-accent-6-background-color{background-color: var(--wp--preset--color--accent-6) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-base-border-color{border-color: var(--wp--preset--color--base) !important;}.has-contrast-border-color{border-color: var(--wp--preset--color--contrast) !important;}.has-accent-1-border-color{border-color: var(--wp--preset--color--accent-1) !important;}.has-accent-2-border-color{border-color: var(--wp--preset--color--accent-2) !important;}.has-accent-3-border-color{border-color: var(--wp--preset--color--accent-3) !important;}.has-accent-4-border-color{border-color: var(--wp--preset--color--accent-4) !important;}.has-accent-5-border-color{border-color: var(--wp--preset--color--accent-5) !important;}.has-accent-6-border-color{border-color: var(--wp--preset--color--accent-6) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}.has-xx-large-font-size{font-size: var(--wp--preset--font-size--xx-large) !important;}.has-manrope-font-family{font-family: var(--wp--preset--font-family--manrope) !important;}.has-fira-code-font-family{font-family: var(--wp--preset--font-family--fira-code) !important;}
+/*# sourceURL=global-styles-inline-css */
+</style>
+<style id="wp-block-template-skip-link-inline-css">
+/*! This file is auto-generated */
+.skip-link.screen-reader-text{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute!important;width:1px;word-wrap:normal!important;word-break:normal!important}.skip-link.screen-reader-text:focus{background-color:#eee;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}
+/*# sourceURL=/wp-includes/css/wp-block-template-skip-link.min.css */
+</style>
+<link rel='stylesheet' id='mba-demo-css' href='/wp-content/uploads/mba-demo/demo.css?ver=1795579543' media='all' />
+<style id="twentytwentyfive-style-inline-css">
+a{text-decoration-thickness:1px!important;text-underline-offset:.1em}:where(.wp-site-blocks :focus){outline-width:2px;outline-style:solid}.wp-block-navigation .wp-block-navigation-submenu .wp-block-navigation-item:not(:last-child){margin-bottom:3px}.wp-block-navigation .wp-block-navigation-item .wp-block-navigation-item__content{outline-offset:4px}.wp-block-navigation .wp-block-navigation-item ul.wp-block-navigation__submenu-container .wp-block-navigation-item__content{outline-offset:0}blockquote,caption,figcaption,h1,h2,h3,h4,h5,h6,p{text-wrap:pretty}.more-link{display:block}:where(pre){overflow-x:auto}
+/*# sourceURL=/wp-content/themes/twentytwentyfive/style.min.css */
+</style>
+<script id="jquery-core-js" src="/wp-includes/js/jquery/jquery.min.js?ver=3.7.1"></script>
+<script id="jquery-migrate-js" src="/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1"></script>
+<link rel="canonical" href="https://demo.medicalbeforeaftergallery.com/pro-demos/body-map-embed/" />
+<style class="wp-fonts-local">
+@font-face{font-family:Manrope;font-style:normal;font-weight:200 800;font-display:fallback;src:url('/wp-content/themes/twentytwentyfive/assets/fonts/manrope/Manrope-VariableFont_wght.woff2') format('woff2');}
+@font-face{font-family:"Fira Code";font-style:normal;font-weight:300 700;font-display:fallback;src:url('/wp-content/themes/twentytwentyfive/assets/fonts/fira-code/FiraCode-VariableFont_wght.woff2') format('woff2');}
+</style>
+</head>
+
+<body class="wp-singular page-template-default page page-id-155 page-child parent-pageid-151 wp-embed-responsive wp-theme-twentytwentyfive mba-demo-pro mba-demo-page-body-map-embed">
+
+<a class="skip-link screen-reader-text" id="wp-skip-link" href="#wp--skip-link--target">Skip to content</a><div class="wp-site-blocks"><header class="wp-block-template-part">
+<div class="mba-demo-bar"><div class="mba-demo-in"><a class="mba-demo-brand" href="https://medicalbeforeaftergallery.com/" aria-label="MBA Gallery home page"><span class="mba-demo-mark" aria-hidden="true"><svg viewBox="0 0 512 512"><path d="M288 448H64V224h64V160H64c-35.300 0-64 28.700-64 64V448c0 35.300 28.700 64 64 64H288c35.300 0 64-28.700 64-64V384H288v64zm-64-96H448c35.300 0 64-28.700 64-64V64c0-35.300-28.700-64-64-64H224c-35.300 0-64 28.700-64 64V288c0 35.300 28.700 64 64 64z"/></svg></span><span class="mba-demo-name">MBA<span>Gallery</span></span></a><nav aria-label="Website"><a href="https://medicalbeforeaftergallery.com/features/">Features</a><a href="https://medicalbeforeaftergallery.com/pricing/">Pricing</a><a href="https://medicalbeforeaftergallery.com/docs/">Docs</a><a href="https://medicalbeforeaftergallery.com/blog/">Blog</a><a href="https://medicalbeforeaftergallery.com/faq/">FAQ</a><a href="https://medicalbeforeaftergallery.com/demo/" aria-current="true">Demo</a></nav><div class="mba-demo-actions"><a class="mba-demo-btn mba-demo-btn-ghost" href="https://wordpress.org/plugins/medical-before-after-gallery/">Free download</a><a class="mba-demo-btn" href="https://medicalbeforeaftergallery.com/pricing/">Get Pro</a></div></div></div>
+
+
+</header>
+
+<main id="wp--skip-link--target" class="wp-block-group mba-demo-main has-global-padding is-layout-constrained wp-block-group-is-layout-constrained">
+<div class="entry-content alignfull wp-block-post-content has-global-padding is-layout-constrained wp-block-post-content-is-layout-constrained">
+<div class="mba-demo-top"><div class="mba-demo-in"><div class="mba-demo-crumbs"><a class="mba-demo-all" href="https://medicalbeforeaftergallery.com/demo/">All demos</a><i aria-hidden="true">/</i><span>Embeds</span></div><nav class="mba-demo-variants" aria-label="Finding cases"><ul><li><a href="/pro-demos/subcategory-pills/">Subcategories</a></li><li><a href="/pro-demos/find-by-area/">Find by area</a></li><li><a href="/pro-demos/help-me-choose/">Help me choose</a></li><li><a href="/pro-demos/custom-case-filters/">Case filters</a></li><li><a href="/pro-demos/search-and-sort/">Search and sort</a></li><li><a href="/pro-demos/body-map-embed/" aria-current="page">Map on any page</a></li></ul></nav><div class="mba-demo-steps"><a href="/pro-demos/category-carousel/" rel="prev" aria-label="Previous demo: Category carousel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></a></div></div></div>
+
+
+
+<div class="mba-demo-hero"><div class="mba-demo-in"><div><p class="mba-demo-kind">Pro</p><h1 class="mba-demo-title">Body map on any page</h1><p class="mba-demo-copy">The same map on a page of its own. An area shows its treatments, its two newest results and how many cases there are; “See cases” lists them under the map, on the same page.</p></div><div class="mba-demo-how"><div><h2>How to turn it on</h2><p>Put the shortcode on any page: <code>&#091;mba_body_map figures="face,body-front,smile"&#093;</code>. With <code>url="…"</code> it opens your gallery page instead.</p></div></div></div></div>
+
+
+
+<div class="wp-block-group alignwide mba-demo-stage is-layout-flow wp-block-group-is-layout-flow">
+
+<p class="mba-demo-strip"><b>Live demo</b><span>This is the plugin itself. Click anything.</span></p>
+
+
+
+<div class="wp-block-group alignwide mba-demo-canvas is-layout-flow wp-block-group-is-layout-flow">
+<section class="mba-pro-discovery mba-pro-discovery-inline" aria-label="Find by area" data-mba-map-url="" data-mba-map-figures="face,body-front,smile" data-mba-map-counts="{&quot;hair&quot;:4,&quot;forehead&quot;:3,&quot;eyes&quot;:2,&quot;nose&quot;:4,&quot;cheeks&quot;:0,&quot;lips&quot;:2,&quot;chin-jaw&quot;:0,&quot;ears&quot;:0,&quot;neck&quot;:0,&quot;skin&quot;:6,&quot;chest&quot;:0,&quot;abdomen&quot;:5,&quot;waist&quot;:3,&quot;arms&quot;:3,&quot;hands&quot;:0,&quot;hips&quot;:0,&quot;thighs&quot;:0,&quot;lower-legs&quot;:0,&quot;teeth&quot;:4,&quot;gums&quot;:0}" data-mba-map-cases="{&quot;hair&quot;:[{&quot;id&quot;:16,&quot;title&quot;:&quot;FUE Hair Transplant \u2014 Crown Restoration&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/crown-fue-before_watermarked-768x960.jpg?v=1795528263&quot;,&quot;beforeAlt&quot;:&quot;Before: crown of the head \u2014 FUE Hair Transplant \u2014 Crown Restoration&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/crown-fue-after_watermarked-768x960.jpg?v=1795528265&quot;,&quot;afterAlt&quot;:&quot;After: crown of the head \u2014 FUE Hair Transplant \u2014 Crown Restoration&quot;},{&quot;id&quot;:33,&quot;title&quot;:&quot;PRP Therapy \u2014 Thinning Parting&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/prp-parting-before_watermarked-768x960.jpg?v=1795528282&quot;,&quot;beforeAlt&quot;:&quot;Before: centre parting \u2014 PRP Therapy \u2014 Thinning Parting&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/prp-parting-after_watermarked-768x960.jpg?v=1795528283&quot;,&quot;afterAlt&quot;:&quot;After: centre parting \u2014 PRP Therapy \u2014 Thinning Parting&quot;}],&quot;forehead&quot;:[{&quot;id&quot;:45,&quot;title&quot;:&quot;Forehead Lines \u2014 Anti-Wrinkle Injections&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/forehead-lines-before_watermarked-768x960.jpg?v=1795528293&quot;,&quot;beforeAlt&quot;:&quot;Before: forehead with horizontal lines \u2014 Forehead Lines \u2014 Anti-Wrinkle Injections&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/forehead-lines-after_watermarked-768x960.jpg?v=1795528295&quot;,&quot;afterAlt&quot;:&quot;After: forehead with horizontal lines \u2014 Forehead Lines \u2014 Anti-Wrinkle Injections&quot;},{&quot;id&quot;:125,&quot;title&quot;:&quot;Frown lines&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/frown-lines-before_watermarked-768x768.jpg?v=1795528368&quot;,&quot;beforeAlt&quot;:&quot;Before: Frown lines&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/frown-lines-after_watermarked-768x768.jpg?v=1795528369&quot;,&quot;afterAlt&quot;:&quot;After: Frown lines&quot;}],&quot;eyes&quot;:[{&quot;id&quot;:97,&quot;title&quot;:&quot;Eyelid Surgery&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/eyelid-surgery-lower-before_watermarked-768x768.jpg?v=1795528343&quot;,&quot;beforeAlt&quot;:&quot;Before: Eyelid Surgery&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/eyelid-surgery-lower-after_watermarked-768x768.jpg?v=1795528344&quot;,&quot;afterAlt&quot;:&quot;After: Eyelid Surgery&quot;},{&quot;id&quot;:109,&quot;title&quot;:&quot;Eyelid Surgery&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/eyelid-surgery-before_watermarked-768x768.jpg?v=1795528354&quot;,&quot;beforeAlt&quot;:&quot;Before: Eyelid Surgery&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/eyelid-surgery-after_watermarked-768x768.jpg?v=1795528355&quot;,&quot;afterAlt&quot;:&quot;After: Eyelid Surgery&quot;}],&quot;nose&quot;:[{&quot;id&quot;:74,&quot;title&quot;:&quot;Non-Surgical Rhinoplasty \u2014 Dorsal Hump Camouflage&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/rivkin-1-before_watermarked.jpg?v=1795528325&quot;,&quot;beforeAlt&quot;:&quot;Side profile before non-surgical rhinoplasty, with a visible dorsal hump&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/rivkin-1-after_watermarked.jpg?v=1795528326&quot;,&quot;afterAlt&quot;:&quot;Side profile after non-surgical rhinoplasty, with a straighter nasal bridge&quot;},{&quot;id&quot;:77,&quot;title&quot;:&quot;Liquid Rhinoplasty \u2014 Smoother Nasal Profile&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/rivkin-2-before_watermarked.jpg?v=1795528328&quot;,&quot;beforeAlt&quot;:&quot;Side profile before liquid rhinoplasty&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/rivkin-2-after_watermarked.jpg?v=1795528329&quot;,&quot;afterAlt&quot;:&quot;Side profile after liquid rhinoplasty, with a smoother nasal line&quot;}],&quot;lips&quot;:[{&quot;id&quot;:48,&quot;title&quot;:&quot;Lip Filler \u2014 Subtle Volume and Definition&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/lip-filler-before_watermarked-768x960.jpg?v=1795528296&quot;,&quot;beforeAlt&quot;:&quot;Before: lips \u2014 Lip Filler \u2014 Subtle Volume and Definition&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/lip-filler-after_watermarked-768x960.jpg?v=1795528298&quot;,&quot;afterAlt&quot;:&quot;After: lips \u2014 Lip Filler \u2014 Subtle Volume and Definition&quot;},{&quot;id&quot;:100,&quot;title&quot;:&quot;Lip Augmentation&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/lip-augmentation-before_watermarked-768x768.jpg?v=1795528346&quot;,&quot;beforeAlt&quot;:&quot;Before: Lip Augmentation&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/lip-augmentation-after_watermarked-768x768.jpg?v=1795528347&quot;,&quot;afterAlt&quot;:&quot;After: Lip Augmentation&quot;}],&quot;skin&quot;:[{&quot;id&quot;:13,&quot;title&quot;:&quot;Melasma \u2014 More Even Skin Tone&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/melasma-before_watermarked-768x960.jpg?v=1795528260&quot;,&quot;beforeAlt&quot;:&quot;Before: cheeks with pigmentation \u2014 Melasma \u2014 More Even Skin Tone&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/melasma-after_watermarked-768x960.jpg?v=1795528262&quot;,&quot;afterAlt&quot;:&quot;After: cheeks with pigmentation \u2014 Melasma \u2014 More Even Skin Tone&quot;},{&quot;id&quot;:30,&quot;title&quot;:&quot;Rosacea \u2014 Calmer Cheeks and Nose&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/rosacea-before_watermarked-768x960.jpg?v=1795528279&quot;,&quot;beforeAlt&quot;:&quot;Before: cheeks and nose \u2014 Rosacea \u2014 Calmer Cheeks and Nose&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/rosacea-after_watermarked-768x960.jpg?v=1795528281&quot;,&quot;afterAlt&quot;:&quot;After: cheeks and nose \u2014 Rosacea \u2014 Calmer Cheeks and Nose&quot;}],&quot;abdomen&quot;:[{&quot;id&quot;:53,&quot;title&quot;:&quot;Six-Month Medical Weight Loss&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/medical-weight-loss-before_watermarked-768x960.jpg?v=1795528303&quot;,&quot;beforeAlt&quot;:&quot;Before: torso \u2014 Six-Month Medical Weight Loss&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/medical-weight-loss-after_watermarked-768x960.jpg?v=1795528304&quot;,&quot;afterAlt&quot;:&quot;After: torso \u2014 Six-Month Medical Weight Loss&quot;},{&quot;id&quot;:66,&quot;title&quot;:&quot;Body Contouring \u2014 Flatter Lower Abdomen&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/body-contouring-before_watermarked-768x960.jpg?v=1795528317&quot;,&quot;beforeAlt&quot;:&quot;Before: torso \u2014 Body Contouring \u2014 Flatter Lower Abdomen&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/body-contouring-after_watermarked-768x960.jpg?v=1795528319&quot;,&quot;afterAlt&quot;:&quot;After: torso \u2014 Body Contouring \u2014 Flatter Lower Abdomen&quot;}],&quot;waist&quot;:[{&quot;id&quot;:66,&quot;title&quot;:&quot;Body Contouring \u2014 Flatter Lower Abdomen&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/body-contouring-before_watermarked-768x960.jpg?v=1795528317&quot;,&quot;beforeAlt&quot;:&quot;Before: torso \u2014 Body Contouring \u2014 Flatter Lower Abdomen&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/body-contouring-after_watermarked-768x960.jpg?v=1795528319&quot;,&quot;afterAlt&quot;:&quot;After: torso \u2014 Body Contouring \u2014 Flatter Lower Abdomen&quot;},{&quot;id&quot;:80,&quot;title&quot;:&quot;Cryo Sculpting&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/cryo-sculpting-before_watermarked-768x768.jpg?v=1795528330&quot;,&quot;beforeAlt&quot;:&quot;Before: Cryo Sculpting&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/cryo-sculpting-after_watermarked-768x768.jpg?v=1795528331&quot;,&quot;afterAlt&quot;:&quot;After: Cryo Sculpting&quot;}],&quot;arms&quot;:[{&quot;id&quot;:22,&quot;title&quot;:&quot;Shoulder Tribal Tattoo \u2014 Fading Over Eight Sessions&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/shoulder-tribal-before_watermarked-768x960.jpg?v=1795528271&quot;,&quot;beforeAlt&quot;:&quot;Before: shoulder \u2014 Shoulder Tribal Tattoo \u2014 Fading Over Eight Sessions&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/shoulder-tribal-after_watermarked-768x960.jpg?v=1795528272&quot;,&quot;afterAlt&quot;:&quot;After: shoulder \u2014 Shoulder Tribal Tattoo \u2014 Fading Over Eight Sessions&quot;},{&quot;id&quot;:36,&quot;title&quot;:&quot;Colour Rose Tattoo \u2014 Picosecond Laser&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/forearm-rose-before_watermarked-768x576.jpg?v=1795528285&quot;,&quot;beforeAlt&quot;:&quot;Before: forearm \u2014 Colour Rose Tattoo \u2014 Picosecond Laser&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/forearm-rose-after_watermarked-768x576.jpg?v=1795528286&quot;,&quot;afterAlt&quot;:&quot;After: forearm \u2014 Colour Rose Tattoo \u2014 Picosecond Laser&quot;}],&quot;teeth&quot;:[{&quot;id&quot;:10,&quot;title&quot;:&quot;Clear Aligners \u2014 Straighter Lower Teeth&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/aligners-before_watermarked-768x960.jpg?v=1795528257&quot;,&quot;beforeAlt&quot;:&quot;Before: smile \u2014 Clear Aligners \u2014 Straighter Lower Teeth&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/aligners-after_watermarked-768x960.jpg?v=1795528259&quot;,&quot;afterAlt&quot;:&quot;After: smile \u2014 Clear Aligners \u2014 Straighter Lower Teeth&quot;},{&quot;id&quot;:27,&quot;title&quot;:&quot;Dental Implant \u2014 Replacing a Missing Front Tooth&quot;,&quot;beforeThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/implant-before_watermarked-768x960.jpg?v=1795528276&quot;,&quot;beforeAlt&quot;:&quot;Before: smile \u2014 Dental Implant \u2014 Replacing a Missing Front Tooth&quot;,&quot;afterThumb&quot;:&quot;\/wp-content\/uploads\/2026\/11\/implant-after_watermarked-768x960.jpg?v=1795528278&quot;,&quot;afterAlt&quot;:&quot;After: smile \u2014 Dental Implant \u2014 Replacing a Missing Front Tooth&quot;}]}"></section><div class="mba-pro-map-cases" hidden>    <div class="medbeafgallery-container medbeafgallery-no-filters" id="medbeafgallery-gallery-container">
+                <div class="medbeafgallery-gallery-content" id="medbeafgallery-gallery-content">
+            
+            <div class="medbeafgallery-gallery-layout">
+                    <script>
+    (function(){
+        var els = document.querySelectorAll('.medbeafgallery-container');
+        for (var i = 0; i < els.length; i++) {
+            els[i].classList.add('mba-pro-filters-drawer');
+        }
+    })();
+    </script>
+        <script>
+    (function() {
+        'use strict';
+        var script = document.currentScript;
+        var root = script && script.closest( '.medbeafgallery-container' );
+        if ( !root ) { return; }
+        var options = {"layout":"refined","card_style":"reveal-after","card_frame":"boxed","preset":"default","motion":"subtle","columns":"4","structure":"gallery","compare":"off","concerns":[{"name":"Wrinkles and lines","hint":"Forehead, frown lines, crow\u2019s feet","categories":["anti-wrinkle","skin-care"]},{"name":"Volume and shape","hint":"Lips, under-eyes, jawline","categories":["dermal-fillers","lip-fillers"]},{"name":"My nose","hint":"Profile, bridge, tip","categories":["rhinoplasty"]},{"name":"Skin tone and redness","hint":"Pigmentation, rosacea, texture","categories":["skin-care"]},{"name":"Thinning hair","hint":"Crown, parting, hairline","categories":["hair-loss"]},{"name":"An unwanted tattoo","hint":"Black or colour ink","categories":["tattoo-removal"]},{"name":"My smile","hint":"Colour, gaps, shape","categories":["teeth"]},{"name":"Body shape","hint":"Weight, waist, tummy","categories":["body"]}],"show_doctor":false,"show_new_badge":false,"new_days":30,"show_progress_badge":true,"show_result_chips":false,"columns_override":true,"dark_mode":"off","aspect_ratio":"4-5","categories":[],"i18n":{"featured":"Featured","newBadge":"New","progress":"Progress","seeAll":"See all","seeCategory":"See all cases in %s","categoryHidden":"Show the category bar to use See all.","previous":"Previous cases","next":"Next cases","before":"Before","after":"After","duration":"Duration","recovery":"Recovery","results":"Results","procedure":"Procedure","patient":"Patient","views":"Views","treatedBy":"Treated by %s","otherCases":"Other cases","caseSingular":"%s case","casePlural":"%s cases","resultsStatus":"%1$s of %2$s matching cases shown.","rowPending":"More cases in this row appear as the gallery loads.","mainView":"Main view","showView":"Show %1$s of %2$s","viewsOf":"Views of %s","viewNumber":"View %s","openView":"Open %1$s for %2$s","pairUnavailable":"Case opened. Choose the image pair in the case window.","compare":"Compare before and after for %s","compareValue":"%1$s%% before, %2$s%% after","compareHelp":"Drag the divider, or use the arrow keys, to compare the before and after photos.","wholePhotos":"Whole photos, nothing cropped.","photoFit":"Photos use matching centre crops for display.","hoverFit":"Photos enlarge equally on hover; original files are unchanged.","missingPhoto":"Photo unavailable","viewCase":"View case","close":"Close","wallSwitch":"Show every photo before or after treatment","switchLabel":"Show the before or after photo of %s"}};
+        root.setAttribute( 'data-mba-pro-layouts', JSON.stringify( options ) );
+        root.classList.add( 'mba-pro-layouts', 'mba-pro-gallery-' + options.layout, 'mba-pro-preset-' + options.preset, 'mba-pro-motion-' + options.motion );
+        root.classList.toggle( 'mba-pro-preset-active', options.preset !== 'default' );
+        root.classList.toggle( 'mba-pro-layout-masonry', options.layout === 'masonry' );
+        // Same rule as pro-layouts.js: the pre-1.6.0 look keeps its own cards.
+        var legacy = ( options.layout === 'classic' || options.layout === 'masonry' ) && options.card_style === 'split' && options.preset === 'default';
+        root.classList.toggle( 'mba-pro-refined', !legacy );
+        root.classList.add( 'mba-pro-frame-' + ( options.layout === 'refined' ? 'open' : ( options.card_frame || 'boxed' ) ) );
+        root.setAttribute( 'data-mba-pro-columns', options.columns );
+        root.setAttribute( 'data-mba-pro-columns-override', options.columns_override ? 'true' : 'false' );
+        if ( options.card_style === 'reveal' || options.card_style === 'reveal-after' ) { root.classList.add( 'medbeafgallery-cards-reveal' ); }
+        if ( /^[1-4]$/.test( options.columns ) ) { root.style.setProperty( '--mba-pro-layout-columns', options.columns ); }
+        var dark = options.dark_mode === 'on' || ( options.dark_mode === 'auto' && window.matchMedia && window.matchMedia( '(prefers-color-scheme: dark)' ).matches );
+        root.setAttribute( 'data-mba-pro-layout-dark', dark ? 'true' : 'false' );
+    })();
+    </script>
+        <div class="mba-pro-discovery mba-pro-discovery-toolbar" role="group" aria-label="Explore cases">
+                        <span class="mba-pro-discovery-sr" role="status" aria-live="polite" aria-atomic="true" data-mba-discovery-status></span>
+    </div>
+                                    <main class="medbeafgallery-main-content">
+                                        <div class="medbeafgallery-active-filters" style="display:none;">
+                        <div id="medbeafgallery-filter-tags" class="medbeafgallery-filter-tags"></div>
+                        <button type="button" id="medbeafgallery-clear-filters" class="medbeafgallery-clear-filters" style="display:none;">Clear All</button>
+                    </div>
+                    
+
+
+
+
+
+
+
+
+
+
+                                        <div class="medbeafgallery-gallery-container"
+                         data-category="all"
+                         data-per-page="8">
+                                                <div class="medbeafgallery-loading-indicator">
+                            <div class="medbeafgallery-skeleton-grid" aria-hidden="true">
+                                                                    <div class="medbeafgallery-skeleton-card">
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-image"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-title"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-short"></div>
+                                    </div>
+                                                                    <div class="medbeafgallery-skeleton-card">
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-image"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-title"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-short"></div>
+                                    </div>
+                                                                    <div class="medbeafgallery-skeleton-card">
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-image"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-title"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-short"></div>
+                                    </div>
+                                                                    <div class="medbeafgallery-skeleton-card">
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-image"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-title"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-short"></div>
+                                    </div>
+                                                                    <div class="medbeafgallery-skeleton-card">
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-image"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-title"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-short"></div>
+                                    </div>
+                                                                    <div class="medbeafgallery-skeleton-card">
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-image"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-title"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line"></div>
+                                        <div class="medbeafgallery-skeleton medbeafgallery-skeleton-line medbeafgallery-skeleton-short"></div>
+                                    </div>
+                                                            </div>
+                            <p class="screen-reader-text" role="status">Loading gallery…</p>
+                        </div>
+                        <div class="medbeafgallery-gallery-grid" id="medbeafgallery-gallery-grid" style="display: none;">
+                                                    </div>
+                        <div id="medbeafgallery-no-results" class="medbeafgallery-no-results" style="display: none;">
+                            <p>No results found. Please try different filter criteria.</p>
+                        </div>
+                    </div>
+
+                                        <div class="medbeafgallery-pagination">
+                        <button type="button" id="medbeafgallery-load-more" class="medbeafgallery-load-more" style="display: none;">Load More</button>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+        <div id="medbeafgallery-modal" class="medbeafgallery-modal medbeafgallery-backdrop-blur" role="dialog" aria-modal="true" aria-labelledby="medbeafgallery-case-title" aria-hidden="true" tabindex="-1">
+        <div class="medbeafgallery-modal-content">
+            <div class="medbeafgallery-modal-header">
+                <h2 id="medbeafgallery-case-title">Case Study Title</h2>
+
+                                <div class="medbeafgallery-image-controls" role="group" aria-label="Image comparison view">
+                    <button type="button" class="medbeafgallery-control-btn medbeafgallery-split-view active" aria-pressed="true" title="Slider view" aria-label="Slider view">
+                        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="3" x2="12" y2="21"></line><path d="M8 8l-4 4 4 4"></path><path d="M16 16l4-4-4-4"></path></svg><span class="medbeafgallery-control-label" aria-hidden="true">Slider</span>
+                    </button>
+                    <button type="button" class="medbeafgallery-control-btn medbeafgallery-before-view" aria-pressed="false" title="Before view" aria-label="Before view">
+                        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"></rect><rect x="8" y="9" width="8" height="8"></rect></svg><span class="medbeafgallery-control-label" aria-hidden="true">Before</span>
+                    </button>
+                    <button type="button" class="medbeafgallery-control-btn medbeafgallery-after-view" aria-pressed="false" title="After view" aria-label="After view">
+                        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="18" rx="2"></rect><rect x="8" y="9" width="8" height="8"></rect><circle cx="12" cy="13" r="2"></circle></svg><span class="medbeafgallery-control-label" aria-hidden="true">After</span>
+                    </button>
+                </div>
+
+                <span class="medbeafgallery-pair-info medbeafgallery-pair-description" aria-live="polite">Main View</span>
+
+                <button type="button" class="medbeafgallery-modal-close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+
+            <div class="medbeafgallery-modal-body">
+                <div class="medbeafgallery-comparison-container">
+                                        <div class="medbeafgallery-image-pairs-nav" role="group" aria-label="Image pairs">
+                        <button type="button" class="medbeafgallery-pair-nav medbeafgallery-pair-prev" title="Previous image pair" aria-label="Previous image pair">
+                            <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </button>
+                        <div class="medbeafgallery-pair-indicators">
+                                                    </div>
+                        <button type="button" class="medbeafgallery-pair-nav medbeafgallery-pair-next" title="Next image pair" aria-label="Next image pair">
+                            <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+
+                                        <div class="medbeafgallery-image-sets-container">
+                        <div class="medbeafgallery-before-after-wrapper active" data-pair-id="1">
+                                                    </div>
+                    </div>
+
+                                        <div class="medbeafgallery-labels">
+                        <div class="medbeafgallery-before-label">Before</div>
+                        <div class="medbeafgallery-after-label">After</div>
+                    </div>
+                </div>
+
+                                                <div class="medbeafgallery-case-details">
+                    <div class="medbeafgallery-case-tabs" role="tablist" aria-label="Case information">
+                        <button type="button" class="medbeafgallery-tab active" data-tab="description" role="tab" id="medbeafgallery-tab-description" aria-controls="medbeafgallery-panel-description" aria-selected="true">Description</button>
+                        <button type="button" class="medbeafgallery-tab" data-tab="details" role="tab" id="medbeafgallery-tab-details" aria-controls="medbeafgallery-panel-details" aria-selected="false" tabindex="-1">Details</button>
+                    </div>
+                    <div class="medbeafgallery-tab-content active" data-tab="description" role="tabpanel" id="medbeafgallery-panel-description" aria-labelledby="medbeafgallery-tab-description" tabindex="0">
+                        <div id="medbeafgallery-case-description"></div>
+                    </div>
+                    <div class="medbeafgallery-tab-content" data-tab="details" role="tabpanel" id="medbeafgallery-panel-details" aria-labelledby="medbeafgallery-tab-details" tabindex="0">
+                        <div class="medbeafgallery-detail-grid">
+                            <div class="medbeafgallery-detail-item" id="medbeafgallery-detail-category" style="display:none;">
+                                <span class="medbeafgallery-detail-label">Category</span>
+                                <span class="medbeafgallery-detail-value" id="medbeafgallery-case-category"></span>
+                            </div>
+                            <div class="medbeafgallery-detail-item" id="medbeafgallery-detail-gender" style="display:none;">
+                                <span class="medbeafgallery-detail-label">Gender</span>
+                                <span class="medbeafgallery-detail-value" id="medbeafgallery-case-gender"></span>
+                            </div>
+                            <div class="medbeafgallery-detail-item" id="medbeafgallery-detail-age" style="display:none;">
+                                <span class="medbeafgallery-detail-label">Age</span>
+                                <span class="medbeafgallery-detail-value" id="medbeafgallery-case-age"></span>
+                            </div>
+                            <div class="medbeafgallery-detail-item" id="medbeafgallery-detail-recovery" style="display:none;">
+                                <span class="medbeafgallery-detail-label">Recovery</span>
+                                <span class="medbeafgallery-detail-value" id="medbeafgallery-case-recovery"></span>
+                            </div>
+                            <div class="medbeafgallery-detail-item" id="medbeafgallery-detail-duration" style="display:none;">
+                                <span class="medbeafgallery-detail-label">Duration</span>
+                                <span class="medbeafgallery-detail-value" id="medbeafgallery-case-duration"></span>
+                            </div>
+                            <div class="medbeafgallery-detail-item" id="medbeafgallery-detail-results" style="display:none;">
+                                <span class="medbeafgallery-detail-label">Results</span>
+                                <span class="medbeafgallery-detail-value" id="medbeafgallery-case-results"></span>
+                            </div>
+                            <div class="medbeafgallery-detail-item" id="medbeafgallery-detail-procedure" style="display:none;">
+                                <span class="medbeafgallery-detail-label">Procedure</span>
+                                <span class="medbeafgallery-detail-value" id="medbeafgallery-case-procedure"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="medbeafgallery-cta-container">
+                        <div class="medbeafgallery-social-share">
+                            <span>Share:</span>
+                            <button type="button" class="medbeafgallery-share-btn medbeafgallery-share-facebook" aria-label="Share on Facebook">
+                                <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+                            </button>
+                            <button type="button" class="medbeafgallery-share-btn medbeafgallery-share-twitter" aria-label="Share on Twitter">
+                                <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+                            </button>
+                            <button type="button" class="medbeafgallery-share-btn medbeafgallery-share-email" aria-label="Share via Email">
+                                <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                            </div>
+
+                        <div class="medbeafgallery-modal-nav">
+                <div class="medbeafgallery-modal-nav-container">
+                                        <button type="button" class="medbeafgallery-modal-prev" aria-label="Previous case">
+                        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 18 10 12 16 6"></polyline>
+                            <line x1="6" y1="6" x2="6" y2="18"></line>
+                        </svg>
+                    </button>
+
+                    <div class="medbeafgallery-modal-counter-wrapper">
+                        <div class="medbeafgallery-modal-counter" aria-live="polite" aria-atomic="true">
+                            <span class="screen-reader-text">Case </span>
+                            <span id="medbeafgallery-current-item" class="medbeafgallery-counter-current">1</span>
+                            <span class="medbeafgallery-counter-separator" aria-hidden="true">/</span>
+                            <span class="screen-reader-text">of </span>
+                            <span id="medbeafgallery-total-items" class="medbeafgallery-counter-total">1</span>
+                        </div>
+                    </div>
+
+                    <button type="button" class="medbeafgallery-modal-next" aria-label="Next case">
+                        <svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="8 18 14 12 8 6"></polyline>
+                            <line x1="18" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+</div>
+
+
+</div>
+
+
+
+<nav class="mba-demo-pager" aria-label="Demo pages"><div class="mba-demo-in"><a class="mba-demo-prev" href="/pro-demos/category-carousel/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg><span><span>Previous demo</span> Category carousel</span></a><a class="mba-demo-all" href="https://medicalbeforeaftergallery.com/demo/">All demos</a></div></nav>
+
+
+
+<div class="mba-demo-cta"><div class="mba-demo-in"><div><h2>Put this on your own website</h2><p>Start free on WordPress.org. Add Pro when you want more.</p></div><div class="mba-demo-actions"><a class="mba-demo-btn mba-demo-btn-ghost" href="https://wordpress.org/plugins/medical-before-after-gallery/">Free download</a><a class="mba-demo-btn" href="https://medicalbeforeaftergallery.com/pricing/">Get Pro</a></div></div></div>
+
+
+</div>
+</main>
+
+<footer class="wp-block-template-part">
+<div class="mba-demo-foot"><div class="mba-demo-in"><div><span class="mba-demo-brand" aria-hidden="true"><span class="mba-demo-mark" aria-hidden="true"><svg viewBox="0 0 512 512"><path d="M288 448H64V224h64V160H64c-35.300 0-64 28.700-64 64V448c0 35.300 28.700 64 64 64H288c35.300 0 64-28.700 64-64V384H288v64zm-64-96H448c35.300 0 64-28.700 64-64V64c0-35.300-28.700-64-64-64H224c-35.300 0-64 28.700-64 64V288c0 35.300 28.700 64 64 64z"/></svg></span><span class="mba-demo-name">MBA<span>Gallery</span></span></span><p>Sample content for showing the plugin. The doctors are fictional. Some photos were created with an image model and three cases use photos from Wikimedia Commons; each of those cases says so. Doctor portraits: <a href="https://www.dicebear.com/styles/notionists/">DiceBear Notionists</a> (CC0).</p></div><ul><li><a href="https://medicalbeforeaftergallery.com/demo/">All demos</a></li><li><a href="https://medicalbeforeaftergallery.com/">medicalbeforeaftergallery.com</a></li><li><a href="https://medicalbeforeaftergallery.com/docs/">Documentation</a></li><li><a href="https://wordpress.org/plugins/medical-before-after-gallery/">Free plugin on WordPress.org</a></li></ul></div></div>
+
+
+</footer></div>
+<script id="mba-pro-discovery-js-extra">
+var mbaGalleryProDiscovery = {"mapEnabled":"1","mapPlacement":"embed","accent":"#0f6b76","guideEnabled":"","figures":{"face":{"label":"Face","viewBox":"0 0 1122 1402","image":"/wp-content/plugins/mba-gallery-pro/assets/images/body-map/face.webp","regions":{"hair":{"label":"Scalp & hair","path":"M196 330C212 130 380 8 560 8C740 8 908 130 926 330C860 236 720 196 560 196C400 196 262 236 196 330Z","at":[430,70],"side":"l","under":false,"rule":"nonzero","categories":["hair-loss"],"treatments":["Hair loss"]},"forehead":{"label":"Forehead","path":"M236 352C300 262 430 222 560 222C690 222 822 262 886 352C892 404 860 424 800 402C740 388 662 398 606 436L516 436C460 398 382 388 322 402C262 424 230 404 236 352Z","at":[700,300],"side":"r","under":false,"rule":"nonzero","categories":["anti-wrinkle"],"treatments":["Anti-wrinkle injections"]},"eyes":{"label":"Eyes & brows","path":"M248 470C290 410 400 400 490 452C505 490 500 560 474 590C420 612 340 612 300 590C262 560 240 510 248 470Z M876 470C834 410 724 400 634 452C619 490 624 560 650 590C704 612 784 612 824 590C862 560 884 510 876 470Z","at":[396,528],"side":"l","under":false,"rule":"nonzero","categories":["eyelid-surgery"],"treatments":["Eyelid surgery"]},"nose":{"label":"Nose","path":"M534 520C530 600 498 660 482 706C466 748 498 768 530 764C552 778 580 778 602 764C634 768 658 748 644 706C626 660 598 600 592 520C578 498 548 498 534 520Z","at":[566,690],"side":"r","under":false,"rule":"nonzero","categories":["rhinoplasty"],"treatments":["Rhinoplasty"]},"cheeks":{"label":"Cheeks","path":"M252 630C300 606 384 606 442 636C470 690 452 764 416 826C380 876 320 900 286 862C258 800 246 706 252 630Z M872 630C824 606 740 606 682 636C654 690 672 764 708 826C744 876 804 900 838 862C866 800 878 706 872 630Z","at":[330,720],"side":"l","under":false,"rule":"nonzero","categories":[],"treatments":[]},"lips":{"label":"Lips","path":"M430 880C480 850 530 830 565 844C600 830 650 850 694 880C650 926 602 942 565 942C526 942 476 926 430 880Z","at":[640,886],"side":"r","under":false,"rule":"nonzero","categories":["lip-fillers"],"treatments":["Lip fillers"]},"chin-jaw":{"label":"Chin & jaw","path":"M298 934C340 1012 430 1104 562 1110C692 1104 786 1012 828 934C800 926 750 962 700 966C650 990 610 976 565 976C512 976 472 990 422 966C372 962 326 926 298 934Z","at":[470,1048],"side":"l","under":false,"rule":"nonzero","categories":[],"treatments":[]},"ears":{"label":"Ears","path":"M150 500C190 485 215 520 214 620C212 700 236 770 226 780C190 780 160 720 150 650C138 590 132 520 150 500Z M970 500C930 485 905 520 906 620C908 700 884 770 894 780C930 780 960 720 970 650C982 590 988 520 970 500Z","at":[938,620],"side":"r","under":false,"rule":"nonzero","categories":[],"treatments":[]},"neck":{"label":"Neck","path":"M306 1004C332 1064 440 1132 562 1136C682 1132 792 1064 820 1004L822 1130C838 1200 868 1238 898 1260C800 1326 322 1326 222 1260C254 1238 294 1200 303 1130Z","at":[640,1210],"side":"r","under":false,"rule":"nonzero","categories":[],"treatments":[]},"skin":{"label":"Whole face & skin","path":"M214 430C220 250 380 196 562 196C744 196 904 250 910 430C912 620 900 820 826 950C762 1052 652 1110 562 1110C472 1110 362 1052 298 950C224 820 210 620 214 430Z","at":[806,640],"side":"r","under":true,"rule":"nonzero","categories":["skin-care"],"treatments":["Skin care"]}}},"body-front":{"label":"Body front","viewBox":"0 0 1024 1536","image":"/wp-content/plugins/mba-gallery-pro/assets/images/body-map/body-front.webp","regions":{"chest":{"label":"Chest & breast","path":"M390 345C440 304 480 298 511 304C545 298 585 304 634 345C644 400 640 440 630 466C590 482 545 472 511 466C478 472 432 482 392 466C382 440 380 400 390 345Z","at":[570,390],"side":"r","under":false,"rule":"nonzero","categories":[],"treatments":[]},"abdomen":{"label":"Abdomen","path":"M421 490C452 482 572 482 602 490C598 540 600 580 612 640C590 700 545 735 511 745C478 735 434 700 411 640C424 580 425 540 421 490Z","at":[511,600],"side":"r","under":false,"rule":"nonzero","categories":["body-contouring","weight-loss","body-surgery"],"treatments":["Body contouring","Weight loss","Body surgery"]},"waist":{"label":"Waist & flanks","path":"M388 476C400 482 412 488 417 496C421 540 420 580 407 640C394 652 384 642 386 630C400 590 405 560 404 545C398 520 388 500 388 476Z M634 476C622 482 610 488 605 496C601 540 602 580 615 640C628 652 638 642 636 630C622 590 617 560 618 545C624 520 634 500 634 476Z","at":[405,560],"side":"l","under":false,"rule":"nonzero","categories":["body-contouring"],"treatments":["Body contouring"]},"arms":{"label":"Arms","path":"M358 290C326 304 318 350 317 392C312 460 309 500 306 540C285 580 276 640 268 690C262 720 255 738 246 752L297 750C301 720 322 676 341 640C366 592 366 560 367 540C376 500 385 470 384 440C380 400 376 340 374 318Z M664 290C696 304 704 350 705 392C710 460 713 500 716 540C737 580 746 640 754 690C760 720 767 738 776 752L725 750C721 720 700 676 681 640C656 592 656 560 655 540C646 500 637 470 638 440C642 400 646 340 648 318Z","at":[330,470],"side":"l","under":false,"rule":"nonzero","categories":["tattoo-removal"],"treatments":["Laser tattoo removal"]},"hands":{"label":"Hands","path":"M246 754L298 752C303 800 293 876 272 896C246 908 220 892 214 862C214 826 190 832 200 814C214 780 226 764 246 754Z M776 754L724 752C719 800 729 876 750 896C776 908 802 892 808 862C808 826 832 832 822 814C808 780 796 764 776 754Z","at":[762,800],"side":"r","under":false,"rule":"nonzero","categories":[],"treatments":[]},"hips":{"label":"Hips","path":"M390 650C375 690 365 730 360 772C400 792 432 772 472 762C442 730 406 692 390 650Z M632 650C647 690 657 730 662 772C622 792 590 772 550 762C580 730 616 692 632 650Z","at":[384,730],"side":"l","under":false,"rule":"nonzero","categories":[],"treatments":[]},"thighs":{"label":"Thighs","path":"M360 792C400 812 460 792 504 790C507 850 496 900 492 940C490 970 488 990 486 1000C460 1010 420 1010 390 1000C386 950 360 880 360 792Z M662 792C622 812 562 792 518 790C515 850 526 900 530 940C532 970 534 990 536 1000C562 1010 602 1010 632 1000C636 950 662 880 662 792Z","at":[590,900],"side":"r","under":false,"rule":"nonzero","categories":[],"treatments":[]},"lower-legs":{"label":"Lower legs","path":"M390 1080C420 1090 450 1090 472 1085C478 1130 478 1190 465 1240C455 1300 450 1350 452 1390L400 1390C398 1330 380 1270 374 1210C368 1160 375 1120 390 1080Z M632 1080C602 1090 572 1090 550 1085C544 1130 544 1190 557 1240C567 1300 572 1350 570 1390L622 1390C624 1330 642 1270 648 1210C654 1160 647 1120 632 1080Z","at":[424,1180],"side":"l","under":false,"rule":"nonzero","categories":[],"treatments":[]}}},"body-back":{"label":"Body back","viewBox":"0 0 1024 1536","image":"/wp-content/plugins/mba-gallery-pro/assets/images/body-map/body-back.webp","regions":{"upper-back":{"label":"Upper back","path":"M384 322C430 292 600 292 638 322C646 400 640 440 630 466C560 482 470 482 392 466C380 430 376 370 384 322Z","at":[440,380],"side":"l","under":false,"rule":"nonzero","categories":[],"treatments":[]},"lower-back":{"label":"Lower back","path":"M394 482C450 494 580 494 628 482C614 540 622 590 635 640C590 662 440 662 387 640C402 590 408 540 394 482Z","at":[570,560],"side":"r","under":false,"rule":"nonzero","categories":[],"treatments":[]},"buttocks":{"label":"Buttocks","path":"M384 658C430 670 590 670 638 658C656 700 664 760 660 802C620 836 545 830 511 802C478 830 400 836 362 802C358 760 368 700 384 658Z","at":[440,730],"side":"l","under":false,"rule":"nonzero","categories":["buttock-lift"],"treatments":["Buttock lift"]},"back-arms":{"label":"Back of arms","path":"M358 290C326 304 318 350 317 392C312 460 309 500 306 540C285 580 276 640 268 690C262 720 255 738 246 752L297 750C301 720 322 676 341 640C366 592 366 560 367 540C376 500 385 470 384 440C380 400 376 340 374 318Z M664 290C696 304 704 350 705 392C710 460 713 500 716 540C737 580 746 640 754 690C760 720 767 738 776 752L725 750C721 720 700 676 681 640C656 592 656 560 655 540C646 500 637 470 638 440C642 400 646 340 648 318Z","at":[690,470],"side":"r","under":false,"rule":"nonzero","categories":[],"treatments":[]},"back-thighs":{"label":"Back of thighs","path":"M362 822C400 842 460 836 500 812C505 860 496 900 492 940C490 970 488 990 486 1000C460 1010 420 1010 390 1000C386 950 360 890 362 822Z M660 822C622 842 562 836 522 812C517 860 526 900 530 940C532 970 534 990 536 1000C562 1010 602 1010 632 1000C636 950 662 890 660 822Z","at":[590,930],"side":"r","under":false,"rule":"nonzero","categories":[],"treatments":[]},"calves":{"label":"Calves","path":"M390 1080C420 1090 450 1090 472 1085C478 1130 478 1190 465 1240C455 1300 450 1350 452 1390L400 1390C398 1330 380 1270 374 1210C368 1160 375 1120 390 1080Z M632 1080C602 1090 572 1090 550 1085C544 1130 544 1190 557 1240C567 1300 572 1350 570 1390L622 1390C624 1330 642 1270 648 1210C654 1160 647 1120 632 1080Z","at":[424,1160],"side":"l","under":false,"rule":"nonzero","categories":[],"treatments":[]}}},"smile":{"label":"Smile","viewBox":"0 0 720 480","image":"/wp-content/plugins/mba-gallery-pro/assets/images/body-map/smile.webp","regions":{"teeth":{"label":"Teeth & smile","path":"M112 154C182 182 268 192 360 192C452 192 538 182 608 154C580 248 482 320 360 320C238 320 140 248 112 154Z","at":[300,252],"side":"l","under":false,"rule":"nonzero","categories":["teeth"],"treatments":["Teeth"]},"gums":{"label":"Gums","path":"M112 154C182 182 268 192 360 192C452 192 538 182 608 154C590 192 540 206 520 208C460 222 260 222 200 208C180 206 130 192 112 154Z","at":[500,196],"side":"r","under":false,"rule":"nonzero","categories":[],"treatments":[]},"lips":{"label":"Lips","path":"M84 142C150 142 240 126 304 116C330 112 344 125 360 125C376 125 390 112 416 116C480 126 570 142 636 142C622 262 506 384 360 384C214 384 98 262 84 142ZM112 154C140 248 238 320 360 320C482 320 580 248 608 154C538 182 452 192 360 192C268 192 182 182 112 154Z","at":[360,356],"side":"r","under":false,"rule":"evenodd","categories":["lip-fillers"],"treatments":["Lip fillers"]}}}},"showFigures":["face","body-front","body-back","smile"],"guideLabel":"Help me choose","guideIntro":"Two quick questions, then the cases that match.","questions":[{"label":"What would you like to improve?","optional":false,"answers":[{"label":"My skin","categories":["skin-care"],"filters":{}},{"label":"Lines or volume in my face","categories":["botox-fillers"],"filters":{}},{"label":"My nose or eyes","categories":["face"],"filters":{}},{"label":"My smile","categories":["teeth"],"filters":{}},{"label":"My hair","categories":["hair-loss"],"filters":{}},{"label":"My body","categories":["body"],"filters":{}},{"label":"A tattoo","categories":["tattoo-removal"],"filters":{}}]},{"label":"How much recovery time is fine?","optional":true,"answers":[{"label":"A few days at most","categories":[],"filters":{"recovery":"Minimal (1-3 days)"}},{"label":"Up to a week","categories":[],"filters":{"recovery":"Short (4-7 days)"}},{"label":"It does not matter","categories":[],"filters":{}}]}],"darkMode":"off","i18n":{"area":"Find by area","mapTitle":"Find results by area","mapIntro":"Choose the area you would like to improve.","body":"Body","showFront":"Show front","showBack":"Show back","choose":"Choose an area","chooseHint":"See real results and treatments for it.","allAreas":"All areas","changeArea":"Change area","seeOne":"See %d case","seeMany":"See %d cases","seeCases":"See the cases","before":"Before","after":"After","close":"Close discovery","chooseArea":"Choose an area to view matching cases.","figures":"Choose a figure","regions":"Areas","oneCase":"%d case","cases":"%d cases","oneMatch":"%d matching case","matches":"%d matching cases","regionCount":"%1$s \u2014 %2$s","areaChip":"Area: %s","answersChip":"Your answers","remove":"Remove %s","step":"Question %1$d of %2$d","back":"Back","skip":"Skip","next":"Next","finish":"Show matching cases","noMatches":"No matching cases. Try different answers or show all cases.","showAll":"Show all cases","showAllHint":"This clears your area, answers, category, search and case filters.","pastResults":"These are examples of past patients' results, not a recommendation for you."}};
+//# sourceURL=mba-pro-discovery-js-extra
+</script>
+<script id="mba-pro-discovery-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-discovery.js?ver=1.6.0.1795539566"></script>
+<script id="cocoen-js-js" src="/wp-content/plugins/medical-before-after-gallery/assets/vendor/cocoen/cocoen.min.js?ver=1.5.0.1780209663"></script>
+<script id="medbeafgallery-js-js-extra">
+var medbeafgalleryGalleryConfig = {"restUrl":"/wp-json/medical-before-after-gallery/v1/","nonce":"","itemsPerPage":"8","defaultCategory":"all","showFilters":"false","cardStyle":"split","photoBackdrop":"blur","beforeText":"Before","afterText":"After","treatedByText":"Treated by","categoryDisplayMode":"photos","galleryEndpoint":"gallery-data","categoriesEndpoint":"categories","restBase":"/wp-json/medical-before-after-gallery/v1","pluginUrl":"/wp-content/plugins/medical-before-after-gallery/","categoryDescendants":{"botox-fillers":["lip-fillers","dermal-fillers","anti-wrinkle"],"body":["weight-loss","buttock-lift","body-surgery","body-contouring"],"face":["rhinoplasty","eyelid-surgery"]},"hideCaseDetails":"","showCtaButton":"","ctaButtonText":"Book Consultation","ctaButtonLink":"","modalMaxHeight":"0","hideCaseTitle":"","hideCaseCategory":"","darkMode":"off","categoryDisplayStyle":"carousel","galleryLayout":"classic","beforeLabel":"Before","afterLabel":"After","showLabels":"1","defaultViewMode":"split","enableSearch":"","searchPlaceholder":"Search cases\u2026","enableSort":"","defaultSort":"newest","enableDeeplink":"","imageProtection":"","enabledDetails":["category","gender","age","recovery","duration","results","procedure"],"proFilterDefs":[{"name":"gender","label":"Gender","standard":true},{"name":"age","label":"Age Range","standard":true},{"name":"recovery","label":"Recovery Time","standard":true},{"name":"duration","label":"Treatment Duration","standard":true},{"name":"results","label":"Results Visibility","standard":true},{"name":"procedure","label":"Procedure Type","standard":true}],"standardFilterNames":["gender","age","recovery","duration","results","procedure"],"proLayouts":{"layout":"refined","card_style":"reveal-after","card_frame":"boxed","preset":"default","motion":"subtle","columns":"4","structure":"gallery","compare":"off","concerns":[{"name":"Wrinkles and lines","hint":"Forehead, frown lines, crow\u2019s feet","categories":["anti-wrinkle","skin-care"]},{"name":"Volume and shape","hint":"Lips, under-eyes, jawline","categories":["dermal-fillers","lip-fillers"]},{"name":"My nose","hint":"Profile, bridge, tip","categories":["rhinoplasty"]},{"name":"Skin tone and redness","hint":"Pigmentation, rosacea, texture","categories":["skin-care"]},{"name":"Thinning hair","hint":"Crown, parting, hairline","categories":["hair-loss"]},{"name":"An unwanted tattoo","hint":"Black or colour ink","categories":["tattoo-removal"]},{"name":"My smile","hint":"Colour, gaps, shape","categories":["teeth"]},{"name":"Body shape","hint":"Weight, waist, tummy","categories":["body"]}],"show_doctor":false,"show_new_badge":false,"new_days":30,"show_progress_badge":true,"show_result_chips":false,"columns_override":true,"dark_mode":"off","aspect_ratio":"4-5","categories":[],"i18n":{"featured":"Featured","newBadge":"New","progress":"Progress","seeAll":"See all","seeCategory":"See all cases in %s","categoryHidden":"Show the category bar to use See all.","previous":"Previous cases","next":"Next cases","before":"Before","after":"After","duration":"Duration","recovery":"Recovery","results":"Results","procedure":"Procedure","patient":"Patient","views":"Views","treatedBy":"Treated by %s","otherCases":"Other cases","caseSingular":"%s case","casePlural":"%s cases","resultsStatus":"%1$s of %2$s matching cases shown.","rowPending":"More cases in this row appear as the gallery loads.","mainView":"Main view","showView":"Show %1$s of %2$s","viewsOf":"Views of %s","viewNumber":"View %s","openView":"Open %1$s for %2$s","pairUnavailable":"Case opened. Choose the image pair in the case window.","compare":"Compare before and after for %s","compareValue":"%1$s%% before, %2$s%% after","compareHelp":"Drag the divider, or use the arrow keys, to compare the before and after photos.","wholePhotos":"Whole photos, nothing cropped.","photoFit":"Photos use matching centre crops for display.","hoverFit":"Photos enlarge equally on hover; original files are unchanged.","missingPhoto":"Photo unavailable","viewCase":"View case","close":"Close","wallSwitch":"Show every photo before or after treatment","switchLabel":"Show the before or after photo of %s"}}};
+//# sourceURL=medbeafgallery-js-js-extra
+</script>
+<script id="medbeafgallery-js-js" src="/wp-content/plugins/medical-before-after-gallery/assets/js/gallery.js?ver=1.5.0.1795489606"></script>
+<script id="mba-gallery-pro-subcategories-js-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-subcategories.js?ver=1.6.0.1790922901"></script>
+<script id="mba-pro-frontend-filters-js-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-frontend-filters.js?ver=1.6.0.1795570596"></script>
+<script id="mba-pro-filter-drawer-js-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-filter-drawer.js?ver=1.6.0.1781631493"></script>
+<script id="mba-pro-annotations-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-annotations.js?ver=1.6.0.1781229262"></script>
+<script id="mba-gallery-pro-infinite-scroll-js-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-infinite-scroll.js?ver=1.6.0.1790759958"></script>
+<script id="mba-pro-layouts-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-layouts.js?ver=1.6.0.1795530495"></script>
+<script id="mba-pro-stages-js-extra">
+var mbaProStagesConfig = {"minStages":"3","locale":"en-US","i18n":{"group":"Progress stages","title":"Progress timeline","compare":"Before / After","help":"Choose a stage to see its photo. Choose it again, or Before / After, to go back to the comparison. Left and Right Arrow move between the stages.","showing":"Showing %s","back":"Showing the before and after comparison","missing":"Image unavailable"}};
+//# sourceURL=mba-pro-stages-js-extra
+</script>
+<script id="mba-pro-stages-js" src="/wp-content/plugins/mba-gallery-pro/assets/js/pro-stages.js?ver=1.6.0.1795439947"></script>
+<style id="medbeafgallery-fallback-css">
+        /* Medical Before After Gallery - Enhanced Fallback Styles */
+        body .medbeafgallery-nav-btn:hover,
+        html body .medbeafgallery-nav-btn:hover { color: #0f6b76 !important; }
+
+        body .medbeafgallery-carousel-item.active::after,
+        html body .medbeafgallery-carousel-item.active::after { background: #0f6b76 !important; }
+
+        body .medbeafgallery-load-more,
+        html body .medbeafgallery-load-more { background: #0f6b76 !important; }
+
+        body .medbeafgallery-slider-button,
+        html body .medbeafgallery-slider-button { background: #0f6b76 !important; }
+
+        body .medbeafgallery-control-btn.active,
+        html body .medbeafgallery-control-btn.active { background: #0f6b76 !important; }
+
+        body .medbeafgallery-carousel-item.active p,
+        body .medbeafgallery-carousel-item.active .medbeafgallery-category-name,
+        html body .medbeafgallery-carousel-item.active p,
+        html body .medbeafgallery-carousel-item.active .medbeafgallery-category-name { color: #0f6b76 !important; }
+
+        body .medbeafgallery-carousel-item:hover img,
+        body .medbeafgallery-carousel-item.active img,
+        html body .medbeafgallery-carousel-item:hover img,
+        html body .medbeafgallery-carousel-item.active img { border-color: #0f6b76 !important; }
+    </style></body>
+</html>

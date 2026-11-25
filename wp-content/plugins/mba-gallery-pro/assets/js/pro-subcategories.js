@@ -32,6 +32,10 @@
     // Cache: parentSlug → [children]
     let subcategoryCache = {};
 
+    // True once the prefetch has listed every parent that has subcategories,
+    // so any other parent is known to have none (no request needed).
+    let prefetchDone = false;
+
     // Track which parent category is currently selected so the "All" pill
     // can restore it after a child pill was active.
     let activeParentSlug = '';
@@ -68,10 +72,10 @@
                             subcategoryCache[entry.parent.slug] = entry.children;
                         }
                     });
+                    prefetchDone = true;
                 }
             })
             .catch(function (err) {
-                console.warn('MBA Gallery Pro: Could not prefetch subcategories', err);
             });
     }
 
@@ -108,14 +112,24 @@
             return;
         }
 
+        if (prefetchDone) {
+            renderPills(container, parentSlug, []);
+            return;
+        }
+
         fetch(REST_BASE + '/subcategories?parent=' + encodeURIComponent(parentSlug))
             .then(function (res) { return res.json(); })
             .then(function (children) {
                 if (!Array.isArray(children)) children = [];
                 subcategoryCache[parentSlug] = children;
+                // A slow answer for a parent the visitor has since left must not
+                // replace the pills of the one now selected (clicking "Hair" then
+                // "Skin" used to wipe Skin's pills when Hair's reply came last).
+                if (activeParentSlug !== parentSlug) return;
                 renderPills(container, parentSlug, children);
             })
             .catch(function () {
+                if (activeParentSlug !== parentSlug) return;
                 container.style.display = 'none';
             });
     }
@@ -158,11 +172,17 @@
         pill.className = 'mba-pro-subcategory-pill' + (isAll ? ' active' : '');
         pill.setAttribute('data-slug', child.slug);
 
-        var label = child.name;
+        // Built from text nodes, not innerHTML: term names come from the REST
+        // API and innerHTML would run any markup one carried. They arrive
+        // entity-encoded ("Face &amp; Neck"), so decode for display first.
+        pill.appendChild(document.createTextNode(decodeEntities(child.name)));
         if (child.count !== null && child.count !== undefined) {
-            label += ' <span class="mba-pro-pill-count">(' + child.count + ')</span>';
+            var count = document.createElement('span');
+            count.className = 'mba-pro-pill-count';
+            count.textContent = '(' + child.count + ')';
+            pill.appendChild(document.createTextNode(' '));
+            pill.appendChild(count);
         }
-        pill.innerHTML = label;
 
         pill.addEventListener('click', function () {
             // Update active state on pills
@@ -191,6 +211,13 @@
         });
 
         return pill;
+    }
+
+    // A <textarea> decodes entities without parsing markup.
+    function decodeEntities(str) {
+        var t = document.createElement('textarea');
+        t.innerHTML = str === null || str === undefined ? '' : String(str);
+        return t.value;
     }
 
     // ── 6. Hide subcategory pills ────────────────────────────────────

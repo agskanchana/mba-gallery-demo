@@ -301,6 +301,13 @@
     text-transform: none; /* don't let a theme force-uppercase the title */
     color: #0f172a;
 }
+/* Masonry cards stay light in dark mode (only the modal and filters darken).
+   The card body also carries .medbeafgallery-gallery-item-info, so the classic
+   dark rule `.mba-pro-dark .medbeafgallery-gallery-item-info h3` (higher
+   specificity) turned this title white-on-white. */
+.mba-pro-dark .mba-pro-mcard .mba-pro-mcard-title {
+    color: #0f172a;
+}
 .mba-pro-mcard .mba-pro-mcard-desc {
     margin: 0 0 14px;
     font-size: 13.5px;
@@ -401,10 +408,14 @@ body.mba-pro-mmodal-lock {
 /* Light theme (default) */
 .mba-pro-mmodal-dialog {
     --mm-bg: #ffffff;
+    /* Same colour as --mm-bg at zero alpha. A gradient to plain `transparent`
+       interpolates through transparent-black and greys out the fade. */
+    --mm-bg-fade: rgba(255, 255, 255, 0);
+    --mm-scroll-shadow: rgba(15, 23, 42, 0.18);
     --mm-text: #475569;
     --mm-title: #0f172a;
     --mm-border: #ececf1;
-    --mm-muted: #8a8a99;
+    --mm-muted: #6e6e80; /* 4.8:1+ on the panel backgrounds (was #8a8a99, 3.3:1 — below WCAG AA) */
     --mm-accent: var(--medbeafgallery-primary-solid, #2563eb);
     --mm-accent-soft: rgba(37, 99, 235, 0.1);
     --mm-accent-soft: color-mix(in srgb, var(--mm-accent) 12%, transparent);
@@ -444,6 +455,8 @@ body.mba-pro-mmodal-lock {
 /* Dark theme (detail panel + chrome; the image stage stays dark in both) */
 .mba-pro-dark .mba-pro-mmodal-dialog {
     --mm-bg: #14141f;
+    --mm-bg-fade: rgba(20, 20, 31, 0);
+    --mm-scroll-shadow: rgba(0, 0, 0, 0.55);
     --mm-text: #c7c7d4;
     --mm-title: #ffffff;
     --mm-border: rgba(255, 255, 255, 0.09);
@@ -528,7 +541,22 @@ body.mba-pro-mmodal-lock {
     padding: 28px 28px 30px;
     overflow-y: auto;
     overflow-x: hidden; /* overflow-y:auto alone promotes overflow-x to auto */
-    background: var(--mm-bg);
+
+    /* Scroll affordance. A case with a long description leaves a few hundred
+       pixels below the fold here with nothing on screen to say so, which reads
+       as text that simply stops mid-sentence.
+
+       Four background layers, no JS: the two `local` layers scroll with the
+       content and mask the shadows when you are at an edge; the two `scroll`
+       layers stay pinned to the padding box and show a shadow when there is
+       more content that way. When the panel does not overflow, the cover
+       layers sit on top of both shadows and nothing is drawn. */
+    background:
+        linear-gradient(var(--mm-bg) 30%, var(--mm-bg-fade)) top / 100% 30px no-repeat local,
+        linear-gradient(var(--mm-bg-fade), var(--mm-bg) 70%) bottom / 100% 30px no-repeat local,
+        radial-gradient(farthest-side at 50% 0, var(--mm-scroll-shadow), rgba(0, 0, 0, 0)) top / 100% 11px no-repeat scroll,
+        radial-gradient(farthest-side at 50% 100%, var(--mm-scroll-shadow), rgba(0, 0, 0, 0)) bottom / 100% 11px no-repeat scroll,
+        var(--mm-bg);
 }
 @media (min-width: 901px) {
     .mba-pro-mmodal-side { border-left: 1px solid var(--mm-border); }
@@ -579,6 +607,58 @@ body.mba-pro-mmodal-lock {
     transition: opacity 0.4s ease;
 }
 .mba-pro-mmodal-imgwrap.mba-pro-show-after .mba-pro-mmodal-after { opacity: 1; }
+
+/* ── Zoom (pro-zoom.js) ─────────────────────────────────────────────────────
+   Both images take the same transform, so flipping while zoomed stays on the
+   same detail. pan-y leaves vertical scrolling of the stacked mobile layout to
+   the browser while a pinch or horizontal swipe reaches the script; once zoomed
+   every gesture belongs to the pan. */
+.mba-pro-mmodal-imgwrap { touch-action: pan-y; }
+.mba-pro-mmodal-imgwrap .mba-pro-mmodal-img { transform-origin: 0 0; }
+.mba-pro-mmodal-imgwrap.mba-pro-zoomed { cursor: grab; touch-action: none; }
+.mba-pro-mmodal-imgwrap.mba-pro-zoomed .mba-pro-mmodal-img { will-change: transform; }
+.mba-pro-mmodal-imgwrap.mba-pro-zoom-dragging { cursor: grabbing; }
+.mba-pro-mmodal-imgwrap.mba-pro-zoom-animate .mba-pro-mmodal-img { transition: opacity 0.4s ease, transform 0.22s ease; }
+/* Pins are placed for the unzoomed image; hide them rather than mislead. */
+.mba-pro-mmodal-imgwrap.mba-pro-zoomed .mba-pro-anno-layer { display: none !important; }
+
+.mba-pro-mmodal-zoom {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.mba-pro-mmodal-imgwrap.mba-pro-show-both .mba-pro-mmodal-zoom { display: none; }
+.mba-pro-mmodal-zbtn {
+    all: unset;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(15, 15, 20, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #fff;
+    cursor: pointer;
+    line-height: 0;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    transition: background 0.2s ease, opacity 0.2s ease;
+}
+.mba-pro-mmodal-zbtn:hover { background: rgba(15, 15, 20, 0.78); }
+.mba-pro-mmodal-zbtn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.mba-pro-mmodal-zbtn:disabled { opacity: 0.4; cursor: default; }
+/* Reset only means something once zoomed in. */
+.mba-pro-mmodal-imgwrap:not(.mba-pro-zoomed) .mba-pro-mmodal-zbtn[data-zoom="reset"] { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    .mba-pro-mmodal-imgwrap.mba-pro-zoom-animate .mba-pro-mmodal-img { transition: opacity 0.4s ease; }
+}
 
 /* ── "Both" view: before + after side by side (modal only) ─────────────────────
    Rendered as two figure cells (image + caption directly beneath) so each label
@@ -950,6 +1030,27 @@ body.mba-pro-mmodal-lock {
         border-left: none;
         border-top: 1px solid var(--mm-border);
     }
+    /* Scroll affordance for the stacked layout. The scroller here is the body,
+       not the side panel, and its children paint over any background — so the
+       desktop background-layer trick cannot work. A sticky ::after on the last
+       child pins to the bottom of the scrollport instead, and pro-masonry.js
+       toggles .mba-pro-mmodal-more so it vanishes once you reach the end
+       (otherwise it would permanently veil the final line). */
+    .mba-pro-mmodal-side::after {
+        content: '';
+        display: block;
+        position: sticky;
+        bottom: 0;
+        height: 34px;
+        margin: -34px 0 0;  /* overlay the content, do not add height */
+        background: linear-gradient(var(--mm-bg-fade), var(--mm-bg));
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.18s ease;
+    }
+    .mba-pro-mmodal-body.mba-pro-mmodal-more .mba-pro-mmodal-side::after {
+        opacity: 1;
+    }
     /* When both sections are present the side panel turns into tabs here: show
        the tab bar, show only the active panel, and drop the now-redundant
        in-panel headings (the tab label already names the section). */
@@ -1016,11 +1117,10 @@ body.mba-pro-mmodal-lock {
     box-shadow: 0 14px 28px rgba(37, 99, 235, 0.16);
 }
 
-/* Masonry cards use rounded-rectangle imagery rather than circular avatars. */
-.medbeafgallery-container.mba-pro-layout-masonry .medbeafgallery-category-carousel.medbeafgallery-carousel-mode:not(.mba-pro-cat-tabs) .medbeafgallery-carousel-item img,
-.medbeafgallery-container.mba-pro-layout-masonry .medbeafgallery-category-carousel.medbeafgallery-carousel-mode:not(.mba-pro-cat-tabs) .medbeafgallery-category-image {
-   
-}
+/* Category thumbnails keep the free plugin's default circular avatars in
+   masonry mode. (A previous rule forced them to 84x84 rounded squares, but
+   because the theme has no box-sizing reset the inner img's default 3px border
+   pushed it to 90px and overflowed the frame.) */
 
 .medbeafgallery-container.mba-pro-layout-masonry .medbeafgallery-category-carousel.medbeafgallery-carousel-mode:not(.mba-pro-cat-tabs) .medbeafgallery-carousel-item.active img {
     border-color: var(--medbeafgallery-primary-solid, #2563eb);
